@@ -1,0 +1,50 @@
+@import "normalize.css";
+@font-face {
+    font-family: "Roboto";
+    src: url("fonts/Roboto-Light.ttf") format("ttf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("fonts/Roboto-Regular.ttf") format("ttf");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("fonts/Roboto-Medium.ttf") format("ttf");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("fonts/Roboto-Bold.ttf") format("ttf");
+    font-weight: 700;
+}
+
+:root {
+    --navbar-bgc: #F0F1F2;
+    --nav-toggle-btn-hv-color: #B4B9BE3F;
+    --nav-toggle-btn-ac-color: #B4B9BE;
+    --text-color: #222;
+    --nav-item-hover-color: #E1342866;
+    --nav-item-active-color: #E13428;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+    height: 100%;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    height: 100%;
+}
