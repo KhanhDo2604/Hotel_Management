@@ -1,11 +1,10 @@
-import styles from "./Login.module.scss";
+import styles from "./ForgotPassword.module.scss";
 import background from '../../assets/login.webp';
 import hotel from '../../assets/hotel.png';
 
-
-export default function Login() {
+export default function ForgotPassword() {
     return (
-        <div className={styles.login}>
+        <div className={styles.forgotPassword}>
             <div className={styles.left}>
                 <img className={styles.image} src={background} />
             </div>
@@ -20,17 +19,18 @@ export default function Login() {
                     </div>
                     <div className={styles.password}>
                         <input type="password" name="password" required />
-                        <label>PASSWORD
+                        <label>NEW PASSWORD
+                        </label>
+                    </div>
+                    <div className={styles.reTypePassword}>
+                        <input type="password" name="password" required />
+                        <label>RETYPE PASSWORD
                         </label>
                     </div>
                 </form>
-                <div>
-                    <a className={styles.forgotPassword} href="/forgotPassword">FORGOT PASSWORD?</a>
-                </div>
-                <div>
-                    <button className={styles.btn}>LOGIN</button>
-                </div>
+                <button className={styles.btnConfirm}>CONFIRM</button>
             </div>
         </div>
-    );
+    )
 }
+

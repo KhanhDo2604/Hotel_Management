@@ -9,6 +9,7 @@ import {
   RoomList,
   Table,
   Login,
+  ForgotPassword,
 } from "./pages";
 import bell from "./assets/bell.png";
 import chair from "./assets/chair.png";
@@ -80,6 +81,10 @@ const hiddenRoutes = [
   {
     path: "/login",
     page: Login,
+  },
+  {
+    path: "/forgotPassword",
+    page: ForgotPassword,
   },
 ];
 export { routes, hiddenRoutes };

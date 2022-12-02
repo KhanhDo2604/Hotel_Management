@@ -8,3 +8,4 @@ export { default as Ordering } from "./Ordering";
 export { default as RoomList } from "./RoomList";
 export { default as Table } from "./Table";
 export {default as Login} from "./Login";
+export {default as ForgotPassword} from "./ForgotPassword";
