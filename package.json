@@ -11,8 +11,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.6.0",
+    "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
     "sass": "^1.56.1"
