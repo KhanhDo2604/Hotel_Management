@@ -6,12 +6,14 @@ import avatar from "../../assets/main_logo.png";
 import logout from "../../assets/logout.png";
 
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { routes } from "../../routes.js";
+
 
 export default function Layout({ children }) {
     const [sidebar, setSidebar] = useState(true);
     const navRef = useRef(null);
+    const navigate = useNavigate();
 
     const marginLeft = navRef.current ? -navRef.current.getBoundingClientRect().width : undefined;
 
@@ -47,7 +49,7 @@ export default function Layout({ children }) {
                     </button>
 
                     <div className="user-selection">
-                        <button className="header-btn">
+                        <button className="header-btn" onClick={_=>navigate("/login")}>
                             <img src={noti} alt="bell" />
                         </button>
                         <button className="header-btn">

@@ -1,5 +1,17 @@
-import { Billing, BookingList, Dashboard, GuestList, Import, Menu, Ordering, RoomList, Table } from "./pages";
-import bell from "./assets/bell.png"
+import {
+  Billing,
+  BookingList,
+  Dashboard,
+  GuestList,
+  Import,
+  Menu,
+  Ordering,
+  RoomList,
+  Table,
+  Login,
+  ForgotPassword,
+} from "./pages";
+import bell from "./assets/bell.png";
 import chair from "./assets/chair.png";
 import menu from "./assets/menu.png";
 import bed from "./assets/bed.png";
@@ -66,4 +78,14 @@ const routes = [
         name: "Tables"
     }
 ];
-export { routes };
+const hiddenRoutes = [
+  {
+    path: "/login",
+    page: Login,
+  },
+  {
+    path: "/forgotPassword",
+    page: ForgotPassword,
+  },
+];
+export { routes, hiddenRoutes };
