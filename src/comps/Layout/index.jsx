@@ -1,8 +1,8 @@
 import "./Layout.scss";
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/hotelLogo.png";
 import icon from "../../assets/sort.svg";
 import noti from "../../assets/bell2.png";
-import avatar from "../../assets/avatar.jpg";
+import avatar from "../../assets/main_logo.png";
 import logout from "../../assets/logout.png";
 
 import { useState, useRef } from "react";

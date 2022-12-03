@@ -5,10 +5,15 @@
 
 .container {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .content {
     padding: 1rem;
+    flex: 1;
+    overflow-y: scroll;
 }
 
 .header {
@@ -67,7 +72,7 @@
     transition: margin-left 150ms ease-in-out 0s;
     
     .logo {
-        width: 15rem;
+        width: 14rem;
         margin-left: 4rem;
         margin-right: 4rem;
     }
@@ -75,16 +80,16 @@
     .nav {
         padding-left: 2rem;
         padding-right: 2rem;
-        margin-top: 3rem;
+        margin-top: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
 
 
         .nav-item {
             display: flex;
             text-decoration: none;
-            padding: 1rem;
+            padding: .5rem 1rem;
             border-radius: 5px;
             align-items: center;
 

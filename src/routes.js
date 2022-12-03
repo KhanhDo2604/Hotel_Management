@@ -30,6 +30,12 @@ const routes = [
         
     },
     {
+        path: "/rooms",
+        page: RoomList,
+        icon: bed,
+        name: "Rooms"
+    },
+    {
         path: "/guests",
         page: GuestList,
         icon: guest,
@@ -45,19 +51,13 @@ const routes = [
         path: "/menu",
         page: Menu,
         icon: menu,
-        name: "Menu"
+        name: "Food"
     },
     {
         path: "/ordering",
         page: Ordering,
         icon: bell,
         name: "Orders"
-    },
-    {
-        path: "/rooms",
-        page: RoomList,
-        icon: bed,
-        name: "Rooms"
     },
     {
         path: "/tables",
