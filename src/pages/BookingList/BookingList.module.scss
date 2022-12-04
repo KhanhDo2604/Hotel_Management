@@ -1,0 +1,51 @@
+.containerGrid {
+    display: grid;
+    grid-template-columns: 2fr 0.8fr 1fr;
+    gap: 3.8rem;
+
+    .rangPicker{
+        padding: 0.8rem;
+    }
+
+    .middles {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.2rem solid #A9A9A9;
+        border-radius: 0.8rem;
+    }
+
+    button {
+        padding: 1.2rem 3.8rem;
+        border-radius: 0.8rem;
+        border: none;
+        background-color: #F9D410;
+        margin-top: 0.8rem;
+        font-weight: bold;
+    }
+}
+
+.searchBar {
+    margin-top: 2.2rem;
+    padding: 1.2rem;
+    background-color: #e4e4e4;
+    border-radius: 0.8rem;
+    border: none;
+    width: 100%;
+    font-size: 1.6rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+        outline: none;
+        border: 0;
+        width: 100%;
+        background-color: transparent;
+    }
+
+    svg {
+        position: absolute;
+        right: 0;
+    }
+}
