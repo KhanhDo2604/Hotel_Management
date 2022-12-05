@@ -53,7 +53,7 @@
 .contentGrid {
     display: grid;
     grid-template-columns: 0.6fr 0.8fr 0.8fr 1fr;
-    gap: 2.2rem;
+    gap: 3.2rem;
     margin-top: 2rem;
     padding: 2rem;
     box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
@@ -61,12 +61,13 @@
     .end{
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
     .oc {
-        background-color: #19E65D;
-        padding: 0.2rem 0.4rem;
+        padding: 0.8rem 1.2rem;
         border-radius: 1.2rem;
         border: none;
+        max-height: 60%;
     }
 
     .checkOut {
@@ -75,13 +76,14 @@
         border-radius: 1.2rem;
         background-color: #F9D410;
         font-weight: bold;
+        max-height: 60%;
     }
 
     .close,
     .pencil {
         border: none;
         background-color: transparent;
-    }
+        max-height: 60%;
 
-    
+    }
 }

@@ -10,7 +10,48 @@ const { RangePicker } = DatePicker;
 
 
 export default function BookingList() {
+    const bookingList = [
+        {
+            id: 1,
+            numberRoom: "Room 666",
+            typeRoom: "Superior Room (SUP)",
+            nameCustomer: "Võ Đình Vân",
+            startDate: "11/26/22",
+            endDate: "12/23/22",
+            guests: "2 guests",
+            state: "OC"
+        },
+        {
+            id: 2,
+            numberRoom: "Room 777",
+            typeRoom: "Superior Room (SUP)",
+            nameCustomer: "Nguyễn Huỳnh Tuấn Khang",
+            startDate: "11/26/22",
+            endDate: "12/23/22",
+            guests: "2 guests",
+            state: "EA"
+        },
+        {
+            id: 3,
+            numberRoom: "Room 888",
+            typeRoom: "Superior Room (SUP)",
+            nameCustomer: "Nguyễn Văn Pháp",
+            startDate: "11/26/22",
+            endDate: "12/23/22",
+            guests: "2 guests",
+            state: "SO"
+        }
+    ]
     const [dates, setDates] = useState(new Date())
+
+    //Delete an item when click
+    const [list, setList] = useState(bookingList);
+    function handleDelete(id) {
+        const newIds = list.filter((item) => item.id !== id)
+        setList(newIds)
+    }
+
+
     return (
         <>
             <div style={{ marginTop: "2.2rem" }} className={styles.containerGrid}>
@@ -45,32 +86,50 @@ export default function BookingList() {
                 </svg>
             </div>
             <div style={{ fontWeight: "bold", marginTop: "2.2rem" }}>
-                <p>List: <span>4</span> results</p>
+                <p>List: <span>{list.length}</span> results</p>
             </div>
-            <div className={styles.contentGrid}>
-                <div>
-                    <p style={{fontWeight:"bold"}}>Room 666</p>
-                    <p>In: <span style={{fontWeight:"bold"}}>Sat,11/26/22</span></p>
-                </div>
-                <div>
-                    <p>Superior Room (SUP)</p>
-                    <p>Out: <span  style={{fontWeight:"bold"}}>Tue,11/29/22</span></p>
-                </div>
-                <div>
-                    <p>Nguyễn Huỳnh Tuấn Khang</p>
-                    <p style={{fontWeight:"bold"}}>2 Guests</p>
-                </div>
-                <div className={styles.end}>
-                    <button className={styles.oc}>OC</button>
-                    <button className={styles.checkOut}>Check Out</button>
-                    <button className={styles.pencil}>
-                        <img style={{ height: "2.8rem"}} src={penCil} />
-                    </button>
-                    <button className={styles.close}>
-                        <FontAwesomeIcon style={{ color: "red" , height: "3.2rem"}} icon={faClose} />
-                    </button>
-                </div>
-            </div>
+            {
+                list.map((values, index) => (
+                    <div className={styles.contentGrid} key={values.id}>
+                        <div>
+                            <p style={{ fontWeight: "bold" }}>{values.numberRoom}</p>
+                            <p style={{ marginTop: "2rem" }}>In: <span style={{ fontWeight: "bold" }}>{values.startDate}</span></p>
+                        </div>
+                        <div>
+                            <p>{values.typeRoom}</p>
+                            <p style={{ marginTop: "2rem" }}>Out: <span style={{ fontWeight: "bold" }}>{values.endDate}</span></p>
+                        </div>
+                        <div>
+                            <p>{values.nameCustomer}</p>
+                            <p style={{ fontWeight: "bold", marginTop: "2rem" }}>{values.guests}</p>
+                        </div>
+                        <div className={styles.end}>
+                            {
+                                values.state === "OC" ? (
+                                    <>
+                                        <p className={styles.oc} style={{ backgroundColor: "#66FF99", color: "#057028" }}>{values.state}</p>
+                                    </>
+                                ) : values.state === "EA" ? (
+                                    <>
+                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{values.state}</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{values.state}</p>
+                                    </>
+                                )
+                            }
+                            <button className={styles.checkOut}>Check Out</button>
+                            <button className={styles.pencil}>
+                                <img style={{ height: "2.8rem" }} src={penCil} />
+                            </button>
+                            <button className={styles.close} onClick={() => handleDelete(values.id)}>
+                                <FontAwesomeIcon style={{ color: "red", height: "2.8rem" }} icon={faClose} />
+                            </button>
+                        </div>
+                    </div>
+                ))
+            }
         </>
     );
 }
