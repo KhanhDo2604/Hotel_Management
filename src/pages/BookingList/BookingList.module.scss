@@ -87,3 +87,71 @@
 
     }
 }
+
+// Modal
+
+.modal {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+
+.modalContent {
+    position: absolute;
+    top: 26%;
+    left: 68%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 1.2rem 2.2rem;
+    border-radius: 1.2rem;
+    max-width: 600px;
+    min-width: 300px;
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+}
+
+
+.plus,
+.minus {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    border: 1px solid;
+    text-align: center;
+    line-height: 3.2rem;
+    font-weight: bold;
+    font-size: 2rem;
+    line-height: 3.2rem;
+}
+
+.number {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    border: 1px solid;
+    text-align: center;
+    line-height: 3.2rem;
+    font-size: 2rem;
+}
+
+.apply{
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.8rem;
+    border: none;
+    background-color: #F9D410;
+    font-weight: bold;
+}
+
+.reset {
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.8rem;
+    border: none;
+    background-color: var(--nav-item-hover-color);
+    font-weight: bold;
+}

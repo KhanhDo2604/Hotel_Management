@@ -1,11 +1,13 @@
 import styles from "./BookingList.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faL, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import penCil from '../../assets/pencil.png'
 import moment from "moment";
 import { DatePicker } from "antd";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 const { RangePicker } = DatePicker;
 
 
@@ -42,7 +44,7 @@ export default function BookingList() {
             state: "SO"
         }
     ]
-    
+
     //Date
     const [dates, setDates] = useState(new Date())
 
@@ -57,6 +59,48 @@ export default function BookingList() {
     const [query, setQuery] = useState("");
     const keys = ["nameCustomer", "numberRoom"];
 
+    //Show Modal
+    const [modal, setModal] = useState(false)
+    let menuRef = useRef()
+
+    useEffect(() => {
+        let handler = (event) => {
+            if (!menuRef.current.contains(event.target)) {
+                setModal(false)
+            }
+        }
+        document.addEventListener("click", handler)
+        return () => {
+            document.removeEventListener("click", handler)
+        }
+    })
+
+    //Counter Number
+    const [counter, setCounter] = useState(1)
+     
+    const increase = (e) => {
+        e.stopPropagation()
+        setCounter(count => count + 1)
+    }
+    const decrease = (e) => {
+        e.stopPropagation()
+        if (counter > 1) {
+            setCounter(count => count - 1)
+        }
+    }
+
+    //Reset Number
+    const handleReset = (e) => {
+        e.stopPropagation()
+        setCounter(1)
+    }
+
+    //click out modal
+    const handleModal = (e) => {
+        e.stopPropagation()
+
+    }
+
     return (
         <>
             <div style={{ marginTop: "2.2rem" }} className={styles.containerGrid}>
@@ -68,9 +112,9 @@ export default function BookingList() {
                         }))
                     }}
                 />
-                <div className={styles.middles}>
+                <div className={styles.middles} ref={menuRef}>
                     <FontAwesomeIcon icon={faUsers} style={{ marginRight: "1rem" }} />
-                    <div>
+                    <div className={styles.active} onClick={() => setModal(prev => !prev)}>
                         <p>1 Room</p>
                         <p style={{ fontWeight: "bold" }}>2 Guests</p>
                     </div>
@@ -134,6 +178,31 @@ export default function BookingList() {
                         </div>
                     </div>
                 ))
+            }
+
+            {
+                modal && (
+                    <div className={styles.modal}>
+                        <div className={styles.modalContent} onClick={handleModal}>
+                            <div>
+                                <p style={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>Rooms</p>
+                                <div style={{ textAlign: "center", marginTop: "2rem" }}>
+                                    <button className={styles.reset} onClick={handleReset}>Reset</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div style={{ display: "flex", justifyContent: "space-around" }}>
+                                    <p className={styles.minus} onClick={decrease}>-</p>
+                                    <p className={styles.number}>{counter}</p>
+                                    <p className={styles.plus} onClick={increase}>+</p>
+                                </div>
+                                <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                                    <button className={styles.apply}>Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
             }
         </>
     );

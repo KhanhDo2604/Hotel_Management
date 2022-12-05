@@ -195,14 +195,14 @@ export default function RoomList() {
                                     )
                                 }
                             </div>
-                            <div style={{ display: "flex", marginTop: "0.8rem" }}>
+                            <div style={{ display: "flex"}}>
                                 <img style={{ height: "24px" }} src={value.detailThree.imgWifi} />
                                 <p style={{ marginLeft: "0.4rem" }}>{value.detailThree.typeWifi}</p>
                                 <img style={{ height: "24px", marginLeft: "6.2rem" }} src={value.detailFour.imgAc} />
                                 <p style={{ marginLeft: "0.4rem" }}>{value.detailFour.typeAc}</p>
                             </div>
 
-                            <div style={{ display: "flex", marginTop: "0.8rem" }}>
+                            <div style={{ display: "flex" }}>
                                 <img style={{ height: "24px" }} src={value.detailFive.imgFamily} />
                                 <p style={{ marginLeft: "0.4rem" }}>{value.detailFive.typeFamily}</p>
                                 {
@@ -233,9 +233,6 @@ export default function RoomList() {
                             <p className={styles.price}>{value.price}</p>
                             <div className={styles.btnClick}>
                                 <button className={styles.btnLeft}>Book</button>
-                                <button className={styles.btnRight}>
-                                    <FontAwesomeIcon icon={faPencil} />
-                                </button>
                             </div>
 
                         </div>
