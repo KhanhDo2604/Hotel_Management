@@ -42,6 +42,8 @@ export default function BookingList() {
             state: "SO"
         }
     ]
+    
+    //Date
     const [dates, setDates] = useState(new Date())
 
     //Delete an item when click
@@ -51,6 +53,9 @@ export default function BookingList() {
         setList(newIds)
     }
 
+    //Search
+    const [query, setQuery] = useState("");
+    const keys = ["nameCustomer", "numberRoom"];
 
     return (
         <>
@@ -75,7 +80,7 @@ export default function BookingList() {
                 </div>
             </div>
             <div className={styles.searchBar}>
-                <input type="text" id={styles.mySearch} placeholder="Search" />
+                <input type="text" id={styles.mySearch} placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24"
@@ -89,7 +94,7 @@ export default function BookingList() {
                 <p>List: <span>{list.length}</span> results</p>
             </div>
             {
-                list.map((values, index) => (
+                list.filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).map((values, index) => (
                     <div className={styles.contentGrid} key={values.id}>
                         <div>
                             <p style={{ fontWeight: "bold" }}>{values.numberRoom}</p>
