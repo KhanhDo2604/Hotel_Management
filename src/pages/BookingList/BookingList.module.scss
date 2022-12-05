@@ -49,3 +49,39 @@
         right: 0;
     }
 }
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 0.6fr 0.8fr 0.8fr 1fr;
+    gap: 2.2rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 0.8rem;
+    .end{
+        display: flex;
+        justify-content: space-between;
+    }
+    .oc {
+        background-color: #19E65D;
+        padding: 0.2rem 0.4rem;
+        border-radius: 1.2rem;
+        border: none;
+    }
+
+    .checkOut {
+        border: none;
+        padding: 1.2rem;
+        border-radius: 1.2rem;
+        background-color: #F9D410;
+        font-weight: bold;
+    }
+
+    .close,
+    .pencil {
+        border: none;
+        background-color: transparent;
+    }
+
+    
+}
