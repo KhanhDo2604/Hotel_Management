@@ -10,6 +10,7 @@ import {
   Table,
   Login,
   ForgotPassword,
+  FoodChoosing,
 } from "./pages";
 import bell from "./assets/bell.png";
 import chair from "./assets/chair.png";
@@ -86,6 +87,10 @@ const hiddenRoutes = [
   {
     path: "/forgotPassword",
     page: ForgotPassword,
+  },
+  {
+    path:'/foodChoosing',
+    page: FoodChoosing,
   },
 ];
 export { routes, hiddenRoutes };

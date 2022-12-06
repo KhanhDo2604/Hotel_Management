@@ -1,0 +1,143 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr ;
+    gap: 2.4rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+
+    a {
+        cursor: pointer;
+        border-radius: 0.8rem;
+        padding: 1rem 1.6rem;
+        font-size: 1.6rem;
+        border: 0px;
+        background-color: #F9D410;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;  
+        text-decoration: none;
+    }
+
+    .searchBar {
+        padding: 1.2rem;
+        background-color: #e4e4e4;
+        border-radius: 0.8rem;
+        border: none;
+        width: 100%;
+        font-size: 1.6rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+    
+        input {
+            outline: none;
+            border: 0;
+            flex: 1;
+            background-color: transparent;
+        }
+    
+        svg {
+            position: absolute;
+            right: 0;
+        }
+    }  
+
+    .orders {
+        background-color: white;
+        height: 66.4rem;
+        position: absolute;
+        right: 0;
+        box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+        padding: 2rem;
+        h3 {
+            font-weight: 700;
+        }
+        h4 {
+            font-weight: 600;
+        }
+        h6 {
+            font-weight: 600;
+            margin: 0 0;
+        }
+        .foodImg {
+            width: 10rem;
+            height: 100%;
+            border-radius: 0.8rem;
+            margin-right: 0.8rem;
+        }
+        button {
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.8rem;
+            background-color: #F9D410;
+        }
+
+        button:hover {
+            background-color: #ED7D3E;
+        }
+
+        .orderTag {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            margin-bottom: 1rem;
+        }
+
+        .checkOutBtn {
+            width: 100%;
+            font-size: 2.4rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+    }
+}
+
+.content {
+    display:flex;
+    justify-content: space-between;
+    button {
+        border: 2px solid #999;
+        width: 10rem;
+        height: 11rem;
+        background-color: white;
+        border-radius: 1rem;
+    }
+
+    img {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    h6 {
+        font-weight: 600;
+    }
+
+    .active {
+        border-color: #F9D410;
+        background-color: #fff4bc;
+    }
+    
+}
+
+.section {
+    h3 {
+        font-weight: 600;
+        margin: 1.6rem 0;
+    }
+    h6 {
+        opacity: 0.5;
+        margin: 0;
+    }
+    img {
+        width: 90%;
+        border-radius: 1rem;
+        margin-bottom: 0.8rem;
+    }
+    .foodTag {
+        margin-bottom: 1.6rem;
+    }
+    .listFood {
+        height: 41.5rem;
+        overflow-y: scroll;
+    }
+}
