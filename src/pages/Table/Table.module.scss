@@ -1,3 +1,4 @@
+
 .gridContainer {
     display: grid;
     grid-template-columns: 2fr 1fr ;
@@ -5,7 +6,7 @@
     margin-top: 2rem;
     margin-bottom: 3rem;
 
-    button {
+    a {
         cursor: pointer;
         border-radius: 0.8rem;
         padding: 1rem 1.6rem;
@@ -16,6 +17,12 @@
         justify-content: center;
         align-items: center;
         font-weight: 500;  
+        text-decoration: none;
+    }
+
+    .unActive {
+        opacity: 0.5;
+        pointer-events: none;
     }
 }
 
@@ -46,24 +53,22 @@
 .tableList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 8rem;
-}
-
-.tableItem {
-    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
-    border: none;
-    padding: 0.8rem 0;
-    background-color: white;
-    border-radius: 1rem;
-
-    h4 {
-        font-weight: 600;
-        margin: 0;
-    }
-
-    img {
-        width: 15.2rem;
-        height: 15.2rem;
+    gap: 6rem;
+    
+    .tableItem {
+        display: block;
+        box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
+        border: none;
+        padding: 0.8rem 0;
+        background-color: white;
+        border-radius: 1rem;
+        cursor: pointer;
+        
+        h4 {
+            font-weight: 600;
+            margin: 0;
+        }
     }
 }
+
 
