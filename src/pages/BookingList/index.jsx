@@ -62,7 +62,6 @@ export default function BookingList() {
     //Show Modal
     const [modal, setModal] = useState(false)
     let menuRef = useRef()
-
     useEffect(() => {
         let handler = (event) => {
             if (!menuRef.current.contains(event.target)) {
@@ -77,7 +76,6 @@ export default function BookingList() {
 
     //Counter Number
     const [counter, setCounter] = useState(1)
-     
     const increase = (e) => {
         e.stopPropagation()
         setCounter(count => count + 1)
@@ -98,8 +96,18 @@ export default function BookingList() {
     //click out modal
     const handleModal = (e) => {
         e.stopPropagation()
-
     }
+
+    // handleApply
+    const [value, setValue] = useState(1)
+    let valueRef = useRef()
+    const handleApply = () => {
+        valueRef.current.value = counter;
+        setValue(valueRef.current.value)
+    }
+
+    //opacity apply and minus if number === 1
+    const opacity = counter === 1 ? 0.5 : 1;
 
     return (
         <>
@@ -115,7 +123,7 @@ export default function BookingList() {
                 <div className={styles.middles} ref={menuRef}>
                     <FontAwesomeIcon icon={faUsers} style={{ marginRight: "1rem" }} />
                     <div className={styles.active} onClick={() => setModal(prev => !prev)}>
-                        <p>1 Room</p>
+                        <p ref={valueRef}>{value} Room</p>
                         <p style={{ fontWeight: "bold" }}>2 Guests</p>
                     </div>
                 </div>
@@ -187,17 +195,17 @@ export default function BookingList() {
                             <div>
                                 <p style={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>Rooms</p>
                                 <div style={{ textAlign: "center", marginTop: "2rem" }}>
-                                    <button className={styles.reset} onClick={handleReset}>Reset</button>
+                                    <button className={styles.reset} onClick={handleReset} style={{ opacity }}>Reset</button>
                                 </div>
                             </div>
                             <div>
                                 <div style={{ display: "flex", justifyContent: "space-around" }}>
-                                    <p className={styles.minus} onClick={decrease}>-</p>
+                                    <p className={styles.minus} onClick={decrease} style={{ opacity }}>-</p>
                                     <p className={styles.number}>{counter}</p>
                                     <p className={styles.plus} onClick={increase}>+</p>
                                 </div>
                                 <div style={{ textAlign: "center", marginTop: "1rem" }}>
-                                    <button className={styles.apply}>Apply</button>
+                                    <button className={styles.apply} onClick={handleApply}>Apply</button>
                                 </div>
                             </div>
                         </div>
