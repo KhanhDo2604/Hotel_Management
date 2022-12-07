@@ -3,51 +3,6 @@ import styles from "./FoodChoosing.module.scss";
 
 
 export default function ExtraSection({ title, food }) {
-    // const food = [
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //     {
-    //       foodImg: pizza,
-    //       foodName: "Saigon Mania Pizza",
-    //       price: "300000",
-    //       category: "Pizza",
-    //     },
-    //   ];
-
     return (
         <div className={styles.section}>
           <h3>{title}</h3>

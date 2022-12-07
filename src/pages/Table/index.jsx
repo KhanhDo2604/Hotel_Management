@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 
 export default function Table() {
-  const [tableStatus, setTableStatus] = useState(Array(12).fill(0));
-
-  console.log(tableStatus);
+  const [tableStatus, setTableStatus] = useState(Array(20).fill(0));
+  var temp = [];
 
   return (
     <div className="w3-container">
@@ -25,7 +24,18 @@ export default function Table() {
         </div>
         <div>
           <Link
-            to="/foodChoosing"
+            to='/foodChoosing'
+            state={{
+              table: tableStatus.reduce((prev, cur, index) => {
+                if(cur === 1) {
+                  temp = [...prev, index + 1];
+                  console.log(temp);
+                  return [...prev, index + 1];
+                }
+                else return prev;
+              }, [])
+            }}
+            className={temp.length !== 0 ? null : styles.unActive} 
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,8 +52,9 @@ export default function Table() {
 
       <div className={styles.tableList}>
         {tableStatus.map((value, index) => (
-          <div key={index} className={styles.tableItem} onClick={() => {
-            if(value !==2) {
+          <div key={index} className={value === 1 ? styles.active : value === 2 ? styles.disable : styles.tableItem} 
+            onClick={() => {
+            if(value !== 2) {
               setTableStatus(previous => {
                 previous[index] = value === 1 ? 0 : 1;
                 return [...previous];

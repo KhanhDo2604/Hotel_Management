@@ -8,13 +8,18 @@ import desserts from "../../assets/gelato.png";
 import drink from "../../assets/drink.png";
 import meal from "../../assets/meal.png";
 import pasta from "../../assets/spaghetti.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import coke from "../../assets/coke.jpg";
 import dessertCake from "../../assets/cake.png";
 import pastaSeafood from "../../assets/pastaSeafood.jpg";
 import ExtraSection from "./extraScreen";
+import { useLocation } from "react-router-dom";
 
 export default function MenuChoosing() {
+ 
+  const location = useLocation();
+  // console.log(location.state.table.join(', '));
+
   const order = [
     {
       foodImg: pizza,
@@ -326,7 +331,7 @@ export default function MenuChoosing() {
 
         <div className={styles.orders}>
           <div>
-            <h3>Table: 2, 4</h3>
+            <h3>Table: {location.state.table.join(', ')}</h3>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h4>My Order</h4>
               <img
@@ -343,7 +348,7 @@ export default function MenuChoosing() {
 
           <div style={{ height: "60%", overflowY: "scroll" }}>
             {order.map((value, index) => (
-              <div className={styles.orderTag}>
+              <div className={styles.orderTag} key={index}>
                 <div style={{ display: "flex" }}>
                   <img src={value.foodImg} alt="" className={styles.foodImg} />
                   <div>

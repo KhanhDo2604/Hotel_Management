@@ -1,4 +1,5 @@
 
+
 .gridContainer {
     display: grid;
     grid-template-columns: 2fr 1fr ;
@@ -50,24 +51,40 @@
     }
 }  
 
+%table {
+    display: block;
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
+    border: none;
+    padding: 1.6rem 0;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    h4 {
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+    }
+}
+
 .tableList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 6rem;
     
     .tableItem {
-        display: block;
-        box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
-        border: none;
-        padding: 0.8rem 0;
+        @extend %table;
         background-color: white;
-        border-radius: 1rem;
-        cursor: pointer;
-        
-        h4 {
-            font-weight: 600;
-            margin: 0;
-        }
+    }
+
+    .active {
+        background-color: #f7e68d;
+        @extend %table;
+
+    }
+
+    .disable {
+        background-color: #E4644B;
+        @extend %table;
     }
 }
 
