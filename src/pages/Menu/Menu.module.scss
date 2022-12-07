@@ -163,3 +163,25 @@ button {
     padding-left: 1.6rem;
     padding-right: 1.6rem;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.6rem;
+
+    button {
+        padding: 1.2rem 1.6rem;
+        font-weight: 600;
+        font-size: 1.6rem;
+        margin: 0 1rem;
+        border-radius: 0.6rem;
+        border: none;
+    } 
+
+    .active {
+        font-weight: 900;
+        border-color: #101010;
+        background: #ffe400;
+        color: #101010;
+    }
+}

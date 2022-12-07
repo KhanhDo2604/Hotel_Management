@@ -1,17 +1,127 @@
 import styles from "./Menu.module.scss";
-import miquang from "../../assets/spicyUdonNoodle.jpg";
+import miquang from "../../assets/MiQuang.png";
 import update from "../../assets/pencil.png";
 import bin from "../../assets/bin.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Pagination from "./Pagination";
 
 export default function Menu() {
   const dropdownItem = ["All Status", "Unavailable", "Available"];
-
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState("All Status");
+
+  const food = [
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Pizza",
+      price: 30000,
+      quantity: 0,
+      status: "Unavailable",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Main meal",
+      price: 30000,
+      quantity: 1,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Drink",
+      price: 30000,
+      quantity: 4,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Desserts",
+      price: 30000,
+      quantity: 8,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Main meal",
+      price: 30000,
+      quantity: 1,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Pizza",
+      price: 30000,
+      quantity: 10,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Main meal",
+      price: 30000,
+      quantity: 57,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Drink",
+      price: 30000,
+      quantity: 100,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Main meal",
+      price: 30000,
+      quantity: 35,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Main meal",
+      price: 30000,
+      quantity: 138,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Pasta",
+      price: 30000,
+      quantity: 66,
+      status: "Available",
+    },
+    {
+      foodImg: miquang,
+      foodName: "Spicy Udon Noodles",
+      category: "Desserts",
+      price: 30000,
+      quantity: 19,
+      status: "Available",
+    },
+  ];
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(6);
+
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = food.slice(firstPostIndex, lastPostIndex);
+
+  const deleteItem = () => {
+    
+  }
 
   return (
     <div className="w3-container">
@@ -35,8 +145,11 @@ export default function Menu() {
         >
           <div className={styles.dropdownBtn}>
             {selected}
-            {!isActive ? <FontAwesomeIcon icon={faChevronDown}/> : <FontAwesomeIcon icon={faChevronUp}/>}
-            
+            {!isActive ? (
+              <FontAwesomeIcon icon={faChevronDown} />
+            ) : (
+              <FontAwesomeIcon icon={faChevronUp} />
+            )}
           </div>
 
           {isActive && (
@@ -45,7 +158,10 @@ export default function Menu() {
                 <>
                   <div
                     className={styles.dropdownItem}
-                    onClick={(e) => setSelected(value)}
+                    onClick={(e) => {
+                      setSelected(value);
+                      setIsActive(false);
+                    }}
                   >
                     {value}
                   </div>
@@ -82,207 +198,66 @@ export default function Menu() {
             }}
           />
 
-          <div style={{ padding: "0 1.6rem" }}>
-            <div className={styles.itemInListFood}>
-              <div style={{ display: "flex" }}>
-                <img src={miquang} alt="" className={styles.roundedAva} />
-                <h6 className={styles.foodInfo}>Spicy Udon Noodles</h6>
-              </div>
-              <h6 className={styles.foodInfo}>Main meal</h6>
-              <h6 className={styles.foodInfo}>30000đ</h6>
-              <h6 className={styles.foodInfo}>100</h6>
+          <>
+            {currentPosts.map((value, index) => (
+              <div style={{ padding: "0 1.6rem" }} key={index}>
+                <div className={styles.itemInListFood}>
+                  <div style={{ display: "flex" }}>
+                    <img
+                      src={value.foodImg}
+                      alt=""
+                      className={styles.roundedAva}
+                    />
+                    <h6 className={styles.foodInfo}>{value.foodName}</h6>
+                  </div>
+                  <h6 className={styles.foodInfo}>{value.category}</h6>
+                  <h6 className={styles.foodInfo}>{value.price}đ</h6>
+                  <h6 className={styles.foodInfo}>{value.quantity}</h6>
 
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className={styles.statusTagUnavai}>
-                  <p className={styles.statusTextUnavai}>Unavailable</p>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    {value.status === "Unavailable" ? (
+                      <div className={styles.statusTagUnavai}>
+                        <p className={styles.statusTextUnavai}>
+                          {value.status}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className={styles.statusTagAvai}>
+                        <p className={styles.statusTextAvai}>{value.status}</p>
+                      </div>
+                    )}
+
+                    <button className={styles.actionBtn}>
+                      <img src={update} alt="" style={{ width: "2.4rem" }} />
+                    </button>
+                    <button className={styles.actionBtn} onClick={deleteItem}>
+                      <img src={bin} alt="" style={{ width: "2.4rem" }} />
+                    </button>
+                  </div>
                 </div>
-
-                <button className={styles.actionBtn}>
-                  <img src={update} alt="" style={{ width: "2.4rem" }} />
-                </button>
-                <button className={styles.actionBtn}>
-                  <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                </button>
+                <hr
+                  style={{
+                    width: "100%",
+                    background: "#e4e4e4",
+                    height: "1px",
+                    marginTop: "0px",
+                    marginBottom: "1.6rem",
+                  }}
+                />
               </div>
-            </div>
-          </div>
-
-          <hr
-            style={{
-              width: "100%",
-              background: "#e4e4e4",
-              height: "1px",
-              marginTop: "0px",
-              marginBottom: "1.6rem",
-            }}
-          />
-
-          <div style={{ padding: "0 1.6rem" }}>
-            <div className={styles.itemInListFood}>
-              <div style={{ display: "flex" }}>
-                <img src={miquang} alt="" className={styles.roundedAva} />
-                <h6 className={styles.foodInfo}>Spicy Udon Noodles</h6>
-              </div>
-              <h6 className={styles.foodInfo}>Main meal</h6>
-              <h6 className={styles.foodInfo}>30000đ</h6>
-              <h6 className={styles.foodInfo}>100</h6>
-
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className={styles.statusTagAvai}>
-                  <p className={styles.statusTextAvai}>Available</p>
-                </div>
-
-                <button className={styles.actionBtn}>
-                  <img src={update} alt="" style={{ width: "2.4rem" }} />
-                </button>
-                <button className={styles.actionBtn}>
-                  <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr
-            style={{
-              width: "100%",
-              background: "#e4e4e4",
-              height: "1px",
-              marginTop: "0px",
-              marginBottom: "1.6rem",
-            }}
-          />
-
-          <div style={{ padding: "0 1.6rem" }}>
-            <div className={styles.itemInListFood}>
-              <div style={{ display: "flex" }}>
-                <img src={miquang} alt="" className={styles.roundedAva} />
-                <h6 className={styles.foodInfo}>Spicy Udon Noodles</h6>
-              </div>
-              <h6 className={styles.foodInfo}>Main meal</h6>
-              <h6 className={styles.foodInfo}>30000đ</h6>
-              <h6 className={styles.foodInfo}>100</h6>
-
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className={styles.statusTagAvai}>
-                  <p className={styles.statusTextAvai}>Available</p>
-                </div>
-
-                <button className={styles.actionBtn}>
-                  <img src={update} alt="" style={{ width: "2.4rem" }} />
-                </button>
-                <button className={styles.actionBtn}>
-                  <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr
-            style={{
-              width: "100%",
-              background: "#e4e4e4",
-              height: "1px",
-              marginTop: "0px",
-              marginBottom: "1.6rem",
-            }}
-          />
-
-          <div style={{ padding: "0 1.6rem" }}>
-            <div className={styles.itemInListFood}>
-              <div style={{ display: "flex" }}>
-                <img src={miquang} alt="" className={styles.roundedAva} />
-                <h6 className={styles.foodInfo}>Spicy Udon Noodles</h6>
-              </div>
-              <h6 className={styles.foodInfo}>Main meal</h6>
-              <h6 className={styles.foodInfo}>30000đ</h6>
-              <h6 className={styles.foodInfo}>100</h6>
-
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className={styles.statusTagAvai}>
-                  <p className={styles.statusTextAvai}>Available</p>
-                </div>
-
-                <button className={styles.actionBtn}>
-                  <img src={update} alt="" style={{ width: "2.4rem" }} />
-                </button>
-                <button className={styles.actionBtn}>
-                  <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr
-            style={{
-              width: "100%",
-              background: "#e4e4e4",
-              height: "1px",
-              marginTop: "0px",
-              marginBottom: "1.6rem",
-            }}
-          />
-
-          <div style={{ padding: "0 1.6rem" }}>
-            <div className={styles.itemInListFood}>
-              <div style={{ display: "flex" }}>
-                <img src={miquang} alt="" className={styles.roundedAva} />
-                <h6 className={styles.foodInfo}>Spicy Udon Noodles</h6>
-              </div>
-              <h6 className={styles.foodInfo}>Main meal</h6>
-              <h6 className={styles.foodInfo}>30000đ</h6>
-              <h6 className={styles.foodInfo}>100</h6>
-
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className={styles.statusTagAvai}>
-                  <p className={styles.statusTextAvai}>Available</p>
-                </div>
-
-                <button className={styles.actionBtn}>
-                  <img src={update} alt="" style={{ width: "2.4rem" }} />
-                </button>
-                <button className={styles.actionBtn}>
-                  <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr
-            style={{
-              width: "100%",
-              background: "#e4e4e4",
-              height: "1px",
-              marginTop: "0px",
-              marginBottom: "1.6rem",
-            }}
-          />
-
-          <div style={{ padding: "0 1.6rem" }}>
-            <div className={styles.itemInListFood}>
-              <div style={{ display: "flex" }}>
-                <img src={miquang} alt="" className={styles.roundedAva} />
-                <h6 className={styles.foodInfo}>Spicy Udon Noodles</h6>
-              </div>
-              <h6 className={styles.foodInfo}>Main meal</h6>
-              <h6 className={styles.foodInfo}>30000đ</h6>
-              <h6 className={styles.foodInfo}>100</h6>
-
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className={styles.statusTagAvai}>
-                  <p className={styles.statusTextAvai}>Available</p>
-                </div>
-
-                <button className={styles.actionBtn}>
-                  <img src={update} alt="" style={{ width: "2.4rem" }} />
-                </button>
-                <button className={styles.actionBtn}>
-                  <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                </button>
-              </div>
-            </div>
-          </div>
+            ))}
+          </>
         </div>
       </div>
+      
+      <Pagination
+        totalPosts={food.length}
+        postsPerPage={postsPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

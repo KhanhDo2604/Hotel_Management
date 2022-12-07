@@ -98,13 +98,13 @@ export default function Ordering() {
 
       <div className={styles.orderList}>
         {order.map((value, index) => (
-          <div className={styles.orderItem}>
+          <div className={styles.orderItem} key={index}>
             <h5>Order {value.idBill}</h5>
             <h6>{value.time}</h6>
             <h6>Table: {value.listTable.join(", ")}</h6>
 
             {foodInOrder.map((food, index) => (
-              <div style={{ display: "flex", marginTop: "0.8rem" }}>
+              <div style={{ display: "flex", marginTop: "0.8rem" }} key={index}>
                 <img src={food.foodImg} alt="" />
                 <div style={{ width: "100%" }}>
                   <h6 style={{ opacity: "1", fontWeight: "600" }}>
@@ -161,7 +161,7 @@ export default function Ordering() {
                     >
                       <img src={close} alt="" className={styles.iconBtn} />
                     </button>
-                    <button style={{ borderColor: "#2BC48A" }}>
+                    <button style={{ borderColor: "#2BC48A" }} onClick={() => value.status = 1}>
                       <img src={tick} alt="" className={styles.iconBtn} />
                     </button>
                   </div>
