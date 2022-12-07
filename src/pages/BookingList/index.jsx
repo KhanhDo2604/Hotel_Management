@@ -74,7 +74,7 @@ export default function BookingList() {
         }
     })
 
-    //Counter Number
+    //Counter Number room
     const [counter, setCounter] = useState(1)
     const increase = (e) => {
         e.stopPropagation()
@@ -87,10 +87,24 @@ export default function BookingList() {
         }
     }
 
+    // Counter Number guests
+    const [counterGuest, setCounterGuest] = useState(1)
+    const increaseGuests = (e) => {
+        e.stopPropagation()
+        setCounterGuest(count => count + 1)
+    }
+    const decreaseGuests = (e) => {
+        e.stopPropagation()
+        if (counterGuest > 1) {
+            setCounterGuest(count => count - 1)
+        }
+    }
+
     //Reset Number
     const handleReset = (e) => {
         e.stopPropagation()
         setCounter(1)
+        setCounterGuest(1)
     }
 
     //click out modal
@@ -100,10 +114,14 @@ export default function BookingList() {
 
     // handleApply
     const [value, setValue] = useState(1)
+    const [guest,setGuest] = useState(1)
     let valueRef = useRef()
+    let guestRef = useRef()
     const handleApply = () => {
         valueRef.current.value = counter;
+        guestRef.current.value = counterGuest;
         setValue(valueRef.current.value)
+        setGuest( guestRef.current.value)
     }
 
     //opacity apply and minus if number === 1
@@ -124,7 +142,7 @@ export default function BookingList() {
                     <FontAwesomeIcon icon={faUsers} style={{ marginRight: "1rem" }} />
                     <div className={styles.active} onClick={() => setModal(prev => !prev)}>
                         <p ref={valueRef}>{value} Room</p>
-                        <p style={{ fontWeight: "bold" }}>2 Guests</p>
+                        <p ref={guestRef} style={{ fontWeight: "bold" }}>{guest} Guests</p>
                     </div>
                 </div>
                 <div>
@@ -193,18 +211,25 @@ export default function BookingList() {
                     <div className={styles.modal}>
                         <div className={styles.modalContent} onClick={handleModal}>
                             <div>
-                                <p style={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>Rooms</p>
+                                <p style={{ fontWeight: "bold", display: "flex", alignItems: "center", marginTop: "0.5rem" }}>Guests</p>
+                                <p style={{ fontWeight: "bold", display: "flex", alignItems: "center", marginTop: "2rem" }}>Rooms</p>
                                 <div style={{ textAlign: "center", marginTop: "2rem" }}>
                                     <button className={styles.reset} onClick={handleReset} style={{ opacity }}>Reset</button>
                                 </div>
                             </div>
                             <div>
                                 <div style={{ display: "flex", justifyContent: "space-around" }}>
+                                    <p className={styles.minus} onClick={decreaseGuests} style={{ opacity }}>-</p>
+                                    <p className={styles.number}>{counterGuest}</p>
+                                    <p className={styles.plus} onClick={increaseGuests}>+</p>
+                                </div>
+
+                                <div style={{ display: "flex", justifyContent: "space-around", marginTop: "1.2rem" }}>
                                     <p className={styles.minus} onClick={decrease} style={{ opacity }}>-</p>
                                     <p className={styles.number}>{counter}</p>
                                     <p className={styles.plus} onClick={increase}>+</p>
                                 </div>
-                                <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                                <div style={{ textAlign: "center", marginTop: "1.3rem" }}>
                                     <button className={styles.apply} onClick={handleApply}>Apply</button>
                                 </div>
                             </div>
