@@ -139,6 +139,10 @@ export default function RoomList() {
             },
         }
     ]
+    const converPage = () => {
+        location.href = "/formReservation"
+    }
+    
     return (
         <>
             {
@@ -232,7 +236,7 @@ export default function RoomList() {
                         <div className={styles.roomRight}>
                             <p className={styles.price}>{value.price}</p>
                             <div className={styles.btnClick}>
-                                <button className={styles.btnLeft}>Book</button>
+                                <button className={styles.btnLeft} onClick={converPage}>Book</button>
                             </div>
 
                         </div>

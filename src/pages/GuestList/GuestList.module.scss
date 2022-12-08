@@ -1,0 +1,80 @@
+.searchBar {
+    padding: 1.2rem;
+    background-color: #e4e4e4;
+    border-radius: 0.8rem;
+    border: none;
+    width: 100%;
+    font-size: 1.6rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+        outline: none;
+        border: 0;
+        flex: 1;
+        background-color: transparent;
+    }
+
+    svg {
+        position: absolute;
+        right: 0;
+        
+    }
+}  
+
+.gridGeneral {
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 0.8rem;
+    .gridContainer {
+        display: grid;
+        grid-template-columns: 1.3fr 1.2fr 1.7fr 0.65fr;
+        margin-top: 2rem;
+        background-color: #e4e4e4;
+        padding: 0rem 2.2rem;
+        h5 {
+            font-weight: bold;
+        }
+    }
+    .gridItem{
+        display: grid;
+        grid-template-columns: 1.3fr 1.2fr 1.3fr 1fr;
+        padding: 0.8rem 2.2rem;
+        .flexItem{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .actionBtn {
+            border: none;
+            background-color: #fff;
+        }
+    }
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+    font-size: 2rem;
+    gap: 1rem;
+}
+
+.pagination .pageItem.active {
+    background-color: black;
+    color: white;
+}
+
+.pagination .pageLink {
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    border-radius: 0.8rem;
+}
+
+.pagination .pageItem {
+    border: 1px solid;
+    border: none;
+    border-radius: 0.8rem;
+    background-color: #e4e4e4;
+}
