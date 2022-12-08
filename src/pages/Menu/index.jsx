@@ -8,13 +8,9 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import Pagination from "./Pagination";
 import { Link, useLocation } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
-export default function Menu() {
-  const dropdownItem = ["All Status", "Unavailable", "Available"];
-  const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState("All Status");
-
-  const food = [
+const food = [
     {
       id: 0,
       foodImg: miquang,
@@ -125,20 +121,33 @@ export default function Menu() {
     },
   ];
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(6);
+export default function Menu() {
+  const dropdownItem = ["All Status", "Unavailable", "Available"];
+  const [isActive, setIsActive] = useState(false);
+  const [selected, setSelected] = useState("All Status");
 
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  
+  const [list, setList] = useState(food);
+
   const [query, setQuery] = useState("");
   const keys = ["foodName"];
-  const [list, setList] = useState(food);
-  const currentPosts = list.slice(firstPostIndex, lastPostIndex);
 
-  const removeNode = (idx) => {
-    setList((current) => current.filter((value) => value.id !== idx));
-  }
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 6;
+  const endOffset = itemOffset + itemsPerPage;
+  const filtered = list.filter((values) =>keys.some((key) => values[key].toLowerCase().includes(query)));
+  const currentItems = filtered.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filtered.length / itemsPerPage);
+
+  
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filtered.length;
+    setItemOffset(newOffset);
+  };
+
+  const removeNode = (id) => {
+    const newIds = list.filter((item) => item.id !== id)
+    setList(newIds)
+  };
 
   const location = useLocation();
 
@@ -204,7 +213,7 @@ export default function Menu() {
         </div>
 
         <div className={styles.gridFood}>
-          <div style={{height: '51.7rem'}}>
+          <div style={{ height: "51.7rem" }}>
             <div className={styles.titleBarGridFood}>
               <h5 className={styles.titleNameGridFood}>Food Name</h5>
               <h5 className={styles.titleNameGridFood}>Group</h5>
@@ -221,74 +230,97 @@ export default function Menu() {
                 marginTop: "0px",
                 marginBottom: "1.6rem",
               }}
-            />      
-            {
-              currentPosts.filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).map((value, index) => (
-                  <div style={{ padding: "0 1.6rem" }} key={index} id={`id-${index}`}>
-                    <div className={styles.itemInListFood}>
-                      <div style={{ display: "flex" }}>
-                        <img
-                          src={value.foodImg}
-                          alt=""
-                          className={styles.roundedAva}
-                        />
-                        <h6 className={styles.foodInfo}>{value.foodName}</h6>
-                      </div>
-                      <h6 className={styles.foodInfo}>{value.category}</h6>
-                      <h6 className={styles.foodInfo}>{value.price}đ</h6>
-                      <h6 className={styles.foodInfo}>{value.quantity}</h6>
-
-                      <div
-                        style={{ display: "flex", justifyContent: "space-between" }}
-                      >
-                        {value.status === "Unavailable" ? (
-                          <div className={styles.statusTagUnavai}>
-                            <p className={styles.statusTextUnavai}>
-                              {value.status}
-                            </p>
-                          </div>
-                        ) : (
-                          <div className={styles.statusTagAvai}>
-                            <p className={styles.statusTextAvai}>{value.status}</p>
-                          </div>
-                        )}
-
-                        <Link className={styles.actionBtn}  to="/formUpdate"
-                          state={{
-                            foodInfo: value
-                          }}
-                        >
-                          <img src={update} alt="" style={{ width: "2.4rem" }} />
-                        </Link>
-                        <button className={styles.actionBtn} onClick={() => removeNode(index)}>
-                          <img src={bin} alt="" style={{ width: "2.4rem" }} />
-                        </button>
-                      </div>
+            />
+            {currentItems && currentItems.map((value, index) => (
+                <div
+                  style={{ padding: "0 1.6rem" }}
+                  key={index}
+                >
+                  <div className={styles.itemInListFood}>
+                    <div style={{ display: "flex" }}>
+                      <img
+                        src={value.foodImg}
+                        alt=""
+                        className={styles.roundedAva}
+                      />
+                      <h6 className={styles.foodInfo}>{value.foodName}</h6>
                     </div>
-                    <hr
+                    <h6 className={styles.foodInfo}>{value.category}</h6>
+                    <h6 className={styles.foodInfo}>{value.price}đ</h6>
+                    <h6 className={styles.foodInfo}>{value.quantity}</h6>
+
+                    <div
                       style={{
-                        width: "100%",
-                        background: "#e4e4e4",
-                        height: "1px",
-                        marginTop: "0px",
-                        marginBottom: "1.6rem",
+                        display: "flex",
+                        justifyContent: "space-between",
                       }}
-                    />
+                    >
+                      {value.status === "Unavailable" ? (
+                        <div className={styles.statusTagUnavai}>
+                          <p className={styles.statusTextUnavai}>
+                            {value.status}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className={styles.statusTagAvai}>
+                          <p className={styles.statusTextAvai}>
+                            {value.status}
+                          </p>
+                        </div>
+                      )}
+
+                      <Link
+                        className={styles.actionBtn}
+                        to="/formUpdate"
+                        state={{
+                          foodInfo: value,
+                        }}
+                      >
+                        <img src={update} alt="" style={{ width: "2.4rem" }} />
+                      </Link>
+                      <button
+                        className={styles.actionBtn}
+                        onClick={() => removeNode(value.id)}
+                      >
+                        <img src={bin} alt="" style={{ width: "2.4rem" }} />
+                      </button>
+                    </div>
                   </div>
-                ))
-            }
+                  <hr
+                    style={{
+                      width: "100%",
+                      background: "#e4e4e4",
+                      height: "1px",
+                      marginTop: "0px",
+                      marginBottom: "1.6rem",
+                    }}
+                  />
+                </div>
+              ))}
           </div>
         </div>
 
-        <Pagination
-          totalPosts={food.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
+        <ReactPaginate
+          nextLabel=">"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pageCount}
+          previousLabel="<"
+          pageClassName={styles.pageItem}
+          pageLinkClassName={styles.pageLink}
+          previousClassName={styles.pageItem}
+          previousLinkClassName={styles.pageLink}
+          nextClassName={styles.pageItem}
+          nextLinkClassName={styles.pageLink}
+          breakLabel="..."
+          breakClassName={styles.pageItem}
+          breakLinkClassName={styles.pageLink}
+          containerClassName={styles.pagination}
+          activeClassName={styles.active}
+          renderOnZeroPageCount={null}
         />
       </div>
     </div>
-
-    
   );
 }

@@ -26,12 +26,14 @@
 .gridGeneral {
     box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.8rem;
+    height: 54.1rem;
     .gridContainer {
         display: grid;
         grid-template-columns: 1.3fr 1.2fr 1.7fr 0.65fr;
         margin-top: 2rem;
         background-color: #e4e4e4;
         padding: 0rem 2.2rem;
+        border-radius: 0.8rem 0.8rem 0 0;
         h5 {
             font-weight: bold;
         }
@@ -39,7 +41,7 @@
     .gridItem{
         display: grid;
         grid-template-columns: 1.3fr 1.2fr 1.3fr 1fr;
-        padding: 0.8rem 2.2rem;
+        padding: 0.8rem 2.2rem 1.6rem;
         .flexItem{
             display: flex;
             justify-content: space-evenly;
@@ -47,6 +49,10 @@
         .actionBtn {
             border: none;
             background-color: #fff;
+        }
+
+        p {
+            font-weight: 500;
         }
     }
 }
@@ -59,22 +65,28 @@
     margin-bottom: 5rem;
     font-size: 2rem;
     gap: 1rem;
+    cursor: pointer;
 }
 
 .pagination .pageItem.active {
-    background-color: black;
-    color: white;
-}
-
-.pagination .pageLink {
-    padding: 1rem 1.2rem;
-    cursor: pointer;
+    font-weight: 700;
+    border-color: #101010;
+    background: #ffe400;
+    color: #101010;
     border-radius: 0.8rem;
 }
+
+// .pagination .pageLink {
+//     padding: 1rem 1.2rem;
+//     border-radius: 0.8rem;
+// }
 
 .pagination .pageItem {
     border: 1px solid;
     border: none;
     border-radius: 0.8rem;
     background-color: #e4e4e4;
+    a {
+        padding: 1.6rem 1.2rem;
+    }
 }

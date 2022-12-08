@@ -9,6 +9,7 @@
     .dropdown {
         position: relative;
         cursor: pointer;
+
         .dropdownBtn {
             padding: 0.9rem 0.8rem;
             background-color: #F9D410;
@@ -171,24 +172,31 @@ a {
 }
 
 .pagination {
+    list-style: none;
     display: flex;
     justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    gap: 1rem;
     margin-top: 1.6rem;
+    cursor: pointer;
 
-    button {
-        padding: 1.2rem 1.6rem;
-        font-weight: 600;
-        font-size: 1.6rem;
-        margin: 0 1rem;
-        border-radius: 0.6rem;
-        border: none;
-    } 
-
-    .active {
-        font-weight: 900;
+    .pageItem.active {
+        font-weight: 700;
         border-color: #101010;
         background: #ffe400;
         color: #101010;
+        border-radius: 0.8rem;
+    }
+
+    .pageItem {
+        border: 1px solid;
+        border: none;
+        border-radius: 0.8rem;
+        background-color: #e4e4e4;
+        a {
+            padding: 1.6rem 1.2rem;
+        }
     }
 }
 
