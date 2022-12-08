@@ -10,3 +10,7 @@ export { default as Table } from "./Table";
 export {default as Login} from "./Login";
 export {default as ForgotPassword} from "./ForgotPassword";
 export { default as FoodChoosing} from './FoodChoosing';
+export { default as FormUpdate} from './FormUpdate';
+export { default as FoodAdding} from './FoodAdding';
+
+

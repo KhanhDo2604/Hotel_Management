@@ -1,9 +1,7 @@
 .gridContainer {
     display: grid;
     grid-template-columns: 1.5fr 1fr ;
-    gap: 2.4rem;
     margin-top: 2rem;
-    margin-bottom: 3rem;
 
     a {
         cursor: pointer;
@@ -29,6 +27,7 @@
         position: relative;
         display: flex;
         align-items: center;
+        margin-bottom: 3rem;
     
         input {
             outline: none;
@@ -46,6 +45,7 @@
     .orders {
         background-color: white;
         height: 66.4rem;
+        width: 38.393rem;
         position: absolute;
         right: 0;
         box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);

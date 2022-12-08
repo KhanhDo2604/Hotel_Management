@@ -110,4 +110,12 @@ button {
         width: 3.1rem;
         margin: 0 0 ;
     }
+
+    .rejectBtn:hover {
+        background-color: #f7bbb7;
+    }
+
+    .completeBtn:hover {
+        background-color: #a6f7d8;
+    }
 }
