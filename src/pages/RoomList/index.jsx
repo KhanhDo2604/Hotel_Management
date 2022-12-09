@@ -14,10 +14,12 @@ import wifi from '../../assets/wifi.png';
 import family from '../../assets/family.png';
 import couple from '../../assets/couple.png';
 import { useState } from "react";
+import { useRef } from "react";
 
 export default function RoomList() {
     const roomList = [
         {
+            id: 1,
             img: standard,
             name: "Standard Room (STD)",
             price: "3000000Đ",
@@ -49,6 +51,7 @@ export default function RoomList() {
             },
         },
         {
+            id: 2,
             img: superior,
             name: "Superior Room (SUP)",
             price: "4000000Đ",
@@ -79,6 +82,7 @@ export default function RoomList() {
             },
         },
         {
+            id: 3,
             img: dulexe,
             name: "Deluxe Room (DLX)",
             price: "5000000Đ",
@@ -109,6 +113,7 @@ export default function RoomList() {
             },
         },
         {
+            id: 4,
             img: suite,
             name: "Suite Room (SUT)",
             price: "6000000Đ",
@@ -139,10 +144,18 @@ export default function RoomList() {
             },
         }
     ]
-    const converPage = () => {
-        location.href = "/formReservation"
+
+    const [convertButton, setConvertButton] = useState("Update")
+    //const [list,setList] = useState(roomList)
+    const handleChange = (id) => {
+        roomList.map((item) => {
+            if(item.id === id) {
+                //setList(item.price)    
+                setConvertButton("Save")
+            }
+        }) 
     }
-    
+
     return (
         <>
             {
@@ -178,28 +191,28 @@ export default function RoomList() {
                                 {
                                     index === 0 ? (
                                         <>
-                                            <img style={{ height: "24px",marginLeft:"0.4rem"}} src={value.detailTwo.imgTwin} />
+                                            <img style={{ height: "24px", marginLeft: "0.4rem" }} src={value.detailTwo.imgTwin} />
                                             <p className={styles.singleBed}>{value.detailTwo.typeTwin}</p>
                                         </>
                                     ) : index === 1 ? (
                                         <>
-                                            <img style={{ height: "24px",marginLeft:"0.4rem" }} src={value.detailTwo.imgTwin} />
+                                            <img style={{ height: "24px", marginLeft: "0.4rem" }} src={value.detailTwo.imgTwin} />
                                             <p className={styles.singleBed}>{value.detailTwo.typeTwin}</p>
                                         </>
                                     ) : index === 2 ? (
                                         <>
-                                            <img style={{ height: "24px", marginLeft:"1.6rem" }} src={value.detailTwo.imgTwin} />
+                                            <img style={{ height: "24px", marginLeft: "1.6rem" }} src={value.detailTwo.imgTwin} />
                                             <p className={styles.singleBed}>{value.detailTwo.typeTwin}</p>
                                         </>
                                     ) : (
                                         <>
-                                            <img style={{ height: "24px",marginLeft:"0.4rem"}} src={value.detailTwo.imgBalcony} />
+                                            <img style={{ height: "24px", marginLeft: "0.4rem" }} src={value.detailTwo.imgBalcony} />
                                             <p className={styles.singleBed}>{value.detailTwo.typeBalcony}</p>
                                         </>
                                     )
                                 }
                             </div>
-                            <div style={{ display: "flex"}}>
+                            <div style={{ display: "flex" }}>
                                 <img style={{ height: "24px" }} src={value.detailThree.imgWifi} />
                                 <p style={{ marginLeft: "0.4rem" }}>{value.detailThree.typeWifi}</p>
                                 <img style={{ height: "24px", marginLeft: "6.2rem" }} src={value.detailFour.imgAc} />
@@ -234,11 +247,21 @@ export default function RoomList() {
                             </div>
                         </div>
                         <div className={styles.roomRight}>
-                            <p className={styles.price}>{value.price}</p>
-                            <div className={styles.btnClick}>
-                                <button className={styles.btnLeft} onClick={converPage}>Book</button>
+                            <div>
+                                {
+                                    value.id && convertButton === "Update" ? (
+                                        <input type="text" />
+                                    ) :
+                                        (
+                                            <input type="text" disabled />
+                                        )
+                                }
                             </div>
-
+                            <div className={styles.btnClick}>
+                                <button className={styles.btnLeft} onClick={() => handleChange(value.id)}>
+                                    {convertButton}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))

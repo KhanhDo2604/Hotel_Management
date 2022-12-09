@@ -1,6 +1,9 @@
+import { useState } from "react";
 import styles from "./FormReservation.module.scss";
 
 export default function FormReservation() {
+    const [stateGender,setStateGender] = useState("")
+
     return (
         <div style={{padding:"1rem"}}>
             <h3 style={{ fontWeight: "bold" }}>Form Reservation</h3>
@@ -17,6 +20,22 @@ export default function FormReservation() {
                     </div>
                     <div>
                         <input type="text" name="name" />
+                    </div>
+                    <div>
+                        <label>Gender:</label>
+                    </div>
+                    <div>
+                        <select
+                        style={{padding:"0.8rem", fontWeight:"bold"}} 
+                        value={stateGender}
+                        onChange={(e) => {
+                            const selectedGender= e.target.value
+                            console.log(selectedGender)
+                            setStateGender(selectedGender)
+                        }}>
+                            <option value="male">Male</option>
+                            <option value="female">FeMale</option>
+                        </select>
                     </div>
                     <div>
                         <label>Phone Number:</label>

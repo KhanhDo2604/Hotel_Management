@@ -8,6 +8,7 @@ const guestList = [
     {
         id: 1,
         name: "Vo Dinh Van",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -17,6 +18,7 @@ const guestList = [
     {
         id: 2,
         name: "Nguyen Van Phap",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "phap@gmail.com",
@@ -26,6 +28,7 @@ const guestList = [
     {
         id: 3,
         name: "Nguyen Huynh Tuan Khang",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "khang@gmail.com",
@@ -35,6 +38,7 @@ const guestList = [
     {
         id: 4,
         name: "Do Pham Huy Khanh",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "khanh@gmail.com",
@@ -44,6 +48,7 @@ const guestList = [
     {
         id: 5,
         name: "Vo Dinh Van",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -53,6 +58,7 @@ const guestList = [
     {
         id: 6,
         name: "Vo Dinh Van",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -60,8 +66,9 @@ const guestList = [
         }
     },
     {
-        id: 3,
+        id: 7,
         name: "Nguyen Huynh Tuan Khang",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "khang@gmail.com",
@@ -69,8 +76,9 @@ const guestList = [
         }
     },
     {
-        id: 4,
+        id: 8,
         name: "Do Pham Huy Khanh",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "khanh@gmail.com",
@@ -78,8 +86,9 @@ const guestList = [
         }
     },
     {
-        id: 5,
+        id: 9,
         name: "Vo Dinh Van",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -87,8 +96,9 @@ const guestList = [
         }
     },
     {
-        id: 6,
+        id: 10,
         name: "Vo Dinh Van",
+        gender:"Nam",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -136,6 +146,7 @@ export default function GuestList() {
             <div className={styles.gridGeneral}>
                 <div className={styles.gridContainer}>
                     <h5>Name</h5>
+                    <h5>Gender</h5>
                     <h5>Create In</h5>
                     <h5>Contact</h5>
                     <h5>Action</h5>
@@ -154,6 +165,7 @@ export default function GuestList() {
                         <div key={index}>
                             <div className={styles.gridItem}>
                                 <p style={{ display: "flex", alignItems: "center" }}>{value.name}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{value.gender}</p>
                                 <p style={{ display: "flex", alignItems: "center" }}>{value.createIn}</p>
                                 <div>
                                     <p>{value.contact.email}</p>
@@ -161,7 +173,7 @@ export default function GuestList() {
                                 </div>
                                 <div className={styles.flexItem}>
                                     <button className={styles.actionBtn}>
-                                        <img src={update} alt="" style={{ width: "2.4rem" }} />
+                                        <img src={update} alt="" style={{ width: "2.4rem" }} onClick={()=> location.href = "/userInformation"}/>
                                     </button>
                                     <button className={styles.actionBtn} onClick={() => handleDelete(value.id)}>
                                         <img src={bin} alt="" style={{ width: "2.4rem" }} />

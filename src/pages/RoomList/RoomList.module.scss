@@ -28,19 +28,18 @@
         align-items: center;
         align-content: space-evenly;
         border-left: 0.2rem solid #C0C0C0;
-    }
-
-    .price{
-        color:red;
-        font-weight:bold;
-        text-align: center;
+        input {
+            padding: 0.4rem;
+            border-radius: 0.8rem;
+            border: 0.2rem solid #999;
+        }
     }
     
     .btnLeft{
         background-color: #F9D410;
         padding: 0.8rem 2.6rem;
-        border: none;
-        border-radius: 0.5rem;
+        border: 0.2rem solid #999;
+        border-radius: 0.4rem;
         font-weight: bold;
     }
     
@@ -48,6 +47,10 @@
         background-color: #F9D410;
         border: none;
         border-radius: 0.5rem;
+    }
+
+    .btnClick{
+        text-align: center;
     }
 }
 

@@ -1,0 +1,54 @@
+.gridContainer {
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 0.8rem;
+    border-radius: 0.8rem;
+}
+.gridContent {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    gap: 1.6rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    label {
+        margin-right: 1rem;
+        font-weight: bold;
+        font-size: 1.8rem;
+    }
+    input {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid #999;
+    }
+    select {
+        width: 30%;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 0.2rem solid #999;
+    }
+    .datePicker {
+        width: 30%;
+        padding: 1rem;
+    }
+}
+
+.format {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    .btnConfirm {
+        background-color: #F9D410;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0.8rem;
+        border: none;
+        font-weight: bold;
+        margin-right: 1.5rem;
+    }
+    .btnCancel {
+        background-color: #C0C0C0;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0.8rem;
+        border: none;
+        font-weight: bold;
+    }
+}

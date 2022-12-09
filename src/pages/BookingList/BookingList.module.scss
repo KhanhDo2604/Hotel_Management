@@ -1,6 +1,6 @@
 .containerGrid {
     display: grid;
-    grid-template-columns: 2fr 0.8fr 1fr;
+    grid-template-columns: 2fr 0.8fr 1.2fr;
     gap: 3.8rem;
 
     .rangPicker{
@@ -153,5 +153,13 @@
     border-radius: 0.8rem;
     border: none;
     background-color: var(--nav-item-hover-color);
+    font-weight: bold;
+}
+
+.btnLeft{
+    background-color: #F9D410;
+    padding: 0.8rem 2.6rem;
+    border: none;
+    border-radius: 0.5rem;
     font-weight: bold;
 }

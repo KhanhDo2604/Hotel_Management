@@ -28,7 +28,7 @@
     border-radius: 0.8rem;
     .gridContainer {
         display: grid;
-        grid-template-columns: 1.3fr 1.2fr 1.7fr 0.65fr;
+        grid-template-columns: 1.5fr 0.6fr 1fr 1.38fr 0.65fr;
         margin-top: 2rem;
         background-color: #e4e4e4;
         padding: 0rem 2.2rem;
@@ -38,7 +38,7 @@
     }
     .gridItem{
         display: grid;
-        grid-template-columns: 1.3fr 1.2fr 1.3fr 1fr;
+        grid-template-columns: 1.5fr 0.6fr 1fr 1fr 1fr;
         padding: 0.8rem 2.2rem;
         .flexItem{
             display: flex;
