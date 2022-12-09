@@ -19,6 +19,20 @@ export default function Ordering() {
     },
     {
       imgage: cake,
+      idBill: "#352",
+      time: "24 Feb 2021, 08:28 PM",
+      listTable: [10],
+      status: 0,
+    },
+    {
+      imgage: cake,
+      idBill: "#353",
+      time: "25 Mar 2021, 08:28 PM",
+      listTable: [7, 8, 9],
+      status: 0,
+    },
+    {
+      imgage: cake,
       idBill: "#358",
       time: "23 Feb 2021, 08:28 PM",
       listTable: [1, 2, 3],
@@ -55,11 +69,14 @@ export default function Ordering() {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState("All Bills");
 
+  const [query, setQuery] = useState("");
+  const keys = ["idBill", "time", "listTable"];
+
   return (
     <div className="w3-container">
       <div className={styles.gridContainer}>
         <div className={styles.searchBar}>
-          <input type="text" id={styles.mySearch} placeholder="Search" />
+          <input type="text" id={styles.mySearch} placeholder="Search" onChange={(e) => setQuery(e.target.value)}/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -86,6 +103,7 @@ export default function Ordering() {
                   <div
                     className={styles.dropdownItem}
                     onClick={(e) => setSelected(value)}
+                    key={index}
                   >
                     {value}
                   </div>
@@ -97,7 +115,7 @@ export default function Ordering() {
       </div>
 
       <div className={styles.orderList}>
-        {order.map((value, index) => (
+        {order.filter((value) => keys.some((key) => value[key].toString().toLowerCase().includes(query))).map((value, index) => (
           <div className={styles.orderItem} key={index}>
             <h5>Order {value.idBill}</h5>
             <h6>{value.time}</h6>
@@ -157,11 +175,15 @@ export default function Ordering() {
                 {value.status === 0 ? (
                   <div style={{ display: "flex" }}>
                     <button
+                      className={styles.rejectBtn}
                       style={{ marginRight: "1.6rem", borderColor: "#E13428" }}
+
                     >
                       <img src={close} alt="" className={styles.iconBtn} />
                     </button>
-                    <button style={{ borderColor: "#2BC48A" }} onClick={() => value.status = 1}>
+                    <button 
+                      className={styles.completeBtn}
+                      style={{ borderColor: "#2BC48A" }}>
                       <img src={tick} alt="" className={styles.iconBtn} />
                     </button>
                   </div>

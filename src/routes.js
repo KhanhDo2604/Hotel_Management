@@ -14,6 +14,8 @@ import {
   FoodChoosing,
   ProfileSetting,
   UserInformation,
+  FormUpdate,
+  FoodAdding,
 } from "./pages";
 import bell from "./assets/bell.png";
 import chair from "./assets/chair.png";
@@ -106,6 +108,14 @@ const hiddenRoutes = [
   {
     path :"/userInformation",
     page : UserInformation,
+  },
+  {
+    path:'/formUpdate',
+    page: FormUpdate,
+  },
+  {
+    path:'/foodAdding',
+    page: FoodAdding,
   }
 ];
 export { routes, hiddenRoutes };

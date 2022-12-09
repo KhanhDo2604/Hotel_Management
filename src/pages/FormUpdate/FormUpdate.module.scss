@@ -1,0 +1,46 @@
+h3 {
+    font-weight: 600;
+}
+
+%box {
+    font-size: 1.6rem;
+    padding: 0.4rem;
+    margin: 0.89rem 0;
+    border-radius: 0.4rem;
+}
+
+.formContainer {
+    background-color: white;
+    border-radius: 0.8rem;
+    padding: 1.6rem;
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 2rem 15.2rem; 
+
+    .formUpdate {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        padding: 0 1.6rem;
+
+        label {
+            font-weight: 600;
+            margin: 1.2rem 0;
+        }
+
+        input {
+            @extend %box;
+            border: 2px solid #bfbfbf;
+        }
+
+        select {
+            @extend %box;
+            border: 2px solid #bfbfbf;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        padding: 0.8rem 1.6rem;
+        border-radius: 0.8rem;
+        font-weight: 500;
+    }
+}

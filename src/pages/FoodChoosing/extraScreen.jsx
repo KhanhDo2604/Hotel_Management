@@ -10,7 +10,7 @@ export default function ExtraSection({ title, food }) {
           <div className={styles.listFood}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
               {food.map((value, index) => (
-                <div className={styles.foodTag} key={index}>
+                <div className={styles.foodTag} key={index} style={{cursor: 'pointer'}}>
                   <img src={value.foodImg} alt="" />
                   <h6 style={{ opacity: "1", fontWeight: "600" }}>
                     {value.foodName}
@@ -24,7 +24,6 @@ export default function ExtraSection({ title, food }) {
               ))}
             </div>
           </div>
-
         </div>
     );
 }

@@ -13,3 +13,7 @@ export {default as ForgotPassword} from "./ForgotPassword";
 export { default as FoodChoosing} from './FoodChoosing';
 export {default as ProfileSetting} from './ProfileSetting';
 export {default as UserInformation} from './UserInformation';
+export { default as FormUpdate} from './FormUpdate';
+export { default as FoodAdding} from './FoodAdding';
+
+

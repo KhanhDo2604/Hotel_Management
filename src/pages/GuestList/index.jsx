@@ -157,7 +157,7 @@ export default function GuestList() {
                         background: "#e4e4e4",
                         height: "1px",
                         marginTop: "0px",
-                        marginBottom: "1.6rem",
+                        marginBottom: "0.8rem",
                     }}
                 />
                 {
@@ -186,7 +186,7 @@ export default function GuestList() {
                                     background: "#e4e4e4",
                                     height: "1px",
                                     marginTop: "0px",
-                                    marginBottom: "1.6rem",
+                                    marginBottom: "0.8rem",
                                 }}
                             />
                         </div>
@@ -194,7 +194,7 @@ export default function GuestList() {
                 }
 
             </div>
-            <div>
+            <div style={{marginTop: '1.6rem'}}>
                 <ReactPaginate
                     nextLabel=">"
                     onPageChange={handlePageClick}
