@@ -3,7 +3,6 @@ import {
   BookingList,
   Dashboard,
   GuestList,
-  Import,
   Menu,
   Ordering,
   RoomList,
@@ -23,7 +22,6 @@ import menu from "./assets/menu.png";
 import bed from "./assets/bed.png";
 import booking from "./assets/booking.png";
 import guest from "./assets/guests.png";
-import _import from "./assets/import.png";
 import bill from "./assets/bill.png";
 import dashboard from "./assets/dashboard.png";
 
@@ -57,12 +55,6 @@ const routes = [
     page: GuestList,
     icon: guest,
     name: "Guests",
-  },
-  {
-    path: "/import",
-    page: Import,
-    icon: _import,
-    name: "Import",
   },
   {
     path: "/menu",
