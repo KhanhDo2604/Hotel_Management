@@ -1,9 +1,12 @@
 import { useState } from "react";
 import styles from "./ProfileSetting.module.scss";
 import { DatePicker } from "antd";
+import { useLocation } from "react-router-dom";
 const { RangePicker } = DatePicker;
-
 export default function ProfileSetting() {
+    const location = useLocation()
+    //const groupTypeRoom = ["Standard Room (STD)","Superior Room (SUP)","Deluxe Room (DLX)","Suite Room (SUT)"]
+    const groupState = ["OC", "EA", "SO"];
     //Format Date
     const dateFormat = "DD/MM/YYYY";
     const [typeRoom, setTypeRoom] = useState("")
@@ -40,7 +43,7 @@ export default function ProfileSetting() {
                         <label>Customer Name:</label>
                     </div>
                     <div >
-                        <input type="text" name="name" />
+                        <input defaultValue={location.state.profileInfo.nameCustomer} type="text" />
                     </div>
                     <div>
                         <label>Date:</label>
@@ -55,7 +58,7 @@ export default function ProfileSetting() {
                         <label>Number Of Guest:</label>
                     </div>
                     <div >
-                        <input type="text" name="name" />
+                        <input defaultValue={location.state.profileInfo.guests} type="text" />
                     </div>
                     <div>
                         <label>Status:</label>
@@ -69,15 +72,22 @@ export default function ProfileSetting() {
                                 setState(st)
                             }}
                         >
-                            <option value="oc">OC</option>
-                            <option value="ea">EA</option>
-                            <option value="so">SO</option>
+                            <option>{location.state.profileInfo.state}</option>
+                            {
+                                groupState.map((value, index) => {
+                                    if (value !== location.state.profileInfo.state) {
+                                        return <option key={index}>{value}</option>
+
+                                    }
+                                })
+                            }
+
                         </select>
                     </div>
                 </form>
                 <div className={styles.format}>
-                        <button className={styles.btnConfirm}>Confirm</button>
-                        <button className={styles.btnCancel}>Cancel</button>
+                    <button className={styles.btnConfirm}>Confirm</button>
+                    <button className={styles.btnCancel}>Cancel</button>
                 </div>
             </div>
         </>

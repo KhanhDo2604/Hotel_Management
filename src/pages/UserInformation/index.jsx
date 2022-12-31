@@ -1,11 +1,15 @@
 import { useState } from "react";
 import styles from "./UserInformation.module.scss";
-import { DatePicker } from "antd";
+import { DatePicker, Form } from "antd";
+import { useLocation } from "react-router-dom";
+
 
 export default function UserInformation() {
     const [stateGender, setStateGender] = useState("")
-    const dateFormat = "DD/MM/YYYY";
+    const location = useLocation();
+    const groupGender = ["Male", "Female"]
 
+   
     return (
         <>
             <h3 style={{ fontWeight: "bold" }}>User Information</h3>
@@ -15,7 +19,7 @@ export default function UserInformation() {
                         <label>Name:</label>
                     </div>
                     <div >
-                        <input type="text" name="name" />
+                        <input defaultValue={location.state.userInfo.name} type="text" name="name" />
                     </div>
                     <div>
                         <label>Gender:</label>
@@ -26,28 +30,30 @@ export default function UserInformation() {
                             value={stateGender}
                             onChange={(e) => {
                                 const selectedGender = e.target.value
-                                console.log(selectedGender)
                                 setStateGender(selectedGender)
                             }}>
-                            <option value="male">Male</option>
-                            <option value="female">FeMale</option>
+                            <option>{location.state.userInfo.gender}</option>
+                            {
+                                groupGender.map((value, index) => {
+                                    if (value !== location.state.userInfo.gender) {
+                                        return <option key={index}>{value}</option>
+                                    }
+                                })
+                            }
                         </select>
                     </div>
                     <div>
                         <label>Create In:</label>
                     </div>
                     <div>
-                        <DatePicker
-                            className={styles.datePicker}
-                            format={dateFormat}
-                        />
+                        <DatePicker className={styles.datePicker}  format={'DD/MM/YYYY'} />
                     </div>
                     <div>
                         <label>Contact:</label>
                     </div>
                     <div>
-                        <input type="text" name="name" placeholder="Email" />
-                        <input style={{ marginTop: "2rem" }} type="text" name="name" placeholder="Phone Number" />
+                        <input defaultValue={location.state.userInfo.contact.email} type="text" name="name" placeholder="Email" />
+                        <input defaultValue={location.state.userInfo.contact.phoneNumber} style={{ marginTop: "2rem" }} type="text" name="name" placeholder="Phone Number" />
                     </div>
                 </form>
                 <div className={styles.format}>

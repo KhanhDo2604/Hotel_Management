@@ -21,6 +21,12 @@ export default function FormReservation() {
                     <div>
                         <input type="text" name="name" />
                     </div>
+                      <div>
+                        <label>Email:</label>
+                    </div>
+                    <div>
+                        <input type="email" name="name" />
+                    </div>
                     <div>
                         <label>Gender:</label>
                     </div>
