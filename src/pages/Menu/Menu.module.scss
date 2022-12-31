@@ -1,15 +1,20 @@
 .gridContainer {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 1.6rem;
+    // display: grid;
+    // grid-template-columns: 2fr 1fr 1fr;
+    // gap: 1.6rem;
+    display: flex;
     margin-top: 2rem;
     margin-bottom: 3rem;
     justify-content: space-between;
 
+    .gridItem1 {
+        width: 60%;
+    }
+
     .dropdown {
         position: relative;
         cursor: pointer;
-
+        width: 20%;
         .dropdownBtn {
             padding: 0.9rem 0.8rem;
             background-color: #F9D410;
@@ -74,7 +79,7 @@ button {
 
 .buttonAction {
     border-radius: 0.8rem;
-    padding: 1rem 1.6rem;
+    padding: 0.8rem 1.4rem;
     font-size: 1.6rem;
     border: 0px;
     background-color: #F9D410;
