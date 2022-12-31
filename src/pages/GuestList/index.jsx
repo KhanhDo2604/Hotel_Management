@@ -3,12 +3,13 @@ import update from "../../assets/pencil.png";
 import bin from "../../assets/bin.png";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
 
 const guestList = [
     {
         id: 1,
         name: "Vo Dinh Van",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -18,7 +19,7 @@ const guestList = [
     {
         id: 2,
         name: "Nguyen Van Phap",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "phap@gmail.com",
@@ -28,7 +29,7 @@ const guestList = [
     {
         id: 3,
         name: "Nguyen Huynh Tuan Khang",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "khang@gmail.com",
@@ -38,7 +39,7 @@ const guestList = [
     {
         id: 4,
         name: "Do Pham Huy Khanh",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "khanh@gmail.com",
@@ -48,7 +49,7 @@ const guestList = [
     {
         id: 5,
         name: "Vo Dinh Van",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -58,7 +59,7 @@ const guestList = [
     {
         id: 6,
         name: "Vo Dinh Van",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -68,7 +69,7 @@ const guestList = [
     {
         id: 7,
         name: "Nguyen Huynh Tuan Khang",
-        gender:"Nam",
+        gender: "Male",
         createIn: "20/11/2022",
         contact: {
             email: "khang@gmail.com",
@@ -78,7 +79,7 @@ const guestList = [
     {
         id: 8,
         name: "Do Pham Huy Khanh",
-        gender:"Nam",
+        gender: "Female",
         createIn: "20/11/2022",
         contact: {
             email: "khanh@gmail.com",
@@ -88,7 +89,7 @@ const guestList = [
     {
         id: 9,
         name: "Vo Dinh Van",
-        gender:"Nam",
+        gender: "Female",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -98,7 +99,7 @@ const guestList = [
     {
         id: 10,
         name: "Vo Dinh Van",
-        gender:"Nam",
+        gender: "Female",
         createIn: "20/11/2022",
         contact: {
             email: "van@gmail.com",
@@ -173,7 +174,14 @@ export default function GuestList() {
                                 </div>
                                 <div className={styles.flexItem}>
                                     <button className={styles.actionBtn}>
-                                        <img src={update} alt="" style={{ width: "2.4rem" }} onClick={()=> location.href = "/userInformation"}/>
+                                        <Link
+                                            to="/userInformation"
+                                            state={{
+                                                userInfo :value
+                                            }}
+                                        >
+                                            <img src={update} alt="" style={{ width: "2.4rem" }} />
+                                        </Link>
                                     </button>
                                     <button className={styles.actionBtn} onClick={() => handleDelete(value.id)}>
                                         <img src={bin} alt="" style={{ width: "2.4rem" }} />
@@ -194,7 +202,7 @@ export default function GuestList() {
                 }
 
             </div>
-            <div style={{marginTop: '1.6rem'}}>
+            <div style={{ marginTop: '1.6rem' }}>
                 <ReactPaginate
                     nextLabel=">"
                     onPageChange={handlePageClick}

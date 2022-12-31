@@ -7,6 +7,7 @@ import { DatePicker } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 const { RangePicker } = DatePicker;
 
 
@@ -80,20 +81,29 @@ export default function BookingList() {
         }
     ]
 
-    //Date
-    const [dates, setDates] = useState(new Date())
+    //Fetch api
+    const [data, setData] = useState([])
+    console.log(data)
+    
+    useEffect(() => {
+            fetch("https://whale-app-owrsp.ondigitalocean.app/hotelbe2/api/reservation?fbclid=IwAR1OYz47WHRbluXT6PKV-vPkIEvVZfJwJ_haUvtvnRkC2wcdnkfYhNkBywk")
+            .then(async (res) => {
+                setData(await res.json())
+                
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
 
     //Delete an item when click
-    const [list, setList] = useState(bookingList);
-    function handleDelete(id) {
-        const newIds = list.filter((item) => item.id !== id)
-        setList(newIds)
+    const handleDelete = (id) => {
+        const newIds = data.filter((item) => item.id !== id)
+        setData(newIds)
     }
 
     //Search
     const [query, setQuery] = useState("");
-    const keys = ["nameCustomer"];
-
+    const keys = ["fullname"];
     //Show Modal
     const [modal, setModal] = useState(false)
     let menuRef = useRef()
@@ -107,7 +117,7 @@ export default function BookingList() {
         return () => {
             document.removeEventListener("click", handler)
         }
-    })
+    }, [])
 
     //Counter Number room
     const [counter, setCounter] = useState(1)
@@ -170,7 +180,7 @@ export default function BookingList() {
     //Format Date
     const dateFormat = "DD/MM/YYYY";
 
-
+    // filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).
 
     return (
         <>
@@ -187,7 +197,7 @@ export default function BookingList() {
                     </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-around" }}>
-                    <button>Search</button>
+                    <button>Filter</button>
                     <button className={styles.btnLeft} onClick={converPage}>Book</button>
                 </div>
 
@@ -205,59 +215,66 @@ export default function BookingList() {
             </div>
 
             <div style={{ fontWeight: "bold", marginTop: "2.2rem" }}>
-                <p>List: <span>{list.length}</span> results</p>
+                <p>List: <span>{data.length}</span> results</p>
             </div>
             {
-                list.filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).map((values, index) => (
+                data && data.filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).map((values, index) => (
                     <div className={styles.contentGrid} key={values.id}>
-                        <div>
-                            <p style={{ fontWeight: "bold" }}>{values.numberRoom.roomOne}</p>
-                            <p style={{ fontWeight: "bold" }}>{values.numberRoom.roomTwo}</p>
-                            <p style={{ marginTop: "2rem" }}>In: <span style={{ fontWeight: "bold" }}>{values.startDate}</span></p>
+                        <div >
+                            {
+                                values.rooms.map((valueRoom) => (
+                                    <span style={{ display: "flex" }}>Room:
+                                        <p key={value.id} style={{ fontWeight: "bold" }}>
+                                            {valueRoom.number}
+                                        </p>
+                                    </span>
+                                ))
+                            }
+                            <p>In: <span style={{ fontWeight: "bold" }}>{values.in}</span></p>
                         </div>
-                        <div>
-                            {/* <p>{values.typeRoom.typeRoomOne}</p>
-                            <p>{values.typeRoom.typeRoomTwo}</p> */}
-                            <div>
-                                {
-                                    value.typeRoom > 2 ? (
-                                        <div>
-                                            <p>...</p>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <p>{values.typeRoom.typeRoomOne}</p>
-                                            <p>{values.typeRoom.typeRoomTwo}</p>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                            <p style={{ marginTop: "2rem" }}>Out: <span style={{ fontWeight: "bold" }}>{values.endDate}</span></p>
+                        <div className={styles.alignItems}>
+                            {
+                                values.rooms.map((valueRoom) => (
+                                    <span style={{ display: "flex" }}>Type:
+                                        <p key={value.id} style={{ fontWeight: "bold" }}>
+                                            {valueRoom.type}
+                                        </p>
+                                    </span>
+                                ))
+                            }
+                            <p>Out: <span style={{ fontWeight: "bold" }}>{values.out}</span></p>
                         </div>
-                        <div>
-                            <p>{values.nameCustomer}</p>
-                            <p style={{ fontWeight: "bold", marginTop: "4.3rem" }}>{values.guests}</p>
+                        <div className={styles.alignItems}>
+                            <p>{values.fullname}</p>
+                            <p style={{ fontWeight: "bold", marginTop: "4.3rem" }}>{values.guestcount}</p>
                         </div>
                         <div className={styles.end}>
                             {
                                 values.state === "OC" ? (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "#66FF99", color: "#057028" }}>{values.state}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "#66FF99", color: "#057028" }}>{values.status}</p>
                                     </>
                                 ) : values.state === "EA" ? (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{values.state}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{values.status}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{values.state}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{values.status}</p>
                                     </>
                                 )
                             }
                             <button className={styles.checkOut}>Check Out</button>
-                            <button className={styles.pencil}>
-                                <img style={{ height: "2.8rem" }} src={penCil} onClick={()=> location.href="/profileSetting"}/>
-                            </button>
+                            {/* <div className={styles.pencil}>
+                                <Link
+                                    to="/profileSetting"
+                                    state={{
+                                        profileInfo: values
+                                    }}
+                                >
+                                    <img style={{ height: "2.8rem" }} src={penCil} />
+                                </Link>
+                            </div> */}
                             <button className={styles.close} onClick={() => handleDelete(values.id)}>
                                 <FontAwesomeIcon style={{ color: "red", height: "2.8rem" }} icon={faClose} />
                             </button>

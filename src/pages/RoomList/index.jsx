@@ -13,7 +13,7 @@ import twin from '../../assets/doubleBed.png';
 import wifi from '../../assets/wifi.png';
 import family from '../../assets/family.png';
 import couple from '../../assets/couple.png';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 
 export default function RoomList() {
@@ -23,6 +23,7 @@ export default function RoomList() {
             img: standard,
             name: "Standard Room (STD)",
             price: "3000000Đ",
+            status: "Update",
             detailOne: {
                 imgBed: single,
                 nameBed: "2 single bed"
@@ -55,6 +56,7 @@ export default function RoomList() {
             img: superior,
             name: "Superior Room (SUP)",
             price: "4000000Đ",
+            status: "Update",
             detailOne: {
                 imgBed: single,
                 nameBed: "2 single bed"
@@ -86,6 +88,7 @@ export default function RoomList() {
             img: dulexe,
             name: "Deluxe Room (DLX)",
             price: "5000000Đ",
+            status: "Update",
             detailOne: {
                 sofaBed: sofa,
                 typeSofa: "1 sofa bed"
@@ -117,6 +120,7 @@ export default function RoomList() {
             img: suite,
             name: "Suite Room (SUT)",
             price: "6000000Đ",
+            status: "Update",
             detailOne: {
                 queenBed: single,
                 typeBed: "1 queen bed"
@@ -145,21 +149,24 @@ export default function RoomList() {
         }
     ]
 
-    const [convertButton, setConvertButton] = useState("Update")
-    //const [list,setList] = useState(roomList)
+    //Set Update
+    const [convertButton, setConvertButton] = useState(roomList)
     const handleChange = (id) => {
-        roomList.map((item) => {
-            if(item.id === id) {
-                //setList(item.price)    
-                setConvertButton("Save")
+        const temp = convertButton.map(item => {
+            if (item.id === id) {
+                item.status === "Update" ?
+                    (item.status = "Save") :
+                    (item.status = "Update")
             }
-        }) 
+            return item;
+        })
+        setConvertButton(temp)
     }
 
     return (
         <>
             {
-                roomList.map((value, index) => (
+                convertButton.map((value, index) => (
                     <div className={styles.roomList} key={index}>
                         <img className={styles.standard} src={value.img} />
                         <div className={styles.roomMiddle}>
@@ -249,17 +256,17 @@ export default function RoomList() {
                         <div className={styles.roomRight}>
                             <div>
                                 {
-                                    value.id && convertButton === "Update" ? (
+                                    value.status === "Update" ? (
                                         <input type="text" />
                                     ) :
                                         (
-                                            <input type="text" disabled />
+                                            <input type="text" disabled/>
                                         )
                                 }
                             </div>
                             <div className={styles.btnClick}>
                                 <button className={styles.btnLeft} onClick={() => handleChange(value.id)}>
-                                    {convertButton}
+                                    {value.status}
                                 </button>
                             </div>
                         </div>
