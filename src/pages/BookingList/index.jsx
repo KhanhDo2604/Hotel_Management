@@ -89,7 +89,6 @@ export default function BookingList() {
             fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation")
             .then(async (res) => {
                 setData(await res.json())
-                
             })
             .catch((err) => console.log(err))
     }, [])

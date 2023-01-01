@@ -1,0 +1,51 @@
+.gridGeneral {
+    .gridContainer {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr 0.8fr;
+        margin-top: 2rem;
+        padding: 0rem 1.8rem 0rem 1.6rem;
+    }
+    .gridItem{
+        box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+        display: grid;
+        grid-template-columns: 1fr 1.1fr 0.8fr;
+        padding: 0.8rem 1.8rem 1.6rem;
+        p{
+            font-weight: 600;
+        }
+    }
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1.8rem;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}  
+
+.format{
+    display: flex;
+}
+
+.elementp{
+    border-bottom: 4px solid #D3D3D3;
+    padding: 1.2rem;
+    font-size: 3.2rem;
+    text-align: center;
+    background-color: #dddddd;
+    border-radius: 5px;
+}
+
+.formatCanvas {
+    canvas {
+        width: 100% !important;
+    }
+}
