@@ -9,28 +9,28 @@ export default function DashBoard() {
             name: "JAN",
             nor: 100,
             in: 100,
-            tr: 120
+            tr: 30
         },
         {
             id: 2,
             name: "FEB",
             nor: 100,
             in: 100,
-            tr: 120
+            tr: 20
         },
         {
             id: 3,
             name: "MAR",
             nor: 100,
             in: 100,
-            tr: 120
+            tr: 90
         },
         {
             id: 4,
             name: "APR",
             nor: 100,
             in: 100,
-            tr: 120
+            tr: 2
         },
         {
             id: 5,
