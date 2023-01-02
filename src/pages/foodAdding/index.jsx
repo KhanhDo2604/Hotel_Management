@@ -8,7 +8,7 @@ export default function FoodAdding() {
 const group = ['Main meal', 'Pizza', 'Desserts', 'Drink', 'Pasta'];
 
   return (
-    <div>
+    <div style={{height: '98%', position: 'relative'}}>
       <h3>Form Adding Food</h3>
 
       <div className={styles.formContainer}>
@@ -21,11 +21,11 @@ const group = ['Main meal', 'Pizza', 'Desserts', 'Drink', 'Pasta'];
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <input type="file" class="input-file" id="choose" onchange="changed(this)" multiple accept=""/>
+            <input type="file" className="input-file" id="choose" onchange="changed(this)" multiple accept=""/>
             <input type="text"/>
             <select name="status" id="status">
               {group.map((value, index) => (
-                <option>{value}</option>
+                <option key={index}>{value}</option>
               ))}
             </select>
             <input type="text" />

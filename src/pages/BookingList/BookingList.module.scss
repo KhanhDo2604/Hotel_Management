@@ -76,15 +76,6 @@
         font-size:1.8rem;
     }
 
-    .checkOut {
-        border: none;
-        padding: 1.2rem;
-        border-radius: 1.2rem;
-        background-color: #F9D410;
-        font-weight: bold;
-        max-height: 60%;
-    }
-
     .close,
     .pencil {
         border: none;
@@ -168,4 +159,59 @@
     border: none;
     border-radius: 0.5rem;
     font-weight: bold;
+}
+
+.overlay {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 1rem;
+    padding: 0 2.4rem;
+
+    h3 {
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .modalContain {
+        display: grid;
+        grid-template-columns: 0.5fr 1fr;
+        label {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+        p {
+            margin-bottom: 0.8rem;
+        }
+
+        .special {
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 7.5rem;
+        }
+    }
+
+    button {
+        margin: 1.6rem;
+        padding: 0.8rem 1.6rem;
+        border-radius: 0.8rem;
+        border: none;
+        font-weight: 600;
+    }
+
+    .confirmBtn:hover {
+        background-color: #ED7D3E;
+    }
+
+    .confirmBtn {
+        background-color: #F9D410;
+    }
+
+    .cancleBtn {
+        background-color: rgba($color: #999, $alpha: 0.5);
+    }
 }

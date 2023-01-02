@@ -12,7 +12,7 @@ export default function FormUpdate() {
   const status = ['Unavailable', 'Available'];
 
   return (
-    <div>
+    <div style={{height: '98%', position: 'relative'}}>
       <h3>Form Update Food Detail</h3>
 
       <div className={styles.formContainer}>

@@ -1,5 +1,6 @@
 import styles from "./Login.module.scss";
-import background from '../../assets/login.webp';
+// import background from '../../assets/login.webp';
+import background from '../../assets/scenery.png';
 import hotel from '../../assets/hotel.png';
 
 

@@ -7,7 +7,9 @@ import { DatePicker } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import BillModal from "./billModal";
+import CheckOutBtn from "../../comps/checkOutButton";
 const { RangePicker } = DatePicker;
 
 
@@ -81,12 +83,14 @@ export default function BookingList() {
         }
     ]
 
+    const [getState, setState] = useState(false); 
+
     //Fetch api
     const [data, setData] = useState([])
     console.log(data)
     
     useEffect(() => {
-            fetch("https://whale-app-owrsp.ondigitalocean.app/hotelbe2/api/reservation?fbclid=IwAR1OYz47WHRbluXT6PKV-vPkIEvVZfJwJ_haUvtvnRkC2wcdnkfYhNkBywk")
+            fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation")
             .then(async (res) => {
                 setData(await res.json())
                 
@@ -181,6 +185,7 @@ export default function BookingList() {
     const dateFormat = "DD/MM/YYYY";
 
     // filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).
+    // const location = useLocation();
 
     return (
         <>
@@ -188,6 +193,7 @@ export default function BookingList() {
                 <RangePicker
                     className={styles.rangPicker}
                     format={dateFormat}
+                    style={{border: '0.2rem solid #999'}}
                 />
                 <div className={styles.middles} ref={menuRef}>
                     <FontAwesomeIcon icon={faUsers} style={{ marginRight: "1rem" }} />
@@ -264,17 +270,10 @@ export default function BookingList() {
                                     </>
                                 )
                             }
-                            <button className={styles.checkOut}>Check Out</button>
-                            {/* <div className={styles.pencil}>
-                                <Link
-                                    to="/profileSetting"
-                                    state={{
-                                        profileInfo: values
-                                    }}
-                                >
-                                    <img style={{ height: "2.8rem" }} src={penCil} />
-                                </Link>
-                            </div> */}
+                            <CheckOutBtn guestInfo={values}/>
+
+                            {/* <BillModal open={getState} onClose={() => setState(false)} guestInfo={values}/> */}
+
                             <button className={styles.close} onClick={() => handleDelete(values.id)}>
                                 <FontAwesomeIcon style={{ color: "red", height: "2.8rem" }} icon={faClose} />
                             </button>

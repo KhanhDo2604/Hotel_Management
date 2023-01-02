@@ -1,5 +1,5 @@
 import styles from "./ForgotPassword.module.scss";
-import background from '../../assets/login.webp';
+import background from '../../assets/scenery.png';
 import hotel from '../../assets/hotel.png';
 
 export default function ForgotPassword() {
