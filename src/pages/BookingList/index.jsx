@@ -93,7 +93,6 @@ export default function BookingList() {
             fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation")
             .then(async (res) => {
                 setData(await res.json())
-                
             })
             .catch((err) => console.log(err))
     }, [])
@@ -226,7 +225,7 @@ export default function BookingList() {
             {
                 data && data.filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).map((values, index) => (
                     <div className={styles.contentGrid} key={values.id}>
-                        <div >
+                        <div className={styles.alignItems}>
                             {
                                 values.rooms.map((valueRoom) => (
                                     <span style={{ display: "flex" }}>Room:

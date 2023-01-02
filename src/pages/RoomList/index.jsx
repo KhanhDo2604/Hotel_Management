@@ -1,6 +1,4 @@
 import styles from "./RoomList.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faL, faPencil } from "@fortawesome/free-solid-svg-icons";
 import standard from '../../assets/StandardRoom.jpg';
 import superior from '../../assets/SuperiorRoom.jpg';
 import dulexe from '../../assets/DulexeRoom.jpg';
@@ -13,8 +11,7 @@ import twin from '../../assets/doubleBed.png';
 import wifi from '../../assets/wifi.png';
 import family from '../../assets/family.png';
 import couple from '../../assets/couple.png';
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import UpdateRooms from "../../comps/UpdateRooms";
 
 export default function RoomList() {
     const roomList = [
@@ -23,7 +20,6 @@ export default function RoomList() {
             img: standard,
             name: "Standard Room (STD)",
             price: "3000000Đ",
-            status: "Update",
             detailOne: {
                 imgBed: single,
                 nameBed: "2 single bed"
@@ -56,7 +52,6 @@ export default function RoomList() {
             img: superior,
             name: "Superior Room (SUP)",
             price: "4000000Đ",
-            status: "Update",
             detailOne: {
                 imgBed: single,
                 nameBed: "2 single bed"
@@ -88,7 +83,6 @@ export default function RoomList() {
             img: dulexe,
             name: "Deluxe Room (DLX)",
             price: "5000000Đ",
-            status: "Update",
             detailOne: {
                 sofaBed: sofa,
                 typeSofa: "1 sofa bed"
@@ -120,7 +114,6 @@ export default function RoomList() {
             img: suite,
             name: "Suite Room (SUT)",
             price: "6000000Đ",
-            status: "Update",
             detailOne: {
                 queenBed: single,
                 typeBed: "1 queen bed"
@@ -149,24 +142,10 @@ export default function RoomList() {
         }
     ]
 
-    //Set Update
-    const [convertButton, setConvertButton] = useState(roomList)
-    const handleChange = (id) => {
-        const temp = convertButton.map(item => {
-            if (item.id === id) {
-                item.status === "Update" ?
-                    (item.status = "Save") :
-                    (item.status = "Update")
-            }
-            return item;
-        })
-        setConvertButton(temp)
-    }
-
     return (
         <>
             {
-                convertButton.map((value, index) => (
+                roomList.map((value, index) => (
                     <div className={styles.roomList} key={index}>
                         <img className={styles.standard} src={value.img} />
                         <div className={styles.roomMiddle}>
@@ -253,23 +232,7 @@ export default function RoomList() {
                                 }
                             </div>
                         </div>
-                        <div className={styles.roomRight}>
-                            <div>
-                                {
-                                    value.status === "Update" ? (
-                                        <input type="text" />
-                                    ) :
-                                        (
-                                            <input type="text" disabled/>
-                                        )
-                                }
-                            </div>
-                            <div className={styles.btnClick}>
-                                <button className={styles.btnLeft} onClick={() => handleChange(value.id)}>
-                                    {value.status}
-                                </button>
-                            </div>
-                        </div>
+                        <UpdateRooms/>
                     </div>
                 ))
             }

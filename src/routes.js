@@ -1,5 +1,4 @@
 import {
-  Billing,
   BookingList,
   Dashboard,
   GuestList,
@@ -15,6 +14,8 @@ import {
   UserInformation,
   FormUpdate,
   FoodAdding,
+  RestaurantReport,
+
 } from "./pages";
 import bell from "./assets/bell.png";
 import chair from "./assets/chair.png";
@@ -22,7 +23,7 @@ import menu from "./assets/menu.png";
 import bed from "./assets/bed.png";
 import booking from "./assets/booking.png";
 import guest from "./assets/guests.png";
-import bill from "./assets/bill.png";
+
 import dashboard from "./assets/dashboard.png";
 
 const routes = [
@@ -31,12 +32,6 @@ const routes = [
     page: Dashboard,
     icon: dashboard,
     name: "Dashboard",
-  },
-  {
-    path: "/billing",
-    page: Billing,
-    icon: bill,
-    name: "Bills",
   },
   {
     path: "/bookinglist",
@@ -108,6 +103,10 @@ const hiddenRoutes = [
   {
     path:'/foodAdding',
     page: FoodAdding,
+  },
+  {
+    path:'/restaurantReport',
+    page: RestaurantReport,
   }
 ];
 export { routes, hiddenRoutes };
