@@ -218,7 +218,7 @@ export default function Menu() {
               <h5 className={styles.titleNameGridFood}>Food Name</h5>
               <h5 className={styles.titleNameGridFood}>Group</h5>
               <h5 className={styles.titleNameGridFood}>Price</h5>
-              <h5 className={styles.titleNameGridFood}>Quantity</h5>
+              {/* <h5 className={styles.titleNameGridFood}>Quantity</h5> */}
               <h5 className={styles.titleNameGridFood}>Status</h5>
             </div>
 
@@ -247,7 +247,7 @@ export default function Menu() {
                     </div>
                     <h6 className={styles.foodInfo}>{value.category}</h6>
                     <h6 className={styles.foodInfo}>{value.price}đ</h6>
-                    <h6 className={styles.foodInfo}>{value.quantity}</h6>
+                    {/* <h6 className={styles.foodInfo}>{value.quantity}</h6> */}
 
                     <div
                       style={{

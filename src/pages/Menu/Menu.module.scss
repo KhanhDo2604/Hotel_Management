@@ -99,7 +99,7 @@ a {
     font-weight: $weight;
 }
 
-@mixin grid($grid: 2.4fr 1fr 1fr 1fr 1.5fr){
+@mixin grid($grid: 2.4fr 1fr 1fr 1.5fr){
     grid-template-columns: $grid;
 }
 

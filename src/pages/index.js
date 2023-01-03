@@ -14,5 +14,7 @@ export {default as UserInformation} from './UserInformation';
 export { default as FormUpdate} from './FormUpdate';
 export { default as FoodAdding} from './FoodAdding';
 export {default as RestaurantReport} from "./RestaurantReport"
+export {default as PlaceToBook} from "./PlaceToBook"
+
 
 

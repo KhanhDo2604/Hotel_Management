@@ -15,6 +15,7 @@ import {
   FormUpdate,
   FoodAdding,
   RestaurantReport,
+  PlaceToBook
 
 } from "./pages";
 import bell from "./assets/bell.png";
@@ -107,6 +108,10 @@ const hiddenRoutes = [
   {
     path:'/restaurantReport',
     page: RestaurantReport,
+  },
+  {
+    path:'/placeToBook',
+    page: PlaceToBook,
   }
 ];
 export { routes, hiddenRoutes };

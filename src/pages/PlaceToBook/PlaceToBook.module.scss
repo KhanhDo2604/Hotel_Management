@@ -67,7 +67,7 @@
 .tableList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 6rem;
+    gap: 1.6rem;
     
     .tableItem {
         @extend %table;
@@ -85,5 +85,3 @@
         @extend %table;
     }
 }
-
-

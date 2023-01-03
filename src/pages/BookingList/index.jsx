@@ -177,7 +177,7 @@ export default function BookingList() {
 
     // convert page
     const converPage = () => {
-        location.href = "/formReservation"
+        location.href = "/placeToBook"
     }
 
     //Format Date
