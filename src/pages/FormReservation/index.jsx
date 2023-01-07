@@ -3,11 +3,21 @@ import styles from "./FormReservation.module.scss";
 import { DatePicker } from "antd";
 import { useLocation } from "react-router-dom";
 const { RangePicker } = DatePicker;
+import moment from "moment/moment";
+import { useNavigate } from "react-router-dom";
 
 export default function FormReservation() {
     const [stateGender, setStateGender] = useState("")
     const location = useLocation()
     const table = location.state.table
+    const navigate = useNavigate();
+
+    const [guestid, setguestId] = useState("")
+    const [count, setCount] = useState("")
+    const [date, setDate] = useState({
+        start: moment(),
+        end: moment().add(1, "d")
+    });
 
     const sendData = () => {
         fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation",
@@ -17,22 +27,21 @@ export default function FormReservation() {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: {
-                    guestid: "20521331",
+                body: JSON.stringify({
+                    guestid: guestid,
                     agentid: "20521333",
-                    in: "2023-01-11",
-                    out: "2023-01-23",
-                    count: 3,
-                    rooms: [
-                        "001",
-                        "002",
-                        "003"
-                    ]
-                }
+                    in: date.start,
+                    out: date.end,
+                    count: count,
+                    rooms: table.map((value) => value.number)
+                })
             }
         )
-        .then((res) => console.log(res))
+            .then((res) => {
+                navigate("/bookinglist")
+            })
     }
+
 
     return (
         <div style={{ padding: "1rem" }}>
@@ -49,7 +58,7 @@ export default function FormReservation() {
                         <label>Identification:</label>
                     </div>
                     <div>
-                        <input type="text" name="name" />
+                        <input type="text" name="name" onChange={(e) => setguestId(e.target.value)} value={guestid} />
                     </div>
                     <div>
                         <label>Email:</label>
@@ -110,15 +119,21 @@ export default function FormReservation() {
                     <div>
                         <RangePicker
                             className={styles.rangPicker}
-                            format={"DD/MM/YYYY"}
+                            format={"YYYY-MM-DD"}
                             style={{ height: '32.4px', border: '0.2rem solid #999' }}
+                            onChange={(e) => {
+                                setDate({
+                                    start: e[0].format("YYYY-MM-DD"),
+                                    end: e[1].format("YYYY-MM-DD")
+                                })
+                            }}
                         />
                     </div>
                     <div>
                         <label>Number Of Guest:</label>
                     </div>
                     <div>
-                        <input type="text" name="name" />
+                        <input type="text" name="name" onChange={(e) => setCount(e.target.value)} value={count} />
                     </div>
                 </form>
                 <div className={styles.format}>

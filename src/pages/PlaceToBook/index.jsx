@@ -7,44 +7,17 @@ import "react-tabs/style/react-tabs.css";
 
 export default function PlaceToBook() {
   const std = [
-    { number: 11, type: 1 },
-    { number: 15, type: 1 },
-    { number: 24, type: 1 },
-    { number: 27, type: 1 },
-    { number: 36, type: 1 },
-    { number: 38, type: 1 },
-    { number: 43, type: 1 },
-    { number: 48, type: 1 },
+    { number: "001", type: 1 },
   ];
   const sup = [
-    { number: 13, type:2 },
-    { number: 17, type:2 },
-    { number: 22, type:2 },
-    { number: 25, type:2 },
-    { number: 33, type:2 },
-    { number: 36, type:2 },
-    { number: 41, type:2 },
-    { number: 44, type:2 },
+    { number: "002", type:2 },
   ];
   const dlx = [
-    { number: 12, type:3 },
-    { number: 14, type:3 },
-    { number: 21, type:3 },
-    { number: 26, type:3 },
-    { number: 32, type:3 },
-    { number: 37, type:3 },
-    { number: 42, type:3 },
-    { number: 47, type:3 },
+    { number: "003", type:3 },
   ];
   const sut = [
-    { number: 16, type:4 },
-    { number: 18, type:4 },
-    { number: 23, type:4 },
-    { number: 28, type:4 },
-    { number: 31, type:4 },
-    { number: 34, type:4 },
-    { number: 45, type:4 },
-    { number: 46, type:4 },
+    { number: "004", type:4 },
+
   ];
 
   const [selectedRoom, setSelectedRoom] = useState([])
