@@ -17,7 +17,7 @@ const mapType = {
     std:"Standard Room (STD)",
     sup:"Superior Room (SUP)",
     dlx:"Deluxe Room (DLX)",
-    sut:"Suite Room (SUT)"
+    sui:"Suite Room (SUT)"
 }
 
 export default function BookingList() {
