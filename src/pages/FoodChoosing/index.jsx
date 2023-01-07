@@ -12,7 +12,6 @@ import { useState } from "react";
 import coke from "../../assets/coke.jpg";
 import dessertCake from "../../assets/cake.png";
 import pastaSeafood from "../../assets/pastaSeafood.jpg";
-import ExtraSection from "./extraScreen";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 

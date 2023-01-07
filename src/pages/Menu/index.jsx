@@ -10,146 +10,184 @@ import Pagination from "./Pagination";
 import { Link, useLocation } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-const food = [
-    {
-      id: 0,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Pizza",
-      price: 30000,
-      quantity: 0,
-      status: "Unavailable",
-    },
-    {
-      id: 1,
-      foodImg: miquang,
-      foodName: "Mì Quảng",
-      category: "Main meal",
-      price: 30000,
-      quantity: 1,
-      status: "Available",
-    },
-    {
-      id: 2,
-      foodImg: miquang,
-      foodName: "Coca Cola",
-      category: "Drink",
-      price: 30000,
-      quantity: 4,
-      status: "Available",
-    },
-    {
-      id: 3,
-      foodImg: miquang,
-      foodName: "Chocolate Cake",
-      category: "Desserts",
-      price: 30000,
-      quantity: 8,
-      status: "Available",
-    },
-    {
-      id: 4,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Main meal",
-      price: 30000,
-      quantity: 1,
-      status: "Available",
-    },
-    {
-      id: 5,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Pizza",
-      price: 30000,
-      quantity: 10,
-      status: "Available",
-    },
-    {
-      id: 6,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Main meal",
-      price: 30000,
-      quantity: 57,
-      status: "Available",
-    },
-    {
-      id: 7,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Drink",
-      price: 30000,
-      quantity: 100,
-      status: "Available",
-    },
-    {
-      id: 8,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Main meal",
-      price: 30000,
-      quantity: 35,
-      status: "Available",
-    },
-    {
-      id: 9,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Main meal",
-      price: 30000,
-      quantity: 138,
-      status: "Available",
-    },
-    {
-      id: 10,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Pasta",
-      price: 30000,
-      quantity: 66,
-      status: "Available",
-    },
-    {
-      id: 11,
-      foodImg: miquang,
-      foodName: "Spicy Udon Noodles",
-      category: "Desserts",
-      price: 30000,
-      quantity: 19,
-      status: "Available",
-    },
-  ];
+// const food = [
+//   {
+//     id: 0,
+//     foodImg: miquang,
+//     foodName: "Spicy Udon Noodles",
+//     category: "Pizza",
+//     price: 30000,
+//     quantity: 0,
+//     status: "Unavailable",
+//   },
+//   // {
+//   //   id: 1,
+//   //   foodImg: miquang,
+//   //   foodName: "Mì Quảng",
+//   //   category: "Main meal",
+//   //   price: 30000,
+//   //   quantity: 1,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 2,
+//   //   foodImg: miquang,
+//   //   foodName: "Coca Cola",
+//   //   category: "Drink",
+//   //   price: 30000,
+//   //   quantity: 4,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 3,
+//   //   foodImg: miquang,
+//   //   foodName: "Chocolate Cake",
+//   //   category: "Desserts",
+//   //   price: 30000,
+//   //   quantity: 8,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 4,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Main meal",
+//   //   price: 30000,
+//   //   quantity: 1,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 5,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Pizza",
+//   //   price: 30000,
+//   //   quantity: 10,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 6,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Main meal",
+//   //   price: 30000,
+//   //   quantity: 57,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 7,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Drink",
+//   //   price: 30000,
+//   //   quantity: 100,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 8,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Main meal",
+//   //   price: 30000,
+//   //   quantity: 35,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 9,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Main meal",
+//   //   price: 30000,
+//   //   quantity: 138,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 10,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Pasta",
+//   //   price: 30000,
+//   //   quantity: 66,
+//   //   status: "Available",
+//   // },
+//   // {
+//   //   id: 11,
+//   //   foodImg: miquang,
+//   //   foodName: "Spicy Udon Noodles",
+//   //   category: "Desserts",
+//   //   price: 30000,
+//   //   quantity: 19,
+//   //   status: "Available",
+//   // },
+// ];
 
 export default function Menu() {
+  const [data, setData] = useState([]);
+   const [list, setList] = useState(data);
+
+  const [updated, setUpdated] = useState(false);
+
+  const removeFood = (id) => {
+    fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/food/${id}`, {
+      method: "DELETE",
+    })
+      .then(async (response) => {
+        setUpdated(!updated);
+        const data = await response.json();
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  };
+
+  useEffect(() => {
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
+      .then(async (res) => {
+        setData(await res.json());
+        setList(data);
+      })
+      .catch((err) => console.log(err));
+  }, [updated]);
+
   const dropdownItem = ["All Status", "Unavailable", "Available"];
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState("All Status");
 
-  const [list, setList] = useState(food);
+  // const [list, setList] = useState(food);
+  // const [list, setList] = useState(data);
 
   const [query, setQuery] = useState("");
-  const keys = ["foodName"];
+  const keys = ["name"];
 
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 6;
   const endOffset = itemOffset + itemsPerPage;
-  const filtered = list.filter((values) =>keys.some((key) => values[key].toLowerCase().includes(query)));
+
+  const filtered = data.filter((values) =>
+    keys.some((key) => values[key].toLowerCase().includes(query))
+  );
+
+  const filterBaseOnCate = (value) => {
+    if(value === "Available") {
+      setData(data.filter((x) => x.status === 1));
+    }
+    else if(value === "Unavailable") {
+      setData(data.filter((x) => x.status === 0));
+    }
+    return selected;
+  }
+
   const currentItems = filtered.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filtered.length / itemsPerPage);
 
-  
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filtered.length;
     setItemOffset(newOffset);
   };
-
-  const removeNode = (id) => {
-    const newIds = list.filter((item) => item.id !== id)
-    setList(newIds)
-  };
-
-  const location = useLocation();
 
   return (
     <div className="w3-container">
@@ -173,6 +211,8 @@ export default function Menu() {
               </svg>
             </div>
           </div>
+
+          {/* nút filter */}
           <div
             className={styles.dropdown}
             onClick={(e) => setIsActive(!isActive)}
@@ -190,11 +230,13 @@ export default function Menu() {
               <div className={styles.dropdownContent}>
                 {dropdownItem.map((value, index) => (
                   <>
-                    <div
+                    <div 
+                      key={index}
                       className={styles.dropdownItem}
                       onClick={(e) => {
                         setSelected(value);
                         setIsActive(false);
+                        // filterBaseOnCate(selected);
                       }}
                     >
                       {value}
@@ -231,21 +273,26 @@ export default function Menu() {
                 marginBottom: "1.6rem",
               }}
             />
-            {currentItems && currentItems.map((value, index) => (
-                <div
-                  style={{ padding: "0 1.6rem" }}
-                  key={index}
-                >
+            {currentItems &&
+              currentItems.map((value, index) => (
+                <div style={{ padding: "0 1.6rem" }} key={index}>
                   <div className={styles.itemInListFood}>
                     <div style={{ display: "flex" }}>
                       <img
-                        src={value.foodImg}
+                        src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`}
                         alt=""
                         className={styles.roundedAva}
                       />
-                      <h6 className={styles.foodInfo}>{value.foodName}</h6>
+                      <h6 className={styles.foodInfo}>{value.name}</h6>
                     </div>
-                    <h6 className={styles.foodInfo}>{value.category}</h6>
+                    <h6
+                      className={styles.foodInfo}
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {value.category === "mainmeal"
+                        ? "Main meal"
+                        : value.category}
+                    </h6>
                     <h6 className={styles.foodInfo}>{value.price}đ</h6>
                     {/* <h6 className={styles.foodInfo}>{value.quantity}</h6> */}
 
@@ -255,17 +302,13 @@ export default function Menu() {
                         justifyContent: "space-between",
                       }}
                     >
-                      {value.status === "Unavailable" ? (
+                      {value.status === 0 ? (
                         <div className={styles.statusTagUnavai}>
-                          <p className={styles.statusTextUnavai}>
-                            {value.status}
-                          </p>
+                          <p className={styles.statusTextUnavai}>Unavailable</p>
                         </div>
                       ) : (
                         <div className={styles.statusTagAvai}>
-                          <p className={styles.statusTextAvai}>
-                            {value.status}
-                          </p>
+                          <p className={styles.statusTextAvai}>Available</p>
                         </div>
                       )}
 
@@ -280,7 +323,7 @@ export default function Menu() {
                       </Link>
                       <button
                         className={styles.actionBtn}
-                        onClick={() => removeNode(value.id)}
+                        onClick={() => removeFood(value.id)}
                       >
                         <img src={bin} alt="" style={{ width: "2.4rem" }} />
                       </button>

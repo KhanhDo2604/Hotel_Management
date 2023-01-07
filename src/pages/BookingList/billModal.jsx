@@ -35,7 +35,7 @@ export default function BillModal({ open, onClose, guestInfo }) {
             </p>
           ))}
 
-          <p>1 jack</p>
+          <p>1200000 vnd</p>
         </div>
       </div>
 
