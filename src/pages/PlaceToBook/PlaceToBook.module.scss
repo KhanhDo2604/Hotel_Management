@@ -49,39 +49,35 @@
     }
 }  
 
-%table {
-    display: block;
-    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
-    border: none;
-    padding: 1.6rem 0;
-    border-radius: 1rem;
-    cursor: pointer;
-
-    h4 {
-        font-weight: 600;
-        margin: 0;
-        text-align: center;
-    }
-}
-
 .tableList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 1.6rem;
-    
-    .tableItem {
-        @extend %table;
-        background-color: white;
-    }
 
     .active {
-        background-color: #f7e68d;
-        @extend %table;
-
+        box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
+        border: none;
+        padding: 1.6rem 0;
+        border-radius: 1rem;
+        cursor: pointer;
+    
+        h4 {
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+        }
     }
 
-    .disable {
-        background-color: #E4644B;
-        @extend %table;
+    input[type="checkbox"] {
+        display: none;
+        
+        & + label {
+            background-color: white;
+        }
+
+        &:checked + label {
+            background-color: #f7e68d;
+        }
     }
+    
 }
