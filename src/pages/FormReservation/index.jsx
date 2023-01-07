@@ -29,17 +29,21 @@ export default function FormReservation() {
                 },
                 body: JSON.stringify({
                     guestid: guestid,
-                    agentid: "20521333",
+                    agentid: "20521330",
                     in: date.start,
                     out: date.end,
                     count: count,
-                    rooms: table.map((value) => value.number)
+                    rooms: table.map((value) => value.roomnumber)
                 })
             }
         )
             .then((res) => {
                 navigate("/bookinglist")
             })
+    }
+
+    const navigatePage = () => {
+        navigate("/bookinglist")
     }
 
 
@@ -94,21 +98,21 @@ export default function FormReservation() {
                     <div style={{ display: 'flex' }}>
                         <div>
                             <div>
-                                <input defaultValue={table.filter(value => value.type === 1).length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
+                                <input defaultValue={table.filter(value => value.roomtype === "std").length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
                                 <label>Standard Room (STD)</label>
                             </div>
                             <div style={{ marginTop: "1rem" }}>
-                                <input defaultValue={table.filter(value => value.type === 2).length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
+                                <input defaultValue={table.filter(value => value.roomtype === "sup").length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
                                 <label>Superior Room (SUP)</label>
                             </div>
                         </div>
                         <div>
                             <div style={{ marginTop: "1rem" }}>
-                                <input defaultValue={table.filter(value => value.type === 3).length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
+                                <input defaultValue={table.filter(value => value.roomtype === "dlx").length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
                                 <label>Duluxe Room (DLX)</label>
                             </div>
                             <div style={{ marginTop: "1rem" }}>
-                                <input defaultValue={table.filter(value => value.type === 4).length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
+                                <input defaultValue={table.filter(value => value.roomtype === "sui").length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
                                 <label>Suite Room (SUT)</label>
                             </div>
                         </div>
@@ -138,7 +142,7 @@ export default function FormReservation() {
                 </form>
                 <div className={styles.format}>
                     <button className={styles.btnConfirm} onClick={sendData}>Confirm</button>
-                    <button className={styles.btnCancel} onClick={() => location.href = "/bookingList"}>Cancel</button>
+                    <button className={styles.btnCancel} onClick={navigatePage}>Cancel</button>
                 </div>
             </div>
 
