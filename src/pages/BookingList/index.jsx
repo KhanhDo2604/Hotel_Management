@@ -13,6 +13,13 @@ import CheckOutBtn from "../../comps/checkOutButton";
 const { RangePicker } = DatePicker;
 
 
+const mapType = {
+    std:"Standard Room (STD)",
+    sup:"Superior Room (SUP)",
+    dlx:"Deluxe Room (DLX)",
+    sui:"Suite Room (SUT)"
+}
+
 export default function BookingList() {
     //Fetch api
     const [data, setData] = useState([])
@@ -169,8 +176,10 @@ export default function BookingList() {
                             {
                                 values.rooms.map((valueRoom) => (
                                     <span style={{ display: "flex" }}>Type:
-                                        <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
-                                            {valueRoom.type}
+                                        <p key={value.id} style={{ fontWeight: "bold" }}>
+                                            {
+                                                mapType[valueRoom.type]
+                                            }
                                         </p>
                                     </span>
                                 ))

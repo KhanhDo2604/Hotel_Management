@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./PlaceToBook.module.scss";
@@ -6,21 +6,18 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
 export default function PlaceToBook() {
-  const std = [
-    { number: "001", type: 1 },
-  ];
-  const sup = [
-    { number: "002", type:2 },
-  ];
-  const dlx = [
-    { number: "003", type:3 },
-  ];
-  const sut = [
-    { number: "004", type:4 },
 
-  ];
-
+  const [typeRoom, setTypeRoom] = useState([])
   const [selectedRoom, setSelectedRoom] = useState([])
+
+  useEffect(()=>{
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/room")
+    .then(async (res) => {
+      setTypeRoom(await res.json())
+  })
+  .catch((err) => console.log(err))
+  },[])
+
   const changeHandler = (room, status) => {
     if (!status) {
       const check = selectedRoom.filter(value => value.number !== room.number);
@@ -31,7 +28,6 @@ export default function PlaceToBook() {
     }
   }
 
-  console.log(selectedRoom)
   return (
     <div className="w3-container">
       <div className={styles.gridContainer}>
@@ -86,13 +82,13 @@ export default function PlaceToBook() {
           </TabList>
           <TabPanel>
             <div className={styles.tableList}>
-              {std.map((value, index) => (
+              {typeRoom.filter((value) => value.roomtype === "std").map((value, index) => (
                 <>
-                  <input type="checkbox" name={value.number} id={value.number} checked={selectedRoom.some((ele)=>ele.number=== value.number)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} />
-                  <label htmlFor={value.number} key={index}
+                  <input type="checkbox" name={value.roomnumber} id={value.roomnumber} checked={selectedRoom.some((ele)=>ele.roomnumber=== value.roomnumber)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} disabled={value.status===1}/>
+                  <label htmlFor={value.roomnumber} key={index}
                     className={styles.active}
                   >
-                    <h4>Room {value.number}</h4>
+                    <h4>Room {value.roomnumber}</h4>
                   </label>
                 </>
               ))}
@@ -101,13 +97,13 @@ export default function PlaceToBook() {
 
           <TabPanel>
             <div className={styles.tableList}>
-              {sup.map((value, index) => (
+              {typeRoom.filter((value) => value.roomtype==="sup").map((value, index) => (
                 <>
-                  <input type="checkbox" name={value.number} id={value.number} checked={selectedRoom.some((ele)=>ele.number=== value.number)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} />
-                  <label htmlFor={value.number} key={index}
+                  <input type="checkbox" name={value.roomnumber} id={value.roomnumber} checked={selectedRoom.some((ele)=>ele.roomnumber=== value.roomnumber)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} disabled={value.status===1}/>
+                  <label htmlFor={value.roomnumber} key={index}
                     className={styles.active}
                   >
-                    <h4>Room {value.number}</h4>
+                    <h4>Room {value.roomnumber}</h4>
                   </label>
                 </>
               ))}
@@ -116,13 +112,13 @@ export default function PlaceToBook() {
 
           <TabPanel>
             <div className={styles.tableList}>
-              {dlx.map((value, index) => (
+              {typeRoom.filter((value) => value.roomtype==="dlx").map((value, index) => (
                 <>
-                  <input type="checkbox" name={value.number} id={value.number} checked={selectedRoom.some((ele)=>ele.number=== value.number)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} />
-                  <label htmlFor={value.number} key={index}
+                  <input type="checkbox" name={value.roomnumber} id={value.roomnumber} checked={selectedRoom.some((ele)=>ele.roomnumber=== value.roomnumber)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} disabled={value.status===1}/>
+                  <label htmlFor={value.roomnumber} key={index}
                     className={styles.active}
                   >
-                    <h4>Room {value.number}</h4>
+                    <h4>Room {value.roomnumber}</h4>
                   </label>
                 </>
               ))}
@@ -131,13 +127,13 @@ export default function PlaceToBook() {
 
           <TabPanel>
             <div className={styles.tableList}>
-              {sut.map((value, index) => (
+              {typeRoom.filter((value) => value.roomtype==="sui").map((value, index) => (
                 <>
-                  <input type="checkbox" name={value.number} id={value.number} checked={selectedRoom.some((ele)=>ele.number=== value.number)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} />
-                  <label htmlFor={value.number} key={index}
+                  <input type="checkbox" name={value.roomnumber} id={value.roomnumber} checked={selectedRoom.some((ele)=>ele.roomnumber=== value.roomnumber)} className={styles.checkBox} onChange={(e) => changeHandler(value, e.target.checked)} disabled={value.status===1}/>
+                  <label htmlFor={value.roomnumber} key={index}
                     className={styles.active}
                   >
-                    <h4>Room {value.number}</h4>
+                    <h4>Room {value.roomnumber}</h4>
                   </label>
                 </>
               ))}

@@ -78,6 +78,10 @@
         &:checked + label {
             background-color: #f7e68d;
         }
+
+        &:disabled + label {
+            background-color: red;
+        }
     }
     
 }
