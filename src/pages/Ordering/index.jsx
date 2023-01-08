@@ -6,77 +6,123 @@ import tick from "../../assets/tick.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Ordering() {
-  const order = [
-    {
-      imgage: cake,
-      idBill: "#351",
-      time: "23 Feb 2021, 08:28 PM",
-      listTable: [1, 2, 3],
-      status: 0,
-    },
-    {
-      imgage: cake,
-      idBill: "#352",
-      time: "24 Feb 2021, 08:28 PM",
-      listTable: [10],
-      status: 0,
-    },
-    {
-      imgage: cake,
-      idBill: "#353",
-      time: "25 Mar 2021, 08:28 PM",
-      listTable: [7, 8, 9],
-      status: 0,
-    },
-    {
-      imgage: cake,
-      idBill: "#358",
-      time: "23 Feb 2021, 08:28 PM",
-      listTable: [1, 2, 3],
-      status: 1,
-    },
-    {
-      imgage: cake,
-      idBill: "#666",
-      time: "23 Feb 2021, 08:28 PM",
-      listTable: [1, 2, 3],
-      status: 2,
-    },
-  ];
+  // const order = [
+  //   {
+  //     imgage: cake,
+  //     idBill: "#351",
+  //     time: "23 Feb 2021, 08:28 PM",
+  //     listTable: [1, 2, 3],
+  //     status: 0,
+  //   },
+  //   {
+  //     imgage: cake,
+  //     idBill: "#352",
+  //     time: "24 Feb 2021, 08:28 PM",
+  //     listTable: [10],
+  //     status: 0,
+  //   },
+  //   {
+  //     imgage: cake,
+  //     idBill: "#353",
+  //     time: "25 Mar 2021, 08:28 PM",
+  //     listTable: [7, 8, 9],
+  //     status: 0,
+  //   },
+  //   {
+  //     imgage: cake,
+  //     idBill: "#358",
+  //     time: "23 Feb 2021, 08:28 PM",
+  //     listTable: [1, 2, 3],
+  //     status: 1,
+  //   },
+  //   {
+  //     imgage: cake,
+  //     idBill: "#666",
+  //     time: "23 Feb 2021, 08:28 PM",
+  //     listTable: [1, 2, 3],
+  //     status: 2,
+  //   },
+  // ];
 
-  const foodInOrder = [
-    {
-      foodImg: cake,
-      foodName: "Vegetable Mixups",
-      desFood: "Vegetable fritters with egg",
-      price: 30000,
-      quantity: 1,
-    },
-    {
-      foodImg: salad,
-      foodName: "Vegetable Mixups",
-      desFood: "Vegetable salad",
-      price: 30000,
-      quantity: 3,
-    },
-  ];
+  // const foodInOrder = [
+  //   {
+  //     foodImg: cake,
+  //     foodName: "Vegetable Mixups",
+  //     desFood: "Vegetable fritters with egg",
+  //     price: 30000,
+  //     quantity: 1,
+  //   },
+  //   {
+  //     foodImg: salad,
+  //     foodName: "Vegetable Mixups",
+  //     desFood: "Vegetable salad",
+  //     price: 30000,
+  //     quantity: 3,
+  //   },
+  // ];
 
   const dropdownItem = ["All Bills", "Not Pay Yet", "Completed", "Rejected"];
+
+  const [data, setData] = useState([]);
+
+  // const [updated, setUpdated] = useState(false);
+
+  const [status, setStatus] = useState(0);
+
+  useEffect(() => {
+    setTimeout(
+      fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/order")
+        .then(async (res) => {
+          setData(await res.json());
+        })
+        .catch((err) => console.log(err)),
+      1000
+    );
+  }, [status]);
 
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState("All Bills");
 
   const [query, setQuery] = useState("");
-  const keys = ["idBill", "time", "listTable"];
+  const keys = ["id", "createin"];
+
+  const countQuantity = (value) => {
+    let count = 0;
+    for (const quantity in value) {
+      count += value[quantity].quantity;
+    }
+    return count;
+  };
+
+  const updateState = (id, number) => {
+    setStatus(number);
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        status: number,
+      }),
+    };
+
+    fetch(
+      `https://hammerhead-app-7qhnq.ondigitalocean.app/api/order/${id}`,
+      requestOptions
+    ).catch((err) => console.log(err));
+  };
 
   return (
     <div className="w3-container">
       <div className={styles.gridContainer}>
         <div className={styles.searchBar}>
-          <input type="text" id={styles.mySearch} placeholder="Search" onChange={(e) => setQuery(e.target.value)}/>
+          <input
+            type="text"
+            id={styles.mySearch}
+            placeholder="Search"
+            onChange={(e) => setQuery(e.target.value)}
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -93,7 +139,11 @@ export default function Ordering() {
         >
           <div className={styles.dropdownBtn}>
             {selected}
-            {!isActive ? <FontAwesomeIcon icon={faChevronDown}/> : <FontAwesomeIcon icon={faChevronUp}/>}
+            {!isActive ? (
+              <FontAwesomeIcon icon={faChevronDown} />
+            ) : (
+              <FontAwesomeIcon icon={faChevronUp} />
+            )}
           </div>
 
           {isActive && (
@@ -115,121 +165,158 @@ export default function Ordering() {
       </div>
 
       <div className={styles.orderList}>
-        {order.filter((value) => keys.some((key) => value[key].toString().toLowerCase().includes(query))).map((value, index) => (
-          <div className={styles.orderItem} key={index}>
-            <h5>Order {value.idBill}</h5>
-            <h6>{value.time}</h6>
-            <h6>Table: {value.listTable.join(", ")}</h6>
+        {data
+          .filter((value) =>
+            keys.some((key) =>
+              value[key].toString().toLowerCase().includes(query)
+            )
+          )
+          .map((value, index) => (
+            <div className={styles.orderItem} key={index}>
+              <h5>Order #{value.id}</h5>
+              <h6>{value.createin}</h6>
+              <h6>Table: {}</h6>
 
-            {foodInOrder.map((food, index) => (
-              <div style={{ display: "flex", marginTop: "0.8rem" }} key={index}>
-                <img src={food.foodImg} alt="" />
-                <div style={{ width: "100%" }}>
-                  <h6 style={{ opacity: "1", fontWeight: "600" }}>
-                    {food.foodName}
-                  </h6>
-                  <h6>{food.desFood}</h6>
+              <div style={{overflowY: "scroll", height: '45%'}}>
+                {data[index].foods.map((food, index) => (
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <h6 style={{ opacity: "1", fontWeight: "600" }}>
-                      {food.price}đ
-                    </h6>
-                    <h6 style={{ opacity: "1", fontWeight: "600" }}>
-                      Qty: {food.quantity}
-                    </h6>
-                  </div>
-                  <hr
                     style={{
-                      color: "#9999",
-                      width: "100%",
-                      marginBottom: "0px",
+                      display: "flex",
                       marginTop: "0.8rem",
                     }}
-                  />
+                    key={index}
+                  >
+                    <img
+                      src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${food.cover}`}
+                      alt=""
+                    />
+                    <div style={{ width: "100%" }}>
+                      <h6 style={{ opacity: "1", fontWeight: "600" }}>
+                        {food.name}
+                      </h6>
+                      {/* <h6 style={{textOverflow: 'ellipsis'}}>{food.}</h6> */}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <h6 style={{ opacity: "1", fontWeight: "600" }}>
+                          {food.price}đ
+                        </h6>
+                        <h6 style={{ opacity: "1", fontWeight: "600" }}>
+                          Qty: {food.quantity}
+                        </h6>
+                      </div>
+                      <hr
+                        style={{
+                          color: "#9999",
+                          width: "100%",
+                          marginBottom: "0px",
+                          marginTop: "0.8rem",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  width: "91%",
+                  marginBottom: "0.8rem",
+                }}
+              >
+                <hr
+                  style={{
+                    color: "#9999",
+                    width: "100%",
+                    margin: "0 0",
+                    marginTop: "-1px",
+                  }}
+                />
+
+                <div
+                  style={{
+                    marginTop: "0.8rem",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>
+                    <h6>x{countQuantity(value.foods)} items</h6>
+                    <h6 style={{ opacity: "1", fontWeight: "600" }}>
+                      {value.total}đ
+                    </h6>
+                  </div>
+
+                  <div>
+                    {value.status === 0 ? (
+                      <div style={{ display: "flex" }}>
+                        <button
+                          className={styles.rejectBtn}
+                          style={{
+                            marginRight: "1.6rem",
+                            borderColor: "#E13428",
+                          }}
+                          onClick={() => updateState(value.id, 2)}
+                        >
+                          <img src={close} alt="" className={styles.iconBtn} />
+                        </button>
+                        <button
+                          className={styles.completeBtn}
+                          style={{ borderColor: "#2BC48A" }}
+                          onClick={() => updateState(value.id, 1)}
+                        >
+                          <img src={tick} alt="" className={styles.iconBtn} />
+                        </button>
+                      </div>
+                    ) : value.status === 1 ? (
+                      <div>
+                        <button
+                          style={{ borderColor: "#2BC48A", cursor: "default" }}
+                          disabled
+                        >
+                          <img src={tick} alt="" className={styles.iconBtn} />
+                          <h6
+                            style={{
+                              opacity: "1",
+                              color: "#2BC48A",
+                              textTransform: "uppercase",
+                              fontWeight: "600",
+                            }}
+                          >
+                            completed
+                          </h6>
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          style={{ borderColor: "#E13428", cursor: "default" }}
+                          disabled
+                        >
+                          <img src={close} alt="" className={styles.iconBtn} />
+                          <h6
+                            style={{
+                              opacity: "1",
+                              color: "#E13428",
+                              textTransform: "uppercase",
+                              fontWeight: "600",
+                            }}
+                          >
+                            rejected
+                          </h6>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            ))}
-            <hr
-              style={{
-                color: "#9999",
-                width: "100%",
-                margin: "0 0",
-                marginTop: "-1px",
-              }}
-            />
-
-            <div
-              style={{
-                marginTop: "0.8rem",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <h6>x4 items</h6>
-                <h6 style={{ opacity: "1", fontWeight: "600" }}>60000đ</h6>
-              </div>
-
-              <div>
-                {value.status === 0 ? (
-                  <div style={{ display: "flex" }}>
-                    <button
-                      className={styles.rejectBtn}
-                      style={{ marginRight: "1.6rem", borderColor: "#E13428" }}
-
-                    >
-                      <img src={close} alt="" className={styles.iconBtn} />
-                    </button>
-                    <button 
-                      className={styles.completeBtn}
-                      style={{ borderColor: "#2BC48A" }}>
-                      <img src={tick} alt="" className={styles.iconBtn} />
-                    </button>
-                  </div>
-                ) : value.status === 1 ? (
-                  <div>
-                    <button
-                      style={{ borderColor: "#2BC48A", cursor: "default" }}
-                      disabled
-                    >
-                      <img src={tick} alt="" className={styles.iconBtn} />
-                      <h6
-                        style={{
-                          opacity: "1",
-                          color: "#2BC48A",
-                          textTransform: "uppercase",
-                          fontWeight: "600",
-                        }}
-                      >
-                        completed
-                      </h6>
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <button
-                      style={{ borderColor: "#E13428", cursor: "default" }}
-                      disabled
-                    >
-                      <img src={close} alt="" className={styles.iconBtn} />
-                      <h6
-                        style={{
-                          opacity: "1",
-                          color: "#E13428",
-                          textTransform: "uppercase",
-                          fontWeight: "600",
-                        }}
-                      >
-                        rejected
-                      </h6>
-                    </button>
-                  </div>
-                )}
-              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

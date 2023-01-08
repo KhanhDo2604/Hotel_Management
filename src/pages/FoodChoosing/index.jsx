@@ -1,25 +1,23 @@
 import styles from "./FoodChoosing.module.scss";
 import edit from "../../assets/edit.png";
-import pizza from "../../assets/pizzaHalf.jpg";
-import miquang from "../../assets/MiQuang.png";
-import spicyNoodle from "../../assets/spicyUdonNoodle.jpg";
 import pizzaa from "../../assets/pizza.png";
 import desserts from "../../assets/gelato.png";
 import drink from "../../assets/drink.png";
 import meal from "../../assets/meal.png";
 import pasta from "../../assets/spaghetti.png";
-import { useState } from "react";
-import coke from "../../assets/coke.jpg";
-import dessertCake from "../../assets/cake.png";
-import pastaSeafood from "../../assets/pastaSeafood.jpg";
+import { useState, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { useRef } from "react";
+import { actions, reducer } from "./reducer";
 
 export default function MenuChoosing() {
   const location = useLocation();
 
   const [data, setData] = useState([]);
+
+  const [order, dispatch] = useReducer(reducer, {});
+
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
@@ -40,77 +38,69 @@ export default function MenuChoosing() {
 
   const [currentChoice, setCurrentChoice] = useState("Pizza");
 
-  const pizzaList = data.filter((e) => e.status === 1 && e.category === "pizza");
+  const [clicked, setCliked] = useState(false);
+
+  const pizzaList = data.filter(
+    (e) => e.status === 1 && e.category === "pizza"
+  );
 
   const [currentList, setCurrentList] = useState(pizzaList);
-  const [currentOrder, setCurrentOrder] = useState([]);
 
   const filterCategory = (value) => {
     switch (value) {
-      case 'Drink': 
+      case "Drink":
         return "drink";
-      case 'Desserts': 
+      case "Desserts":
         return "dessert";
-      case 'Pasta': 
+      case "Pasta":
         return "pasta";
-      case 'Pizza': 
+      case "Pizza":
         return "pizza";
       default:
         return "mainmeal";
     }
-  }
-
-  // const [current, setCurrent] = useState();
-
-  const handleCLick = (value) => {
-    const check = currentOrder.filter((e) => e.id === value.id).length;
-    if(check === 0) {
-      setCurrentOrder([...currentOrder, {...value, quantity: 1}]);
-    }
-  }
+  };
 
   useEffect(() => {
-    setCurrentList(data.filter((e) => e.status === 1 && e.category === filterCategory(currentChoice)))
-    // switch(currentChoice) {
-    //   case 'Drink': 
-    //     setCurrentList(drinkList);
-    //     return;
-    //   case 'Desserts': 
-    //     setCurrentList(dessertList);
-    //     return;
-    //   case 'Pasta': 
-    //     setCurrentList(pastaList);
-    //     return;
-    //   case 'Pizza': 
-    //     setCurrentList(pizzaList);
-    //     return;
-    //   default:
-    //     setCurrentList(mainMealList);
-    //     return;
-    // }
-  }, [currentChoice, data])
+    setCurrentList(
+      data.filter(
+        (e) => e.status === 1 && e.category === filterCategory(currentChoice)
+      )
+    );
+  }, [currentChoice, data]);
 
-  
-  const [count, setCount] = useState()
+  const makeAnOrder = () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        agentid: "20521331",
+        total: total,
+        foods: Object.values(order).map((value) => ({
+          foodid: value.id,
+          price: value.price,
+          quantity: value.quantity
+        }))
+      }),
+    };
 
-  const handlePlus = (value) => {
-    setCurrent(value);
-    setCount(() => value.quality + 1);
-    setCurrent({...current, quality: count});
-  }
+    fetch(
+      "https://hammerhead-app-7qhnq.ondigitalocean.app/api/order",
+      requestOptions
+    ).then(() => console.log("200 OK"))
+  };
 
-  const handleMinus = (value) => {
-    setCurrent(value);
-
-  }
-
-  const makeAnOrder = (value) => {
-    // const requestOptions = {
-    //   method: "POST",
-    //   body: formData
-    // };
-    // fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
-  } 
+  // Count Total money
+  useEffect(() => {
+    let count = 0;
+    if (Object.values(order).length === 0) return setTotal(0);
+    for (const price in Object.values(order)) {
+      count +=
+        Object.values(order)[price].price *
+        Object.values(order)[price].quantity;
+      setTotal(count);
+    }
+  }, [clicked]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -143,22 +133,42 @@ export default function MenuChoosing() {
               ))}
             </div>
           </div>
-          
+
           {/* danh sách món */}
           <div className={styles.section}>
             <h3>{currentChoice}</h3>
 
             <div className={styles.listFood}>
               <div
-                style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: '1.6rem' }}>   
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1fr",
+                  gap: "1.6rem",
+                }}
+              >
                 {currentList.map((value, index) => (
                   <div
                     className={styles.foodTag}
                     key={index}
                     style={{ cursor: "pointer" }}
-                    onClick={() => handleCLick(value)}
+                    onClick={() => {
+                      dispatch({
+                        type: actions.new,
+                        data: {
+                          id: value.id,
+                          foodImg: value.cover,
+                          price: value.price,
+                          name: value.name,
+                          description: value.description,
+                        },
+                      });
+                      setCliked(!clicked);
+                    }}
                   >
-                    <img src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`} alt="" />
+                    <img
+                      src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`}
+                      alt=""
+                    />
                     <h6 style={{ opacity: "1", fontWeight: "600" }}>
                       {value.name}
                     </h6>
@@ -173,7 +183,7 @@ export default function MenuChoosing() {
             </div>
           </div>
         </div>
-        
+
         {/* Chỗ hiển thị món đã chọn */}
         <div className={styles.orders}>
           <div>
@@ -193,13 +203,17 @@ export default function MenuChoosing() {
           </div>
 
           <div style={{ height: "60%", overflowY: "scroll" }}>
-            {currentOrder.map((value, index) => (
+            {Object.values(order).map((value, index) => (
               <div className={styles.orderTag} key={index}>
                 <div style={{ display: "flex" }}>
-                  <img src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`} alt="" className={styles.foodImg} />
+                  <img
+                    src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`}
+                    alt=""
+                    className={styles.foodImg}
+                  />
                   <div>
                     <div style={{ display: "flex" }}>
-                      <h6>{value.quality}</h6>
+                      <h6>{value.quantity}</h6>
                       <h6 style={{ color: "#999", margin: "0 0.4rem" }}>x</h6>
                       <h6>{value.name}</h6>
                     </div>
@@ -208,8 +222,32 @@ export default function MenuChoosing() {
                 </div>
 
                 <div style={{ position: "relative" }}>
-                  <button style={{ marginLeft: "0.8rem" }}>+</button>
-                  <button style={{ right: "0", position: "absolute", padding: '0.85rem 1.3rem' }}> - </button>
+                  <button
+                    style={{ marginLeft: "0.8rem" }}
+                    onClick={() => {
+                      dispatch({ type: actions.add, data: { id: value.id } });
+                      setCliked(!clicked);
+                    }}
+                  >
+                    +
+                  </button>
+                  <button
+                    style={{
+                      right: "0",
+                      position: "absolute",
+                      padding: "0.85rem 1.3rem",
+                    }}
+                    onClick={() => {
+                      dispatch({
+                        type: actions.subtract,
+                        data: { id: value.id },
+                      });
+                      setCliked(!clicked);
+                    }}
+                  >
+                    {" "}
+                    -{" "}
+                  </button>
                 </div>
               </div>
             ))}
@@ -227,9 +265,9 @@ export default function MenuChoosing() {
             />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h3>Total:</h3>
-              <h3>190000đ</h3>
+              <h3>{total}đ</h3>
             </div>
-            <button className={styles.checkOutBtn}>Make Order</button>
+            <button className={styles.checkOutBtn} onClick={makeAnOrder}>Make Order</button>
           </div>
         </div>
       </div>

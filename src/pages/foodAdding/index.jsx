@@ -7,8 +7,6 @@ export default function FoodAdding() {
 
   const [newFood, setNewFood] = useState({cover: null, name: '', category: 'mainmeal', price: 0, description: ''});
 
-
-
   const addingFood = () => {
     const formData = new FormData();
 

@@ -1,16 +1,14 @@
 import styles from "./Menu.module.scss";
-import miquang from "../../assets/MiQuang.png";
 import update from "../../assets/pencil.png";
 import bin from "../../assets/bin.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 import { Link, useLocation } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-// const food = [
 //   {
 //     id: 0,
 //     foodImg: miquang,
@@ -123,8 +121,7 @@ import ReactPaginate from "react-paginate";
 
 export default function Menu() {
   const [data, setData] = useState([]);
-  // const [list, setList] = useState(data);
-
+  
   const [updated, setUpdated] = useState(false);
 
   const removeFood = (id) => {
@@ -148,38 +145,46 @@ export default function Menu() {
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
       .then(async (res) => {
         setData(await res.json());
-        // setList(data);
       })
       .catch((err) => console.log(err));
   }, [updated]);
+
+  const [list, setList] = useState(data);
+  const [clicked,setCliked] = useState(false);
 
   const dropdownItem = ["All Status", "Unavailable", "Available"];
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState("All Status");
 
-  // const [list, setList] = useState(food);
-  // const [list, setList] = useState(data);
-
   const [query, setQuery] = useState("");
   const keys = ["name"];
 
-  const [itemOffset, setItemOffset] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0); 
   const itemsPerPage = 6;
   const endOffset = itemOffset + itemsPerPage;
 
-  const filtered = data.filter((values) =>
+  const filtered = (clicked === true ? list : data).filter((values) =>
     keys.some((key) => values[key].toLowerCase().includes(query))
   );
 
-  // const filterBaseOnCate = (value) => {
-  //   if(value === "Available") {
-  //     setData(data.filter((x) => x.status === 1));
-  //   }
-  //   else if(value === "Unavailable") {
-  //     setData(data.filter((x) => x.status === 0));
-  //   }
-  //   return selected;
-  // }
+  const kiemtra = clicked === true ? list : data;
+  console.log(clicked);
+  console.log(kiemtra);
+
+  const filterBaseOnCate = (value) => {
+    if(value === "Available") {
+      setList(data.filter((x) => x.status === 1));
+      console.log(list);
+    }
+    else if(value === "Unavailable") {
+      setList(data.filter((x) => x.status === 0));
+    }
+    else {
+      setCliked(false);
+      return;
+    }
+    setCliked(true);
+  }
 
   const currentItems = filtered.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filtered.length / itemsPerPage);
@@ -213,10 +218,7 @@ export default function Menu() {
           </div>
 
           {/* nút filter */}
-          <div
-            className={styles.dropdown}
-            onClick={(e) => setIsActive(!isActive)}
-          >
+          <div className={styles.dropdown} onClick={(e) => setIsActive(!isActive)} >
             <div className={styles.dropdownBtn}>
               {selected}
               {!isActive ? (
@@ -236,7 +238,7 @@ export default function Menu() {
                       onClick={(e) => {
                         setSelected(value);
                         setIsActive(false);
-                        // filterBaseOnCate(selected);
+                        filterBaseOnCate(value);
                       }}
                     >
                       {value}
@@ -246,6 +248,8 @@ export default function Menu() {
               </div>
             )}
           </div>
+
+          {/* Nút adding food */}
           <div style={{ display: "flex" }}>
             <Link className={styles.buttonAction} to="/foodAdding">
               <img src="/src/assets/more.png" className={styles.icon} />
@@ -254,6 +258,7 @@ export default function Menu() {
           </div>
         </div>
 
+        {/* Danh sách food */}
         <div className={styles.gridFood}>
           <div style={{ height: "51.7rem" }}>
             <div className={styles.titleBarGridFood}>

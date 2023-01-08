@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./FormUpdate.module.scss";
 
@@ -14,8 +13,6 @@ export default function FormUpdate() {
 
   const group = ["mainmeal", "pizza", "dessert", "drink", "pasta"];
 
-  const status = [0, 1];
-
   const update = () => {
     const requestOptions = {
       method: "PUT",
@@ -25,7 +22,7 @@ export default function FormUpdate() {
         name: name,
         category: cate,
         price: price,
-        status: trangthai
+        status: trangthai,
       }),
     };
 
@@ -35,7 +32,7 @@ export default function FormUpdate() {
     )
       .then(async (response) => {
         const data = await response.json();
-        console.log("Thành công");
+
         if (!response.ok) {
           const error = (data && data.message) || response.status;
           return Promise.reject(error);
@@ -110,25 +107,11 @@ export default function FormUpdate() {
             <select
               name="status"
               id="status"
-              onClick={(e) => {
-                setStatus(e.target.value === "Available" ? 1 : 0)
-                console.log(trangthai);
-              }}
+              onChange={(e) => setStatus(e.target.value)}
+              value={trangthai}
             >
-              {location.state.foodInfo.status === 0 ? (
-                <option>Unavailable</option>
-              ) : (
-                <option>Available</option>
-              )}
-              {status.map((value, index) => {
-                if (value !== location.state.foodInfo.status) {
-                  return value === 0 ? (
-                    <option key={index}>Unavailable</option>
-                  ) : (
-                    <option key={index}>Available</option>
-                  );
-                }
-              })}
+              <option value={0}>Unavailable</option>
+              <option value={1}>Available</option>
             </select>
           </div>
         </form>

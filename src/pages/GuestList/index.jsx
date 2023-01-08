@@ -17,92 +17,12 @@ const guestList = [
         }
     },
     {
-        id: 2,
-        name: "Nguyen Van Phap",
-        gender: "Male",
-        createIn: "20/11/2022",
-        contact: {
-            email: "phap@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
         id: 3,
         name: "Nguyen Huynh Tuan Khang",
         gender: "Male",
-        createIn: "20/11/2022",
+        createIn: "02/01/2023",
         contact: {
             email: "khang@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 4,
-        name: "Do Pham Huy Khanh",
-        gender: "Male",
-        createIn: "20/11/2022",
-        contact: {
-            email: "khanh@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 5,
-        name: "Vo Dinh Van",
-        gender: "Male",
-        createIn: "20/11/2022",
-        contact: {
-            email: "van@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 6,
-        name: "Vo Dinh Van",
-        gender: "Male",
-        createIn: "20/11/2022",
-        contact: {
-            email: "van@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 7,
-        name: "Nguyen Huynh Tuan Khang",
-        gender: "Male",
-        createIn: "20/11/2022",
-        contact: {
-            email: "khang@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 8,
-        name: "Do Pham Huy Khanh",
-        gender: "Female",
-        createIn: "20/11/2022",
-        contact: {
-            email: "khanh@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 9,
-        name: "Vo Dinh Van",
-        gender: "Female",
-        createIn: "20/11/2022",
-        contact: {
-            email: "van@gmail.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 10,
-        name: "Vo Dinh Van",
-        gender: "Female",
-        createIn: "20/11/2022",
-        contact: {
-            email: "van@gmail.com",
             phoneNumber: "0342578371"
         }
     },
