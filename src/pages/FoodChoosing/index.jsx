@@ -14,9 +14,21 @@ import dessertCake from "../../assets/cake.png";
 import pastaSeafood from "../../assets/pastaSeafood.jpg";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useRef } from "react";
 
 export default function MenuChoosing() {
   const location = useLocation();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
+      .then(async (res) => {
+        setData(await res.json());
+        // setList(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const category = [
     { img: pizzaa, name: "Pizza" },
@@ -28,268 +40,27 @@ export default function MenuChoosing() {
 
   const [currentChoice, setCurrentChoice] = useState("Pizza");
 
-  const pizzaList = [
-    {
-      id: 0,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-    {
-      id: 1,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-    {
-      id: 2,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-    {
-      id: 3,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-    {
-      id: 4,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-    {
-      id: 5,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-    {
-      id: 6,
-      foodImg: pizza,
-      foodName: "Saigon Mania Pizza",
-      price: "300000",
-      category: "Pizza",
-    },
-  ];
-
-  const drinkList = [
-    {
-      id: 0,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-    {
-      id: 1,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-    {
-      id: 2,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-    {
-      id: 3,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-    {
-      id: 4,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-    {
-      id: 5,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-    {
-      id: 6,
-      foodImg: coke,
-      foodName: "Coca Cola",
-      price: "300000",
-      category: "Drink",
-    },
-  ];
-
-  const dessertList = [
-    {
-      id: 0,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-    {
-      id: 1,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-    {
-      id: 2,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-    {
-      id: 3,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-    {
-      id: 4,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-    {
-      id: 5,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-    {
-      id: 6,
-      foodImg: dessertCake,
-      foodName: "Chocolate Cake",
-      price: "300000",
-      category: "Desserts",
-    },
-  ];
-
-  const mainMealList = [
-    {
-      id: 0,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-    {
-      id: 1,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-    {
-      id: 2,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-    {
-      id: 3,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-    {
-      id: 4,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-    {
-      id: 5,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-    {
-      id: 6,
-      foodImg: spicyNoodle,
-      foodName: "Spicy Udon Noodles",
-      price: "300000",
-      category: "Main meal",
-    },
-  ];
-
-  const pastaList = [
-    {
-      id: 0,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-    {
-      id: 1,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-    {
-      id: 2,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-    {
-      id: 3,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-    {
-      id: 4,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-    {
-      id: 5,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-    {
-      id: 6,
-      foodImg: pastaSeafood,
-      foodName: "Pasta Seafood",
-      price: "300000",
-      category: "Pasta",
-    },
-  ];
+  const pizzaList = data.filter((e) => e.status === 1 && e.category === "pizza");
 
   const [currentList, setCurrentList] = useState(pizzaList);
   const [currentOrder, setCurrentOrder] = useState([]);
+
+  const filterCategory = (value) => {
+    switch (value) {
+      case 'Drink': 
+        return "drink";
+      case 'Desserts': 
+        return "dessert";
+      case 'Pasta': 
+        return "pasta";
+      case 'Pizza': 
+        return "pizza";
+      default:
+        return "mainmeal";
+    }
+  }
+
+  // const [current, setCurrent] = useState();
 
   const handleCLick = (value) => {
     const check = currentOrder.filter((e) => e.id === value.id).length;
@@ -297,29 +68,49 @@ export default function MenuChoosing() {
       setCurrentOrder([...currentOrder, {...value, quantity: 1}]);
     }
   }
+
   useEffect(() => {
-    switch(currentChoice) {
-      case 'Drink': 
-        setCurrentList(drinkList);
-        return;
-      case 'Desserts': 
-        setCurrentList(dessertList);
-        return;
-      case 'Pasta': 
-        setCurrentList(pastaList);
-        return;
-      case 'Pizza': 
-        setCurrentList(pizzaList);
-        return;
-      default:
-        setCurrentList(mainMealList);
-        return;
-    }
-  }, [currentChoice])
+    setCurrentList(data.filter((e) => e.status === 1 && e.category === filterCategory(currentChoice)))
+    // switch(currentChoice) {
+    //   case 'Drink': 
+    //     setCurrentList(drinkList);
+    //     return;
+    //   case 'Desserts': 
+    //     setCurrentList(dessertList);
+    //     return;
+    //   case 'Pasta': 
+    //     setCurrentList(pastaList);
+    //     return;
+    //   case 'Pizza': 
+    //     setCurrentList(pizzaList);
+    //     return;
+    //   default:
+    //     setCurrentList(mainMealList);
+    //     return;
+    // }
+  }, [currentChoice, data])
+
+  
+  const [count, setCount] = useState()
 
   const handlePlus = (value) => {
-    setCount(value.quantity + 1);
+    setCurrent(value);
+    setCount(() => value.quality + 1);
+    setCurrent({...current, quality: count});
   }
+
+  const handleMinus = (value) => {
+    setCurrent(value);
+
+  }
+
+  const makeAnOrder = (value) => {
+    // const requestOptions = {
+    //   method: "POST",
+    //   body: formData
+    // };
+    // fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
+  } 
 
   return (
     <div style={{ position: "relative" }}>
@@ -338,6 +129,7 @@ export default function MenuChoosing() {
           </div>
 
           <div>
+            {/* Danh mục menu */}
             <div className={styles.content}>
               {category.map((value, index) => (
                 <button
@@ -351,13 +143,14 @@ export default function MenuChoosing() {
               ))}
             </div>
           </div>
-
+          
+          {/* danh sách món */}
           <div className={styles.section}>
             <h3>{currentChoice}</h3>
 
             <div className={styles.listFood}>
               <div
-                style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>   
+                style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: '1.6rem' }}>   
                 {currentList.map((value, index) => (
                   <div
                     className={styles.foodTag}
@@ -365,9 +158,9 @@ export default function MenuChoosing() {
                     style={{ cursor: "pointer" }}
                     onClick={() => handleCLick(value)}
                   >
-                    <img src={value.foodImg} alt="" />
+                    <img src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`} alt="" />
                     <h6 style={{ opacity: "1", fontWeight: "600" }}>
-                      {value.foodName}
+                      {value.name}
                     </h6>
                     <div style={{ display: "flex" }}>
                       <h6>{value.category}</h6>
@@ -380,7 +173,8 @@ export default function MenuChoosing() {
             </div>
           </div>
         </div>
-
+        
+        {/* Chỗ hiển thị món đã chọn */}
         <div className={styles.orders}>
           <div>
             <h3>Table: {location.state.table.join(", ")}</h3>
@@ -402,22 +196,20 @@ export default function MenuChoosing() {
             {currentOrder.map((value, index) => (
               <div className={styles.orderTag} key={index}>
                 <div style={{ display: "flex" }}>
-                  <img src={value.foodImg} alt="" className={styles.foodImg} />
+                  <img src={`https://hammerhead-app-7qhnq.ondigitalocean.app/api/image/${value.cover}`} alt="" className={styles.foodImg} />
                   <div>
                     <div style={{ display: "flex" }}>
-                      <h6>{value.quantity}</h6>
+                      <h6>{value.quality}</h6>
                       <h6 style={{ color: "#999", margin: "0 0.4rem" }}>x</h6>
-                      <h6>{value.foodName}</h6>
+                      <h6>{value.name}</h6>
                     </div>
                     <h6 style={{ color: "#999" }}>{value.price}đ</h6>
                   </div>
                 </div>
 
                 <div style={{ position: "relative" }}>
-                  <button style={{ marginLeft: "0.8rem" }} onClick={() => value.quantity = 2}>+</button>
-                  <button style={{ right: "0", position: "absolute", padding: '0.85rem 1.3rem' }}>
-                    -
-                  </button>
+                  <button style={{ marginLeft: "0.8rem" }}>+</button>
+                  <button style={{ right: "0", position: "absolute", padding: '0.85rem 1.3rem' }}> - </button>
                 </div>
               </div>
             ))}

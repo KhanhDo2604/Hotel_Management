@@ -14,80 +14,8 @@ const { RangePicker } = DatePicker;
 
 
 export default function BookingList() {
-    const bookingList = [
-        {
-            id: 1,
-            numberRoom: {
-                roomOne: "Room666",
-                roomTwo: "Room777"
-            },
-            typeRoom: {
-                typeRoomOne: "Superior Room (SUP)",
-                typeRoomTwo: "Superior Room (SUP)",
-                typeRoomThree: "Superior Room (SUP)"
-
-            },
-            nameCustomer: "Võ Đình Vân",
-            startDate: "11/26/22",
-            endDate: "12/23/22",
-            guests: "2 guests",
-            state: "OC"
-        },
-        {
-            id: 2,
-            numberRoom: {
-                roomOne: "Room666",
-                roomTwo: "Room777"
-            },
-            typeRoom: {
-                typeRoomOne: "Superior Room (SUP)",
-                typeRoomTwo: "Superior Room (SUP)"
-            },
-            nameCustomer: "Nguyễn Huỳnh Tuấn Khang",
-            startDate: "11/26/22",
-            endDate: "12/23/22",
-            guests: "2 guests",
-            state: "EA"
-        },
-        {
-            id: 3,
-            numberRoom: {
-                roomOne: "Room666",
-                roomTwo: "Room777"
-            },
-            typeRoom: {
-                typeRoomOne: "Superior Room (SUP)",
-                typeRoomTwo: "Superior Room (SUP)"
-            },
-            nameCustomer: "Nguyễn Văn Pháp",
-            startDate: "11/26/22",
-            endDate: "12/23/22",
-            guests: "2 guests",
-            state: "SO"
-        },
-        {
-            id: 4,
-            numberRoom: {
-                roomOne: "Room666",
-                roomTwo: "Room777"
-            },
-            typeRoom: {
-                typeRoomOne: "Superior Room (SUP)",
-                typeRoomTwo: "Superior Room (SUP)"
-            },
-            nameCustomer: "Nguyễn Văn Pháp",
-            startDate: "11/26/22",
-            endDate: "12/23/22",
-            guests: "2 guests",
-            state: "SO"
-        }
-    ]
-
-    const [getState, setState] = useState(false); 
-
     //Fetch api
     const [data, setData] = useState([])
-    console.log(data)
     
     useEffect(() => {
             fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation")
@@ -228,8 +156,8 @@ export default function BookingList() {
                         <div className={styles.alignItems}>
                             {
                                 values.rooms.map((valueRoom) => (
-                                    <span style={{ display: "flex" }}>Room:
-                                        <p key={value.id} style={{ fontWeight: "bold" }}>
+                                    <span style={{ display: "flex"}}>Room: 
+                                        <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
                                             {valueRoom.number}
                                         </p>
                                     </span>
@@ -241,7 +169,7 @@ export default function BookingList() {
                             {
                                 values.rooms.map((valueRoom) => (
                                     <span style={{ display: "flex" }}>Type:
-                                        <p key={value.id} style={{ fontWeight: "bold" }}>
+                                        <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
                                             {valueRoom.type}
                                         </p>
                                     </span>
@@ -251,21 +179,21 @@ export default function BookingList() {
                         </div>
                         <div className={styles.alignItems}>
                             <p>{values.fullname}</p>
-                            <p style={{ fontWeight: "bold", marginTop: "4.3rem" }}>{values.guestcount}</p>
+                            <p style={{ fontWeight: "bold", marginTop: "4.3rem" }}>{values.guestcount} Guest(s)</p>
                         </div>
                         <div className={styles.end}>
                             {
-                                values.state === "OC" ? (
+                                values.status === "oc" ? (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "#66FF99", color: "#057028" }}>{values.status}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "#5BF551", color: "#2C7527" }}>{values.status.toUpperCase()}</p>
                                     </>
-                                ) : values.state === "EA" ? (
+                                ) : values.status === "ea" ? (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{values.status}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{values.status.toUpperCase()}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{values.status}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{values.status.toUpperCase()}</p>
                                     </>
                                 )
                             }
@@ -273,9 +201,9 @@ export default function BookingList() {
 
                             {/* <BillModal open={getState} onClose={() => setState(false)} guestInfo={values}/> */}
 
-                            <button className={styles.close} onClick={() => handleDelete(values.id)}>
+                            {/* <button className={styles.close} onClick={() => handleDelete(values.id)}>
                                 <FontAwesomeIcon style={{ color: "red", height: "2.8rem" }} icon={faClose} />
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 ))

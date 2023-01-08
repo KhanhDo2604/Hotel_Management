@@ -4,9 +4,8 @@ import styles from "./FoodAdding.module.scss";
 
 export default function FoodAdding() {
   const group = ["mainmeal", "pizza", "dessert", "drink", "pasta"];
-  const [pending, setPending] = useState(false);
 
-  const [newFood, setNewFood] = useState({foodCover: null, foodName: '', category: 'mainmeal', price: 0, description: ''});
+  const [newFood, setNewFood] = useState({cover: null, name: '', category: 'mainmeal', price: 0, description: ''});
 
 
 
@@ -19,12 +18,9 @@ export default function FoodAdding() {
 
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
       body: formData
     };
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
-      .then((response) => response.json())
-      .then(() => setPending(!pending));
   };
 
   const filterCategory = (value) => {
@@ -55,11 +51,11 @@ export default function FoodAdding() {
               type="file"
               name="cover"
               onChange={(e) => {
-                setNewFood({...newFood, foodCover: e.target.files[0]},
+                setNewFood({...newFood, cover: e.target.files[0]},
               )}}
             />
 
-            <input type="text" onChange={(e) => setNewFood({...newFood, foodName: e.target.value})} required/>
+            <input type="text" onChange={(e) => setNewFood({...newFood, name: e.target.value})} required/>
 
             <select name="status" id="status" onClick={(e) => setNewFood({...newFood, category: e.target.value})} style={{ textTransform: "capitalize" }}>
               {group.map((value, index) => (

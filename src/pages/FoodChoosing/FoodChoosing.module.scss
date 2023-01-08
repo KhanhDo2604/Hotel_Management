@@ -1,6 +1,6 @@
 .gridContainer {
     display: grid;
-    grid-template-columns: 1.5fr 1fr ;
+    grid-template-columns: 1.6fr 1fr ;
     margin-top: 2rem;
 
     a {
@@ -95,6 +95,7 @@
 .content {
     display:flex;
     justify-content: space-between;
+
     button {
         border: 2px solid #999;
         width: 10rem;
@@ -120,6 +121,7 @@
 }
 
 .section {
+
     h3 {
         font-weight: 600;
         margin: 1.6rem 0;
@@ -129,7 +131,8 @@
         margin: 0;
     }
     img {
-        width: 90%;
+        width: 100%;
+        height: 117.84px;
         border-radius: 1rem;
         margin-bottom: 0.8rem;
     }

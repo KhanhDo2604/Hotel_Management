@@ -123,7 +123,7 @@ import ReactPaginate from "react-paginate";
 
 export default function Menu() {
   const [data, setData] = useState([]);
-   const [list, setList] = useState(data);
+  // const [list, setList] = useState(data);
 
   const [updated, setUpdated] = useState(false);
 
@@ -148,7 +148,7 @@ export default function Menu() {
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
       .then(async (res) => {
         setData(await res.json());
-        setList(data);
+        // setList(data);
       })
       .catch((err) => console.log(err));
   }, [updated]);
@@ -171,15 +171,15 @@ export default function Menu() {
     keys.some((key) => values[key].toLowerCase().includes(query))
   );
 
-  const filterBaseOnCate = (value) => {
-    if(value === "Available") {
-      setData(data.filter((x) => x.status === 1));
-    }
-    else if(value === "Unavailable") {
-      setData(data.filter((x) => x.status === 0));
-    }
-    return selected;
-  }
+  // const filterBaseOnCate = (value) => {
+  //   if(value === "Available") {
+  //     setData(data.filter((x) => x.status === 1));
+  //   }
+  //   else if(value === "Unavailable") {
+  //     setData(data.filter((x) => x.status === 0));
+  //   }
+  //   return selected;
+  // }
 
   const currentItems = filtered.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filtered.length / itemsPerPage);
