@@ -1,14 +1,10 @@
 import styles from "./BookingList.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faL, faUsers } from "@fortawesome/free-solid-svg-icons";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import penCil from '../../assets/pencil.png'
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { DatePicker } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import BillModal from "./billModal";
 import CheckOutBtn from "../../comps/checkOutButton";
 const { RangePicker } = DatePicker;
 
@@ -31,13 +27,6 @@ export default function BookingList() {
             })
             .catch((err) => console.log(err))
     }, [])
-
-
-    //Delete an item when click
-    const handleDelete = (id) => {
-        const newIds = data.filter((item) => item.id !== id)
-        setData(newIds)
-    }
 
     //Search
     const [query, setQuery] = useState("");
@@ -118,8 +107,6 @@ export default function BookingList() {
     //Format Date
     const dateFormat = "DD/MM/YYYY";
 
-    // filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).
-    // const location = useLocation();
 
     return (
         <>
@@ -207,12 +194,6 @@ export default function BookingList() {
                                 )
                             }
                             <CheckOutBtn guestInfo={values}/>
-
-                            {/* <BillModal open={getState} onClose={() => setState(false)} guestInfo={values}/> */}
-
-                            {/* <button className={styles.close} onClick={() => handleDelete(values.id)}>
-                                <FontAwesomeIcon style={{ color: "red", height: "2.8rem" }} icon={faClose} />
-                            </button> */}
                         </div>
                     </div>
                 ))
