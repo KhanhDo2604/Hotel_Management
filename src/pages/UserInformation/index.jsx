@@ -2,16 +2,16 @@ import { useState } from "react";
 import styles from "./UserInformation.module.scss";
 import { DatePicker, Form } from "antd";
 import { useLocation } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 export default function UserInformation() {
     const [stateGender, setStateGender] = useState("")
     const location = useLocation();
     const groupGender = ["Male", "Female"]
-
+    const navigate = useNavigate();
    
     return (
-        <>
+        <div style={{height: "98%", position: 'relative'}}>
             <h3 style={{ fontWeight: "bold" }}>User Information</h3>
             <div className={styles.gridContainer}>
                 <form action="" className={styles.gridContent}>
@@ -57,10 +57,14 @@ export default function UserInformation() {
                     </div>
                 </form>
                 <div className={styles.format}>
-                    <button className={styles.btnConfirm}>Confirm</button>
-                    <button className={styles.btnCancel}>Cancel</button>
+                    <button className={styles.btnConfirm} onClick={() => {
+                        navigate("/guests")
+                    }}>Confirm</button>
+                    <button className={styles.btnCancel} onClick={() => {
+                        navigate("/guests")
+                    }}>Cancel</button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

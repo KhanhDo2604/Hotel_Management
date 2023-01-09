@@ -23,7 +23,6 @@ export default function MenuChoosing() {
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
       .then(async (res) => {
         setData(await res.json());
-        // setList(data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -45,6 +44,7 @@ export default function MenuChoosing() {
   );
 
   const [currentList, setCurrentList] = useState(pizzaList);
+
 
   const filterCategory = (value) => {
     switch (value) {
@@ -90,6 +90,10 @@ export default function MenuChoosing() {
     ).then(() => console.log("200 OK"))
   };
 
+  //Search
+  const [query, setQuery] = useState("")
+  const keys = ["name"]
+
   // Count Total money
   useEffect(() => {
     let count = 0;
@@ -107,7 +111,7 @@ export default function MenuChoosing() {
       <div className={styles.gridContainer}>
         <div>
           <div className={styles.searchBar}>
-            <input type="text" id={styles.mySearch} placeholder="Search" />
+            <input type="text" id={styles.mySearch} placeholder="Search" onChange={(e) => setQuery(e.target.value)}/>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -146,7 +150,8 @@ export default function MenuChoosing() {
                   gap: "1.6rem",
                 }}
               >
-                {currentList.map((value, index) => (
+                {currentList && 
+                  currentList.filter((values) => keys.some((key) => values[key].toLowerCase().includes(query))).map((value, index) => (
                   <div
                     className={styles.foodTag}
                     key={index}

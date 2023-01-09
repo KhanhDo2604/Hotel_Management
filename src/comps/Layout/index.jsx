@@ -49,10 +49,10 @@ export default function Layout({ children }) {
                     </button>
 
                     <div className="user-selection">
-                        <button className="header-btn" onClick={_=>navigate("/login")}>
+                        <button className="header-btn">
                             <img src={noti} alt="bell" />
                         </button>
-                        <button className="header-btn">
+                        <button className="header-btn" onClick={_=>navigate("/login")}>
                             <img src={logout} alt="logout" />
                         </button>
                         <button className="header-btn avatar" style={{backgroundImage: `url(${avatar})`}}></button>

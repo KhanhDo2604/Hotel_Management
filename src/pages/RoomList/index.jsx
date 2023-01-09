@@ -146,7 +146,7 @@ export default function RoomList() {
         <>
             {
                 roomList.map((value, index) => (
-                    <div className={styles.roomList} key={index}>
+                    <div className={styles.roomList} key={index} style={{margin: '1.2rem 0'}}>
                         <img className={styles.standard} src={value.img} />
                         <div className={styles.roomMiddle}>
                             <p style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{value.name}</p>

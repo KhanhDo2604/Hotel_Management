@@ -48,7 +48,7 @@ export default function FormReservation() {
 
 
     return (
-        <div style={{ padding: "1rem" }}>
+        <div style={{ padding: "1rem", position: 'relative' }}>
             <h3 style={{ fontWeight: "bold" }}>Form Reservation</h3>
             <div className={styles.flexItem}>
                 <form action="" className={styles.gridItem}>

@@ -5,119 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-// import Pagination from "./Pagination";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-//   {
-//     id: 0,
-//     foodImg: miquang,
-//     foodName: "Spicy Udon Noodles",
-//     category: "Pizza",
-//     price: 30000,
-//     quantity: 0,
-//     status: "Unavailable",
-//   },
-//   // {
-//   //   id: 1,
-//   //   foodImg: miquang,
-//   //   foodName: "Mì Quảng",
-//   //   category: "Main meal",
-//   //   price: 30000,
-//   //   quantity: 1,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 2,
-//   //   foodImg: miquang,
-//   //   foodName: "Coca Cola",
-//   //   category: "Drink",
-//   //   price: 30000,
-//   //   quantity: 4,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 3,
-//   //   foodImg: miquang,
-//   //   foodName: "Chocolate Cake",
-//   //   category: "Desserts",
-//   //   price: 30000,
-//   //   quantity: 8,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 4,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Main meal",
-//   //   price: 30000,
-//   //   quantity: 1,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 5,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Pizza",
-//   //   price: 30000,
-//   //   quantity: 10,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 6,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Main meal",
-//   //   price: 30000,
-//   //   quantity: 57,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 7,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Drink",
-//   //   price: 30000,
-//   //   quantity: 100,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 8,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Main meal",
-//   //   price: 30000,
-//   //   quantity: 35,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 9,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Main meal",
-//   //   price: 30000,
-//   //   quantity: 138,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 10,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Pasta",
-//   //   price: 30000,
-//   //   quantity: 66,
-//   //   status: "Available",
-//   // },
-//   // {
-//   //   id: 11,
-//   //   foodImg: miquang,
-//   //   foodName: "Spicy Udon Noodles",
-//   //   category: "Desserts",
-//   //   price: 30000,
-//   //   quantity: 19,
-//   //   status: "Available",
-//   // },
-// ];
 
 export default function Menu() {
   const [data, setData] = useState([]);
@@ -167,17 +57,16 @@ export default function Menu() {
     keys.some((key) => values[key].toLowerCase().includes(query))
   );
 
-  const kiemtra = clicked === true ? list : data;
-  console.log(clicked);
-  console.log(kiemtra);
+  const [filter, setFilter] = useState([]);
 
   const filterBaseOnCate = (value) => {
     if(value === "Available") {
       setList(data.filter((x) => x.status === 1));
-      console.log(list);
+      setFilter([...data, filter])
     }
     else if(value === "Unavailable") {
       setList(data.filter((x) => x.status === 0));
+      setFilter([...data, filter])
     }
     else {
       setCliked(false);
@@ -219,7 +108,7 @@ export default function Menu() {
 
           {/* nút filter */}
           <div className={styles.dropdown} onClick={(e) => setIsActive(!isActive)} >
-            <div className={styles.dropdownBtn}>
+            <div className={styles.dropdownBtn} style={{fontWeight: '500'}}>
               {selected}
               {!isActive ? (
                 <FontAwesomeIcon icon={faChevronDown} />
@@ -241,7 +130,7 @@ export default function Menu() {
                         filterBaseOnCate(value);
                       }}
                     >
-                      {value}
+                      <p style={{fontWeight: '500'}}>{value}</p> 
                     </div>
                   </>
                 ))}
@@ -251,7 +140,7 @@ export default function Menu() {
 
           {/* Nút adding food */}
           <div style={{ display: "flex" }}>
-            <Link className={styles.buttonAction} to="/foodAdding">
+            <Link className={styles.buttonAction} to="/foodAdding" style={{fontWeight: '500'}}>
               <img src="/src/assets/more.png" className={styles.icon} />
               New Food
             </Link>

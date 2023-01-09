@@ -1,76 +1,16 @@
 import styles from "./Ordering.module.scss";
-import cake from "../../assets/cake.jpg";
-import salad from "../../assets/salad.jpg";
 import close from "../../assets/close.png";
 import tick from "../../assets/tick.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
 import { useEffect, useState } from "react";
 
 export default function Ordering() {
-  // const order = [
-  //   {
-  //     imgage: cake,
-  //     idBill: "#351",
-  //     time: "23 Feb 2021, 08:28 PM",
-  //     listTable: [1, 2, 3],
-  //     status: 0,
-  //   },
-  //   {
-  //     imgage: cake,
-  //     idBill: "#352",
-  //     time: "24 Feb 2021, 08:28 PM",
-  //     listTable: [10],
-  //     status: 0,
-  //   },
-  //   {
-  //     imgage: cake,
-  //     idBill: "#353",
-  //     time: "25 Mar 2021, 08:28 PM",
-  //     listTable: [7, 8, 9],
-  //     status: 0,
-  //   },
-  //   {
-  //     imgage: cake,
-  //     idBill: "#358",
-  //     time: "23 Feb 2021, 08:28 PM",
-  //     listTable: [1, 2, 3],
-  //     status: 1,
-  //   },
-  //   {
-  //     imgage: cake,
-  //     idBill: "#666",
-  //     time: "23 Feb 2021, 08:28 PM",
-  //     listTable: [1, 2, 3],
-  //     status: 2,
-  //   },
-  // ];
-
-  // const foodInOrder = [
-  //   {
-  //     foodImg: cake,
-  //     foodName: "Vegetable Mixups",
-  //     desFood: "Vegetable fritters with egg",
-  //     price: 30000,
-  //     quantity: 1,
-  //   },
-  //   {
-  //     foodImg: salad,
-  //     foodName: "Vegetable Mixups",
-  //     desFood: "Vegetable salad",
-  //     price: 30000,
-  //     quantity: 3,
-  //   },
-  // ];
-
-  const dropdownItem = ["All Bills", "Not Pay Yet", "Completed", "Rejected"];
 
   const [data, setData] = useState([]);
 
-  // const [updated, setUpdated] = useState(false);
-
   const [status, setStatus] = useState(0);
+
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     setTimeout(
@@ -83,8 +23,8 @@ export default function Ordering() {
     );
   }, [status]);
 
-  const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState("All Bills");
+  // const [isActive, setIsActive] = useState(false);
+  // const [selected, setSelected] = useState("All Bills");
 
   const [query, setQuery] = useState("");
   const keys = ["id", "createin"];
@@ -133,34 +73,9 @@ export default function Ordering() {
           </svg>
         </div>
 
-        <div
-          className={styles.dropdown}
-          onClick={(e) => setIsActive(!isActive)}
-        >
-          <div className={styles.dropdownBtn}>
-            {selected}
-            {!isActive ? (
-              <FontAwesomeIcon icon={faChevronDown} />
-            ) : (
-              <FontAwesomeIcon icon={faChevronUp} />
-            )}
-          </div>
 
-          {isActive && (
-            <div className={styles.dropdownContent}>
-              {dropdownItem.map((value, index) => (
-                <>
-                  <div
-                    className={styles.dropdownItem}
-                    onClick={(e) => setSelected(value)}
-                    key={index}
-                  >
-                    {value}
-                  </div>
-                </>
-              ))}
-            </div>
-          )}
+        <div>
+          <button className={styles.dropdownBtn} onClick={() => setReload(!reload)}>Reload Page</button>
         </div>
       </div>
 
@@ -177,7 +92,7 @@ export default function Ordering() {
               <h6>{value.createin}</h6>
               <h6>Table: {}</h6>
 
-              <div style={{overflowY: "scroll", height: '45%'}}>
+              <div style={{ overflowY: "scroll", height: "45%" }}>
                 {data[index].foods.map((food, index) => (
                   <div
                     style={{
@@ -253,7 +168,26 @@ export default function Ordering() {
                   </div>
 
                   <div>
-                    {value.status === 0 ? (
+                    <div style={{ display: "flex" }}>
+                      <button
+                        className={styles.rejectBtn}
+                        style={{
+                          marginRight: "1.6rem",
+                          borderColor: "#E13428",
+                        }}
+                        onClick={() => updateState(value.id, 2)}
+                      >
+                        <img src={close} alt="" className={styles.iconBtn} />
+                      </button>
+                      <button
+                        className={styles.completeBtn}
+                        style={{ borderColor: "#2BC48A" }}
+                        onClick={() => updateState(value.id, 1)}
+                      >
+                        <img src={tick} alt="" className={styles.iconBtn} />
+                      </button>
+                    </div>
+                    {/* {value.status === 0 ? (
                       <div style={{ display: "flex" }}>
                         <button
                           className={styles.rejectBtn}
@@ -311,7 +245,7 @@ export default function Ordering() {
                           </h6>
                         </button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

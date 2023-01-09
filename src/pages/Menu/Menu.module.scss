@@ -1,7 +1,4 @@
 .gridContainer {
-    // display: grid;
-    // grid-template-columns: 2fr 1fr 1fr;
-    // gap: 1.6rem;
     display: flex;
     margin-top: 2rem;
     margin-bottom: 3rem;
@@ -91,7 +88,7 @@ a {
 }
 
 .gridFood {
-    box-shadow: -1px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: -1px 2px 8px 0 rgba(0, 0, 0, 0.3);
     border-radius: 1rem;
 }
 
@@ -183,7 +180,7 @@ a {
     align-items: center;
     font-size: 2rem;
     gap: 1rem;
-    margin-top: 1.6rem;
+    margin-top: 3.2rem;
     cursor: pointer;
 
     .pageItem.active {

@@ -5,34 +5,48 @@
     margin-top: 2rem;
     margin-bottom: 3rem;
 
-    .dropdown {
-        position: relative;
+    .dropdownBtn {
         cursor: pointer;
-        .dropdownBtn {
-            padding: 0.9rem 0.8rem;
-            background-color: #F9D410;
-            border-radius: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .dropdownContent {
-            position: absolute;
-            padding: 0.8rem;
-            border-radius: 0.8rem;
-            box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
-            margin-top: 0.8rem;
-            background-color: white;
-            z-index: 1;
-            width: 100%;
-        }
-        .dropdownItem {
-            transition: all 0.2s;
-        }
-        .dropdownItem:hover {
-            background-color: #f4f4f4f4;
-        }
+        padding: 1.2rem 0.8rem;
+        width: 100%;
+        background-color: #F9D410;
+        border-radius: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: none;
+        font-weight: 500;
+        justify-content: center;
     }
+
+    // .dropdown {
+    //     position: relative;
+    //     cursor: pointer;
+    //     .dropdownBtn {
+    //         padding: 0.9rem 0.8rem;
+    //         background-color: #F9D410;
+    //         border-radius: 0.8rem;
+    //         display: flex;
+    //         justify-content: space-between;
+    //         align-items: center;
+    //     }
+    //     .dropdownContent {
+    //         position: absolute;
+    //         padding: 0.8rem;
+    //         border-radius: 0.8rem;
+    //         box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+    //         margin-top: 0.8rem;
+    //         background-color: white;
+    //         z-index: 1;
+    //         width: 100%;
+    //     }
+    //     .dropdownItem {
+    //         transition: all 0.2s;
+    //     }
+    //     .dropdownItem:hover {
+    //         background-color: #f4f4f4f4;
+    //     }
+    // }
 }
 
 button {

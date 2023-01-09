@@ -1,7 +1,11 @@
 .gridContainer {
-    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
     padding: 0.8rem;
     border-radius: 0.8rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .gridContent {
     display: grid;
@@ -21,13 +25,13 @@
         border: 0.2rem solid #999;
     }
     select {
-        width: 30%;
+        width: 50%;
         padding: 0.5rem;
         border-radius: 0.5rem;
         border: 0.2rem solid #999;
     }
     .datePicker {
-        width: 30%;
+        width: 50%;
         padding: 1rem;
     }
 }

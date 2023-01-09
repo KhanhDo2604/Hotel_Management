@@ -1,29 +1,29 @@
 import styles from "./GuestList.module.scss";
 import update from "../../assets/pencil.png";
 import bin from "../../assets/bin.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 const guestList = [
     {
         id: 1,
-        name: "Vo Dinh Van",
+        name: "Võ Đình Vân",
         gender: "Male",
-        createIn: "20/11/2022",
+        createIn: "08/01/2023",
         contact: {
-            email: "van@gmail.com",
+            email: "van2k@yahoo.com",
             phoneNumber: "0342578371"
         }
     },
     {
         id: 3,
-        name: "Nguyen Huynh Tuan Khang",
+        name: "Đỗ Phạm Huy Khánh",
         gender: "Male",
-        createIn: "02/01/2023",
+        createIn: "08/01/2023",
         contact: {
-            email: "khang@gmail.com",
-            phoneNumber: "0342578371"
+            email: "khanhdo@hotgmail.com",
+            phoneNumber: "03429454382"
         }
     },
 ]
@@ -52,7 +52,7 @@ export default function GuestList() {
         setList(newIds)
     }
     return (
-        <>
+        <div style={{marginTop: '2rem'}} className="w3-container">
             <div className={styles.searchBar}>
                 <input type="text" id={styles.mySearch} placeholder="Search name, email or etc." onChange={(e) => setQuery(e.target.value)} />
                 <svg
@@ -122,7 +122,7 @@ export default function GuestList() {
                 }
 
             </div>
-            <div style={{ marginTop: '1.6rem' }}>
+            <div style={{ marginTop: '2.4rem' }}>
                 <ReactPaginate
                     nextLabel=">"
                     onPageChange={handlePageClick}
@@ -144,7 +144,7 @@ export default function GuestList() {
                     renderOnZeroPageCount={null}
                 />
             </div>
-        </>
+        </div>
     );
 }
 

@@ -42,7 +42,7 @@ export default function BillModal({ open, onClose, guestInfo }) {
       <div style={{ justifyContent: "center", display: "flex" }}>
         <button className={style.confirmBtn} onClick={onClose}>Confirm</button>
 
-        <button className={style.cancleBtn} onClick={onClose}>Cancle</button>
+        <button className={style.cancleBtn} onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

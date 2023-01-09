@@ -134,7 +134,7 @@ export default function FormUpdate() {
             to="/menu"
             style={{ marginLeft: "0.4rem", background: "#bfbfbf" }}
           >
-            Cancle
+            Cancel
           </Link>
         </div>
       </div>

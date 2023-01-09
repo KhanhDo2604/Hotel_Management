@@ -11,7 +11,7 @@ export default function Table() {
       <div className={styles.gridContainer}>
         <div>
           <div className={styles.searchBar}>
-            <input type="text" id={styles.mySearch} placeholder="Search" />
+            <input type="text" id={styles.mySearch} placeholder="Search"/>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -29,7 +29,6 @@ export default function Table() {
               table: tableStatus.reduce((prev, cur, index) => {
                 if(cur === 1) {
                   temp = [...prev, index + 1];
-                  console.log(temp);
                   return [...prev, index + 1];
                 }
                 else return prev;

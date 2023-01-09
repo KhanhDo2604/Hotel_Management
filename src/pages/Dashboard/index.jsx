@@ -132,7 +132,8 @@ export default function DashBoard() {
                     <p>27/03/2023</p>
                 </div>
             </div>
-            <h4 style={{ paddingLeft: "10.5rem", marginTop: "3rem" }}>SALES REPORT</h4>
+            
+            <h4 style={{ paddingLeft: "10.5rem", marginTop: "2rem" }}>SALES REPORT</h4>
             <div className={styles.format}>
                 <div>
                     <p style={{ marginTop: "6.2rem" }}>Number of Room</p>

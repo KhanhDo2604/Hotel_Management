@@ -40,7 +40,7 @@
     }
     .gridItem{
         display: grid;
-        grid-template-columns: 1.5fr 0.6fr 1fr 1fr 1fr;
+        grid-template-columns: 1.5fr 0.6fr 1fr 1.2fr 0.8fr;
         padding: 0.8rem 2.2rem 1.6rem;
         .flexItem{
             display: flex;
@@ -62,7 +62,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 4rem;
+    margin-bottom: 1.4rem;
     font-size: 2rem;
     gap: 1rem;
     cursor: pointer;
