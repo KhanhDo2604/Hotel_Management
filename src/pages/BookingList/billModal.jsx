@@ -1,6 +1,12 @@
 import React from "react";
 import style from "./BookingList.module.scss";
-import { useState } from "react";
+
+const mapType = {
+  std: "Standard Room (STD)",
+  sup: "Superior Room (SUP)",
+  dlx: "Deluxe Room (DLX)",
+  sui: "Suite Room (SUT)"
+}
 
 export default function BillModal({ open, onClose, guestInfo }) {
   if (!open) return null;
@@ -10,7 +16,7 @@ export default function BillModal({ open, onClose, guestInfo }) {
       <h3>Bill Details</h3>
       <hr style={{ margin: "0 -2rem 2rem -2rem", background: "#999" }} />
       <div className={style.modalContain}>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label>Reservation id:</label>
           <label>Guest Name:</label>
           <label>Date In:</label>
@@ -31,7 +37,7 @@ export default function BillModal({ open, onClose, guestInfo }) {
 
           {guestInfo.rooms.map((value) => (
             <p>
-              {value.type} (Room {value.number})
+              {mapType[value.type]} (Room {value.number})
             </p>
           ))}
 
