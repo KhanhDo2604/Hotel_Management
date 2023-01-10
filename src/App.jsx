@@ -3,13 +3,14 @@ import Layout from "./comps/Layout";
 import { routes, hiddenRoutes } from "./routes";
 import {Login} from "./pages"
 
-const { ipcRenderer } = require("electron");
 
 function App() {
-    // const role = ipcRenderer.sendSync("get-role");
+
 	return (
 		<Router>
 			<Routes>
+				<Route path="/" element={<Login />} />
+
 				{
 					routes.map((value, index) => (
 						<Route
@@ -28,7 +29,6 @@ function App() {
 						/>
 					))
 				}
-				<Route path="/login" element={<Login />} />
 			</Routes>
 		</Router>
 

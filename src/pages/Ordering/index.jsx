@@ -3,7 +3,9 @@ import close from "../../assets/close.png";
 import tick from "../../assets/tick.png";
 
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
+const { ipcRenderer } = require("electron");
 
 export default function Ordering() {
 
@@ -12,8 +14,15 @@ export default function Ordering() {
   const [status, setStatus] = useState(0);
 
   useEffect(() => {
+    const token = ipcRenderer.sendSync("get-token");
+
+    const requestOptions = {
+      method: "GET",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+    };
+
     setTimeout(
-      fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/order")
+      fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/order", requestOptions)
         .then(async (res) => {
           setData(await res.json());
         })

@@ -36,7 +36,6 @@ export default function PlaceToBook() {
       setSelectedRoom([...selectedRoom, room])
     }
   }
-  console.log(selectedRoom)
 
   return (
     <div className="w3-container">

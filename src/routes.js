@@ -28,7 +28,7 @@ import dashboard from "./assets/dashboard.png";
 
 const routes = [
   {
-    path: "/",
+    path: "/dashboard",
     page: Dashboard,
     icon: dashboard,
     name: "Dashboard",

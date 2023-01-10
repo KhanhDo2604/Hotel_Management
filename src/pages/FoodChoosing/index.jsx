@@ -10,6 +10,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { actions, reducer } from "./reducer";
 
+const { ipcRenderer } = require("electron");
+
 export default function MenuChoosing() {
   const location = useLocation();
 
@@ -20,7 +22,13 @@ export default function MenuChoosing() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
+    const token = ipcRenderer.sendSync("get-token");
+    const requestOptions = {
+      method: "GET",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+    };
+
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
       .then(async (res) => {
         setData(await res.json());
       })

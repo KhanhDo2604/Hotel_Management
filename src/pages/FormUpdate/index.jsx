@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./FormUpdate.module.scss";
 
+const { ipcRenderer } = require("electron");
+
 export default function FormUpdate() {
   const location = useLocation();
 
@@ -12,11 +14,13 @@ export default function FormUpdate() {
   const [trangthai, setStatus] = useState(location.state.foodInfo.status);
 
   const group = ["mainmeal", "pizza", "dessert", "drink", "pasta"];
-
+  
   const update = () => {
+    const token = ipcRenderer.sendSync("get-token");
+
     const requestOptions = {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Accept": "application/json", 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({
         cover: image,
         name: name,

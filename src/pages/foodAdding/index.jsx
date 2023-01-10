@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./FoodAdding.module.scss";
 
+const { ipcRenderer } = require("electron");
+
 export default function FoodAdding() {
   const group = ["mainmeal", "pizza", "dessert", "drink", "pasta"];
 
   const [newFood, setNewFood] = useState({cover: null, name: '', category: 'mainmeal', price: 0, description: ''});
 
   const addingFood = () => {
+    const token = ipcRenderer.sendSync("get-token");
+
     const formData = new FormData();
 
     for (const key in newFood) {
@@ -16,6 +20,7 @@ export default function FoodAdding() {
 
     const requestOptions = {
       method: "POST",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
       body: formData
     };
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)

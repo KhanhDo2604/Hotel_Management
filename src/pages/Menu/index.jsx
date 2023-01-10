@@ -12,12 +12,15 @@ const { ipcRenderer } = require("electron");
 
 export default function Menu() {
   const [data, setData] = useState([]);
+
+  const token = ipcRenderer.sendSync("get-token");
   
   const [updated, setUpdated] = useState(false);
 
   const removeFood = (id) => {
     fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/food/${id}`, {
       method: "DELETE",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
     })
       .then(async (response) => {
         setUpdated(!updated);
@@ -33,8 +36,6 @@ export default function Menu() {
   };
 
   useEffect(() => {
-    const token = ipcRenderer.sendSync("get-token");
-    
     const requestOptions = {
       method: "GET",
       headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },

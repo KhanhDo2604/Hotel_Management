@@ -26,7 +26,7 @@ export default function Login() {
         .then(response => response.json())
         .then(res => {
             if(res.user) {
-                ipcRenderer.send("save-token", res.token,res.user)
+                ipcRenderer.send("save-token", res.token, res.user)
                 typeof(res) === "object" ? navigateFilter(res.user.role) : res;
             }
         })
@@ -42,7 +42,7 @@ export default function Login() {
                 navigate("/bookinglist");
                 break;
             default:
-                navigate("/");
+                navigate("/dashboard");
                 break;
         }
     }

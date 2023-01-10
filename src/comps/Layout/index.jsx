@@ -9,6 +9,7 @@ import { useState, useRef } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { routes } from "../../routes.js";
 
+const { ipcRenderer } = require("electron");
 
 export default function Layout({ children }) {
     const [sidebar, setSidebar] = useState(true);
@@ -17,14 +18,16 @@ export default function Layout({ children }) {
 
     const marginLeft = navRef.current ? -navRef.current.getBoundingClientRect().width : undefined;
 
+    const role = ipcRenderer.sendSync("get-user").role;
+
     return (
         <div className="wrapper">
-            <aside ref={navRef} className="sidebar" style={{ marginLeft: sidebar ? "0px" : marginLeft }}>
+            <aside ref={navRef} className="sidebar" style={{ marginLeft: sidebar ? "0px" : marginLeft, position: 'relative' }}>
                 <img className="logo" src={logo} alt="logo" />
 
                 <div className="nav">
                     {
-                        routes.map((value, index) => {
+                        routes.filter((value) => value.role === role).map((value, index) => {
                             let className;
                             if (value.path === "/") {
                                 className = location.pathname === "/" ? "nav-item active" : "nav-item";
@@ -51,10 +54,10 @@ export default function Layout({ children }) {
                     </button>
 
                     <div className="user-selection">
-                        <button className="header-btn">
+                        {/* <button className="header-btn">
                             <img src={noti} alt="bell" />
-                        </button>
-                        <button className="header-btn" onClick={_=>navigate("/login")}>
+                        </button> */}
+                        <button className="header-btn" onClick={_=>navigate("/")}>
                             <img src={logout} alt="logout" />
                         </button>
                         <button className="header-btn avatar" style={{backgroundImage: `url(${avatar})`}}></button>
