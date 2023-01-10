@@ -35,17 +35,21 @@
     cursor: pointer;
 }
 
+.form {
+    .inputOne:focus~.labelOne,
+    .inputOne:not(:placeholder-shown).inputOne:not(:focus)~.labelOne {
+        transform: translateY(-20px);
+    }
+}
+
 .right .form input{
-   &:focus~label {
-    transform: translateY(-20px);
-   }
    &:focus {
     border-bottom: 0.2rem solid #ED7014;
     outline: none;
    }
 }
 
-.right .form label{
+.right .form label {
    position: absolute;
    left: 0;
    color: #999999;

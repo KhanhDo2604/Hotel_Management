@@ -12,14 +12,34 @@ import wifi from '../../assets/wifi.png';
 import family from '../../assets/family.png';
 import couple from '../../assets/couple.png';
 import UpdateRooms from "../../comps/UpdateRooms";
+import { useEffect, useState } from "react";
+const { ipcRenderer } = require("electron");
 
 export default function RoomList() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "GET",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/roomprice", requestOptions)
+            .then((res) => res.json())
+            .then((res) => {
+                setData(res.reduce((pre, cur) => (
+                  {
+                    ...pre,[cur.id]:cur.price
+                  }
+            ), {}))
+            })
+            .catch((err) => console.log(err));
+    }, []);
     const roomList = [
         {
-            id: 1,
+            id: "std",
             img: standard,
             name: "Standard Room (STD)",
-            price: "3000000Đ",
             detailOne: {
                 imgBed: single,
                 nameBed: "2 single bed"
@@ -48,10 +68,9 @@ export default function RoomList() {
             },
         },
         {
-            id: 2,
+            id: "sup",
             img: superior,
             name: "Superior Room (SUP)",
-            price: "4000000Đ",
             detailOne: {
                 imgBed: single,
                 nameBed: "2 single bed"
@@ -79,10 +98,9 @@ export default function RoomList() {
             },
         },
         {
-            id: 3,
+            id: "dlx",
             img: dulexe,
             name: "Deluxe Room (DLX)",
-            price: "5000000Đ",
             detailOne: {
                 sofaBed: sofa,
                 typeSofa: "1 sofa bed"
@@ -110,10 +128,9 @@ export default function RoomList() {
             },
         },
         {
-            id: 4,
+            id: "sui",
             img: suite,
             name: "Suite Room (SUT)",
-            price: "6000000Đ",
             detailOne: {
                 queenBed: single,
                 typeBed: "1 queen bed"
@@ -146,7 +163,7 @@ export default function RoomList() {
         <>
             {
                 roomList.map((value, index) => (
-                    <div className={styles.roomList} key={index} style={{margin: '1.2rem 0'}}>
+                    <div className={styles.roomList} key={index} style={{ margin: '1.2rem 0' }}>
                         <img className={styles.standard} src={value.img} />
                         <div className={styles.roomMiddle}>
                             <p style={{ fontWeight: "bold", fontSize: "2.2rem" }}>{value.name}</p>
@@ -204,7 +221,6 @@ export default function RoomList() {
                                 <img style={{ height: "24px", marginLeft: "6.2rem" }} src={value.detailFour.imgAc} />
                                 <p style={{ marginLeft: "0.4rem" }}>{value.detailFour.typeAc}</p>
                             </div>
-
                             <div style={{ display: "flex" }}>
                                 <img style={{ height: "24px" }} src={value.detailFive.imgFamily} />
                                 <p style={{ marginLeft: "0.4rem" }}>{value.detailFive.typeFamily}</p>
@@ -232,7 +248,7 @@ export default function RoomList() {
                                 }
                             </div>
                         </div>
-                        <UpdateRooms/>
+                        <UpdateRooms price={data[value.id]} callback={(price) => { setData({...data,[value.id]:price}) }} id={value.id}/>
                     </div>
                 ))
             }
