@@ -3,14 +3,13 @@ import close from "../../assets/close.png";
 import tick from "../../assets/tick.png";
 
 import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Ordering() {
 
   const [data, setData] = useState([]);
 
   const [status, setStatus] = useState(0);
-
-  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     setTimeout(
@@ -22,9 +21,6 @@ export default function Ordering() {
       1000
     );
   }, [status]);
-
-  // const [isActive, setIsActive] = useState(false);
-  // const [selected, setSelected] = useState("All Bills");
 
   const [query, setQuery] = useState("");
   const keys = ["id", "createin"];
@@ -75,7 +71,7 @@ export default function Ordering() {
 
 
         <div>
-          <button className={styles.dropdownBtn} onClick={() => setReload(!reload)}>Reload Page</button>
+          <button className={styles.dropdownBtn} onClick={() => Navigate("/ordering")}>Reload Page</button>
         </div>
       </div>
 

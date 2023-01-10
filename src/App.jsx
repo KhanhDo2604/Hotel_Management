@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./comps/Layout";
 import { routes, hiddenRoutes } from "./routes";
+import {Login} from "./pages"
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
 						/>
 					))
 				}
+				<Route path="/login" element={<Login />} />
 			</Routes>
 		</Router>
 

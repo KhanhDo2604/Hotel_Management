@@ -6,7 +6,6 @@ import {
   Ordering,
   RoomList,
   Table,
-  Login,
   ForgotPassword,
   FormReservation,
   FoodChoosing,
@@ -33,49 +32,52 @@ const routes = [
     page: Dashboard,
     icon: dashboard,
     name: "Dashboard",
+    role: "a"
   },
   {
     path: "/bookinglist",
     page: BookingList,
     icon: booking,
     name: "Booking List",
+    role: "h"
   },
   {
     path: "/rooms",
     page: RoomList,
     icon: bed,
     name: "Rooms",
+    role: "a"
   },
   {
     path: "/guests",
     page: GuestList,
     icon: guest,
     name: "Guests",
+    role: "h"
   },
   {
     path: "/menu",
     page: Menu,
     icon: menu,
     name: "Food",
+    role: "r"
   },
   {
     path: "/ordering",
     page: Ordering,
     icon: bell,
     name: "Orders",
+    role: "r"
   },
   {
     path: "/tables",
     page: Table,
     icon: chair,
     name: "Tables",
+    role: "r"
   },
 ];
 const hiddenRoutes = [
-  {
-    path: "/login",
-    page: Login,
-  },
   {
     path: "/forgotPassword",
     page: ForgotPassword,
@@ -114,4 +116,5 @@ const hiddenRoutes = [
     page: PlaceToBook,
   }
 ];
+
 export { routes, hiddenRoutes };

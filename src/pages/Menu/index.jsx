@@ -7,7 +7,8 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-
+// import settings from "electron-settings";
+const { ipcRenderer } = require("electron");
 
 export default function Menu() {
   const [data, setData] = useState([]);
@@ -32,7 +33,13 @@ export default function Menu() {
   };
 
   useEffect(() => {
-    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food")
+    const token = ipcRenderer.sendSync("get-token");
+    const requestOptions = {
+      method: "GET",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+    };
+
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
       .then(async (res) => {
         setData(await res.json());
       })

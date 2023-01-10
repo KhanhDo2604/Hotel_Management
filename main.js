@@ -1,8 +1,17 @@
 // Packages
-const { BrowserWindow, app } = require('electron');
+const { BrowserWindow, app, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 const { join } = require('path')
+const settings = require("electron-settings");
 
+ipcMain.on("save-token", (event, token) => {
+    settings.setSync("token", token);
+    console.log(token);
+});
+
+ipcMain.on("get-token", (event, _) => {
+    event.returnValue = settings.getSync("token");
+})
 
 app.on('ready', _ => {
 
@@ -10,7 +19,8 @@ app.on('ready', _ => {
         width: 1280,
         height: 900,
         webPreferences: {
-            nodeIntegration: false,
+            nodeIntegration: true,
+            contextIsolation: false
         },
     })
 

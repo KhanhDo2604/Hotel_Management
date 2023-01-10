@@ -42,6 +42,8 @@ export default function Layout({ children }) {
                     }
                 </div>
             </aside>
+
+            {/* Thanh bar ngang */}
             <div className="container">
                 <header className="header">
                     <button className="header-btn" onClick={_ => setSidebar(!sidebar)}>
