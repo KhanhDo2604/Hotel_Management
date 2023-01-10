@@ -4,19 +4,26 @@ import { Link } from "react-router-dom";
 import styles from "./PlaceToBook.module.scss";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+const { ipcRenderer } = require("electron");
 
 export default function PlaceToBook() {
 
   const [typeRoom, setTypeRoom] = useState([])
   const [selectedRoom, setSelectedRoom] = useState([])
 
-  useEffect(()=>{
-    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/room")
-    .then(async (res) => {
-      setTypeRoom(await res.json())
-  })
-  .catch((err) => console.log(err))
-  },[])
+  useEffect(() => {
+    const token = ipcRenderer.sendSync("get-token");
+    const requestOptions = {
+      method: "GET",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+    };
+
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/room", requestOptions)
+      .then(async (res) => {
+        setTypeRoom(await res.json());
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const changeHandler = (room) => {
     const isChecked= selectedRoom.includes(room)

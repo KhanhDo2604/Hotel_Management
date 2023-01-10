@@ -4,13 +4,18 @@ const isDev = require('electron-is-dev');
 const { join } = require('path')
 const settings = require("electron-settings");
 
-ipcMain.on("save-token", (event, token) => {
+ipcMain.on("save-token", (event, token,user) => {
     settings.setSync("token", token);
+    settings.setSync("user",user);
     console.log(token);
 });
 
 ipcMain.on("get-token", (event, _) => {
     event.returnValue = settings.getSync("token");
+})
+
+ipcMain.on("get-user",(event, _)=>{
+    event.returnValue = settings.getSync("user");
 })
 
 app.on('ready', _ => {
