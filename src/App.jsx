@@ -3,8 +3,10 @@ import Layout from "./comps/Layout";
 import { routes, hiddenRoutes } from "./routes";
 import {Login} from "./pages"
 
+const { ipcRenderer } = require("electron");
 
 function App() {
+    // const role = ipcRenderer.sendSync("get-role");
 	return (
 		<Router>
 			<Routes>

@@ -7,7 +7,7 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-// import settings from "electron-settings";
+
 const { ipcRenderer } = require("electron");
 
 export default function Menu() {
@@ -34,6 +34,7 @@ export default function Menu() {
 
   useEffect(() => {
     const token = ipcRenderer.sendSync("get-token");
+    
     const requestOptions = {
       method: "GET",
       headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },

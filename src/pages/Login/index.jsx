@@ -26,13 +26,12 @@ export default function Login() {
         .then(response => response.json())
         .then(res => {
             if(res.user) {
-                ipcRenderer.send("save-token", res.token)
+                ipcRenderer.send("save-token", res.token);
+                // ipcRenderer.send("save-role", res.user.role);
                 typeof(res) === "object" ? navigateFilter(res.user.role) : res;
             }
         })
         .catch((err) => console.log(err));
-
-
     };
 
     const navigateFilter = (role) => {
