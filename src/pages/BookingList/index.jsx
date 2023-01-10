@@ -7,26 +7,35 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import CheckOutBtn from "../../comps/checkOutButton";
 const { RangePicker } = DatePicker;
-
+const { ipcRenderer } = require("electron");
 
 const mapType = {
-    std:"Standard Room (STD)",
-    sup:"Superior Room (SUP)",
-    dlx:"Deluxe Room (DLX)",
-    sui:"Suite Room (SUT)"
+    std: "Standard Room (STD)",
+    sup: "Superior Room (SUP)",
+    dlx: "Deluxe Room (DLX)",
+    sui: "Suite Room (SUT)"
 }
+
+const mapState = ["OC", "EA", "SO"]
 
 export default function BookingList() {
     //Fetch api
     const [data, setData] = useState([])
-    
+
     useEffect(() => {
-            fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation")
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "GET",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation", requestOptions)
             .then(async (res) => {
-                setData(await res.json())
+                setData(await res.json());
             })
-            .catch((err) => console.log(err))
-    }, [])
+            .catch((err) => console.log(err));
+    }, []);
+
 
     //Search
     const [query, setQuery] = useState("");
@@ -107,14 +116,13 @@ export default function BookingList() {
     //Format Date
     const dateFormat = "DD/MM/YYYY";
 
-
     return (
         <>
             <div style={{ marginTop: "2.2rem" }} className={styles.containerGrid}>
                 <RangePicker
                     className={styles.rangPicker}
                     format={dateFormat}
-                    style={{border: '0.2rem solid #999'}}
+                    style={{ border: '0.2rem solid #999' }}
                 />
                 <div className={styles.middles} ref={menuRef}>
                     <FontAwesomeIcon icon={faUsers} style={{ marginRight: "1rem" }} />
@@ -150,7 +158,7 @@ export default function BookingList() {
                         <div className={styles.alignItems}>
                             {
                                 values.rooms.map((valueRoom) => (
-                                    <span style={{ display: "flex"}}>Room: 
+                                    <span style={{ display: "flex" }}>Room:
                                         <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
                                             {valueRoom.number}
                                         </p>
@@ -179,21 +187,21 @@ export default function BookingList() {
                         </div>
                         <div className={styles.end}>
                             {
-                                values.status === "oc" ? (
+                                values.status === 0 ? (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "#5BF551", color: "#2C7527" }}>{values.status.toUpperCase()}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "#5BF551", color: "#2C7527" }}>{mapState[values.status]}</p>
                                     </>
-                                ) : values.status === "ea" ? (
+                                ) : values.status === 1 ? (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{values.status.toUpperCase()}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}>{mapState[values.status]}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{values.status.toUpperCase()}</p>
+                                        <p className={styles.oc} style={{ backgroundColor: "var(--nav-item-hover-color)", color: "#FF0000" }}>{mapState[values.status]}</p>
                                     </>
                                 )
                             }
-                            <CheckOutBtn guestInfo={values}/>
+                            <CheckOutBtn guestInfo={values} />
                         </div>
                     </div>
                 ))

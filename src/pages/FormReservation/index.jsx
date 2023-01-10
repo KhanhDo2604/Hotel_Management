@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 const { RangePicker } = DatePicker;
 import moment from "moment/moment";
 import { useNavigate } from "react-router-dom";
+const { ipcRenderer } = require("electron");
 
 export default function FormReservation() {
     const [stateGender, setStateGender] = useState("")
@@ -20,26 +21,23 @@ export default function FormReservation() {
     });
 
     const sendData = () => {
-        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation",
-            {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    guestid: guestid,
-                    agentid: "20521330",
-                    in: date.start,
-                    out: date.end,
-                    count: count,
-                    rooms: table.map((value) => value.roomnumber)
-                })
-            }
-        )
-            .then((res) => {
-                navigate("/bookinglist")
+        const token = ipcRenderer.sendSync("get-token");
+        const userId = ipcRenderer.sendSync("get-user").id;
+        const requestOptions = {
+            method: "POST",
+            headers: { "Accept": "application/json", 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({
+                guestid: guestid,
+                agentid: userId,
+                in: date.start,
+                out: date.end,
+                count: count,
+                rooms: table.map((value) => value.roomnumber)
             })
+        };
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation", requestOptions
+        )
+        .then((res) => navigate("/bookinglist"))
     }
 
     const navigatePage = () => {
