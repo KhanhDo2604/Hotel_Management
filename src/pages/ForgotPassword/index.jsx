@@ -13,18 +13,18 @@ export default function ForgotPassword() {
                 <h2>WELCOME</h2>
                 <form action="" className={styles.form}>
                     <div>
-                        <input type="text" name="staffid" required />
-                        <label>STAFFID
+                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="text" name="staffid" required />
+                        <label style={{fontSize:"1.6rem"}} className={styles.labelOne}>STAFFID
                         </label>
                     </div>
                     <div className={styles.password}>
-                        <input type="password" name="password" required />
-                        <label>NEW PASSWORD
+                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required />
+                        <label  style={{fontSize:"1.6rem"}} className={styles.labelOne}>NEW PASSWORD
                         </label>
                     </div>
                     <div className={styles.reTypePassword}>
-                        <input type="password" name="password" required />
-                        <label>RETYPE PASSWORD
+                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required />
+                        <label  style={{fontSize:"1.6rem"}} className={styles.labelOne}>RETYPE PASSWORD
                         </label>
                     </div>
                 </form>
