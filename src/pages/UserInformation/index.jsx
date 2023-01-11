@@ -5,13 +5,14 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function UserInformation() {
-    const [stateGender, setStateGender] = useState("")
     const location = useLocation();
+    const [stateGender, setStateGender] = useState(location.state.userInfo.gender)
+
     const groupGender = ["Male", "Female"]
     const navigate = useNavigate();
-   
+
     return (
-        <div style={{height: "98%", position: 'relative'}}>
+        <div style={{ height: "98%", position: 'relative' }}>
             <h3 style={{ fontWeight: "bold" }}>User Information</h3>
             <div className={styles.gridContainer}>
                 <form action="" className={styles.gridContent}>
@@ -19,7 +20,7 @@ export default function UserInformation() {
                         <label>Name:</label>
                     </div>
                     <div >
-                        <input defaultValue={location.state.userInfo.name} type="text" name="name" />
+                        <input defaultValue={location.state.userInfo.fullname} type="text" name="name" />
                     </div>
                     <div>
                         <label>Gender:</label>
@@ -32,28 +33,22 @@ export default function UserInformation() {
                                 const selectedGender = e.target.value
                                 setStateGender(selectedGender)
                             }}>
-                            <option>{location.state.userInfo.gender}</option>
-                            {
-                                groupGender.map((value, index) => {
-                                    if (value !== location.state.userInfo.gender) {
-                                        return <option key={index}>{value}</option>
-                                    }
-                                })
-                            }
+                            <option value={1}>Male</option>
+                            <option value={0}>Female</option>
                         </select>
                     </div>
                     <div>
                         <label>Create In:</label>
                     </div>
                     <div>
-                        <DatePicker className={styles.datePicker}  format={'DD/MM/YYYY'} />
+                        <DatePicker className={styles.datePicker} format={'DD/MM/YYYY'} />
                     </div>
                     <div>
                         <label>Contact:</label>
                     </div>
                     <div>
-                        <input defaultValue={location.state.userInfo.contact.email} type="text" name="name" placeholder="Email" />
-                        <input defaultValue={location.state.userInfo.contact.phoneNumber} style={{ marginTop: "2rem" }} type="text" name="name" placeholder="Phone Number" />
+                        <input defaultValue={location.state.userInfo.email} type="text" name="name" placeholder="Email" />
+                        <input defaultValue={location.state.userInfo.phone} style={{ marginTop: "2rem" }} type="text" name="name" placeholder="Phone Number" />
                     </div>
                 </form>
                 <div className={styles.format}>

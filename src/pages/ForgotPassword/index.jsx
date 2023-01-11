@@ -13,18 +13,18 @@ export default function ForgotPassword() {
                 <h2>WELCOME</h2>
                 <form action="" className={styles.form}>
                     <div>
-                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="text" name="staffid" required />
-                        <label style={{fontSize:"1.6rem"}} className={styles.labelOne}>STAFFID
+                        <input id="trick1" style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="text" name="staffid" required />
+                        <label for="trick1" style={{fontSize:"1.6rem"}} className={styles.labelOne}>STAFFID
                         </label>
                     </div>
                     <div className={styles.password}>
-                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required />
-                        <label  style={{fontSize:"1.6rem"}} className={styles.labelOne}>NEW PASSWORD
+                        <input id="trick2" style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required />
+                        <label for="trick2"  style={{fontSize:"1.6rem"}} className={styles.labelOne}>NEW PASSWORD
                         </label>
                     </div>
                     <div className={styles.reTypePassword}>
-                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required />
-                        <label  style={{fontSize:"1.6rem"}} className={styles.labelOne}>RETYPE PASSWORD
+                        <input id="trick3" style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required />
+                        <label for="trick3"  style={{fontSize:"1.6rem"}} className={styles.labelOne}>RETYPE PASSWORD
                         </label>
                     </div>
                 </form>

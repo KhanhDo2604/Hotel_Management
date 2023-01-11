@@ -57,13 +57,13 @@ export default function Login() {
                 <h2>WELCOME</h2>
                 <form action="" className={styles.form}>
                     <div>
-                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="text" name="staffid" required onChange={(e) => setCheckEmail(e.target.value)}/>
-                        <label style={{fontSize:"1.6rem"}} className={styles.labelOne}>EMAIL
+                        <input id="trick" style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="text" name="staffid" required onChange={(e) => setCheckEmail(e.target.value)}/>
+                        <label for="trick" style={{fontSize:"1.6rem"}} className={styles.labelOne}>EMAIL
                         </label>
                     </div>
                     <div className={styles.password}>
-                        <input style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required onChange={(e) => setCheckPass(e.target.value)}/>
-                        <label  style={{fontSize:"1.6rem"}} className={styles.labelOne}>PASSWORD
+                        <input id="chich" style={{fontSize:"2rem"}} className={styles.inputOne} placeholder=" " type="password" name="password" required onChange={(e) => setCheckPass(e.target.value)}/>
+                        <label for="chich"  style={{fontSize:"1.6rem"}} className={styles.labelOne}>PASSWORD
                         </label>
                     </div>
                 </form>

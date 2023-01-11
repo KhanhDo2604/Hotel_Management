@@ -1,44 +1,56 @@
 import styles from "./GuestList.module.scss";
 import update from "../../assets/pencil.png";
 import bin from "../../assets/bin.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
+const { ipcRenderer } = require("electron");
 
-const guestList = [
-    {
-        id: 1,
-        name: "Võ Đình Vân",
-        gender: "Male",
-        createIn: "08/01/2023",
-        contact: {
-            email: "van2k@yahoo.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 3,
-        name: "Đỗ Phạm Huy Khánh",
-        gender: "Male",
-        createIn: "08/01/2023",
-        contact: {
-            email: "khanhdo@hotgmail.com",
-            phoneNumber: "03429454382"
-        }
-    },
-]
-
+const mapGender = ["Female", "Male"]
 export default function GuestList() {
-    const [list, setList] = useState(guestList)
+    const [list, setList] = useState([])
+    console.log(list)
+    useEffect(() => {
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "GET",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest", requestOptions)
+            .then((res) => res.json())
+            .then((res) => setList(res))
+            .catch((err) => console.log(err));
+    }, []);
+
+     //delete an item
+     const handleDelete = (id) => {
+        console.log(id)
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+        fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest/${id}`, requestOptions)
+            .then(async (response) => {
+                const data = await response.json();
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
+            })
+            .catch((err) => console.log(err));
+    }
+
     //Search
     const [query, setQuery] = useState("")
-    const keys = ["name"]
+    const keys = ["fullname"]
 
     //Pagination
     const [itemOffset, setItemOffset] = useState(0);
     const itemsPerPage = 6;
     const endOffset = itemOffset + itemsPerPage;
-    const filtered = list.filter((values) => keys.some((key) => values[key].toLowerCase().includes(query)))
+    const filtered = list.filter((values) => values.fullname.toLowerCase().includes(query))
     const currentItems = filtered.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(filtered.length / itemsPerPage);
     const handlePageClick = (event) => {
@@ -46,13 +58,8 @@ export default function GuestList() {
         setItemOffset(newOffset);
     };
 
-    //delete an item
-    const handleDelete = (id) => {
-        const newIds = list.filter((item) => item.id !== id)
-        setList(newIds)
-    }
     return (
-        <div style={{marginTop: '2rem'}} className="w3-container">
+        <div style={{ marginTop: '2rem' }} className="w3-container">
             <div className={styles.searchBar}>
                 <input type="text" id={styles.mySearch} placeholder="Search name, email or etc." onChange={(e) => setQuery(e.target.value)} />
                 <svg
@@ -85,19 +92,19 @@ export default function GuestList() {
                     currentItems && currentItems.map((value, index) => (
                         <div key={index}>
                             <div className={styles.gridItem}>
-                                <p style={{ display: "flex", alignItems: "center" }}>{value.name}</p>
-                                <p style={{ display: "flex", alignItems: "center" }}>{value.gender}</p>
-                                <p style={{ display: "flex", alignItems: "center" }}>{value.createIn}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{value.fullname}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{mapGender[value.gender]}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{value.createin.slice(0, 10)}</p>
                                 <div>
-                                    <p>{value.contact.email}</p>
-                                    <p>{value.contact.phoneNumber}</p>
+                                    <p>{value.email}</p>
+                                    <p>{value.phone}</p>
                                 </div>
                                 <div className={styles.flexItem}>
                                     <button className={styles.actionBtn}>
                                         <Link
                                             to="/userInformation"
                                             state={{
-                                                userInfo :value
+                                                userInfo: value
                                             }}
                                         >
                                             <img src={update} alt="" style={{ width: "2.4rem" }} />
