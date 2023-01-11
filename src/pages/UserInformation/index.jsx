@@ -1,15 +1,51 @@
 import { useState } from "react";
 import styles from "./UserInformation.module.scss";
-import { DatePicker, Form } from "antd";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+const { ipcRenderer } = require("electron");
+
 
 export default function UserInformation() {
     const location = useLocation();
-    const [stateGender, setStateGender] = useState(location.state.userInfo.gender)
+    const [fullname, setFullName] = useState(location.state.userInfo.fullname)
+    const [gender, setGender] = useState(location.state.userInfo.gender)
+    const [email, setEmail] = useState(location.state.userInfo.email)
+    const [phone, setPhone] = useState(location.state.userInfo.phone)
 
-    const groupGender = ["Male", "Female"]
     const navigate = useNavigate();
+
+    //PUT
+    const handleUpdate = () => {
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json", "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({
+                fullname: fullname,
+                gender: gender,
+                email: email,
+                phone: phone
+            }),
+        };
+        fetch(
+            `https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest/${location.state.userInfo.id}`,
+            requestOptions
+        )
+            .then(async (response) => {
+                const data = await response.json();
+
+                if (!response.ok) {
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
+            })
+            .then(()=>{
+                window.location.replace("/guests")
+            })
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    }
 
     return (
         <div style={{ height: "98%", position: 'relative' }}>
@@ -20,7 +56,7 @@ export default function UserInformation() {
                         <label>Name:</label>
                     </div>
                     <div >
-                        <input defaultValue={location.state.userInfo.fullname} type="text" name="name" />
+                        <input value={fullname} onChange={(e) => setFullName(e.target.value)} type="text" name="name" />
                     </div>
                     <div>
                         <label>Gender:</label>
@@ -28,33 +64,24 @@ export default function UserInformation() {
                     <div>
                         <select
                             style={{ padding: "0.8rem", fontWeight: "bold" }}
-                            value={stateGender}
+                            value={gender}
                             onChange={(e) => {
-                                const selectedGender = e.target.value
-                                setStateGender(selectedGender)
+                                setGender(e.target.value)
                             }}>
                             <option value={1}>Male</option>
                             <option value={0}>Female</option>
                         </select>
                     </div>
                     <div>
-                        <label>Create In:</label>
-                    </div>
-                    <div>
-                        <DatePicker className={styles.datePicker} format={'DD/MM/YYYY'} />
-                    </div>
-                    <div>
                         <label>Contact:</label>
                     </div>
                     <div>
-                        <input defaultValue={location.state.userInfo.email} type="text" name="name" placeholder="Email" />
-                        <input defaultValue={location.state.userInfo.phone} style={{ marginTop: "2rem" }} type="text" name="name" placeholder="Phone Number" />
+                        <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" name="name" placeholder="Email" />
+                        <input value={phone} onChange={(e) => setPhone(e.target.value)} style={{ marginTop: "2rem" }} type="text" name="name" placeholder="Phone Number" />
                     </div>
                 </form>
                 <div className={styles.format}>
-                    <button className={styles.btnConfirm} onClick={() => {
-                        navigate("/guests")
-                    }}>Confirm</button>
+                    <button className={styles.btnConfirm} onClick={handleUpdate}>Confirm</button>
                     <button className={styles.btnCancel} onClick={() => {
                         navigate("/guests")
                     }}>Cancel</button>

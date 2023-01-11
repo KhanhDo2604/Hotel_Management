@@ -9,7 +9,8 @@ const { ipcRenderer } = require("electron");
 const mapGender = ["Female", "Male"]
 export default function GuestList() {
     const [list, setList] = useState([])
-    console.log(list)
+  
+    //Get
     useEffect(() => {
         const token = ipcRenderer.sendSync("get-token");
         const requestOptions = {
@@ -23,28 +24,21 @@ export default function GuestList() {
             .catch((err) => console.log(err));
     }, []);
 
-     //delete an item
+     //Delete
      const handleDelete = (id) => {
-        console.log(id)
         const token = ipcRenderer.sendSync("get-token");
         const requestOptions = {
             method: "DELETE",
             headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
         };
         fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest/${id}`, requestOptions)
-            .then(async (response) => {
-                const data = await response.json();
-                if (!response.ok) {
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-            })
+            .then(res => res.json())
+            .then(window.location.replace("/guests"))
             .catch((err) => console.log(err));
     }
 
     //Search
     const [query, setQuery] = useState("")
-    const keys = ["fullname"]
 
     //Pagination
     const [itemOffset, setItemOffset] = useState(0);
