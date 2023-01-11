@@ -1,6 +1,5 @@
 # Hotel_Management
-Tiến độ (cập nhật ngày 8/1/2023): 80%
-- Chưa phân quyền giữa receptionist, accountant và restaurant staff
+Tiến độ (cập nhật ngày 10/1/2023): 88%
 - Chưa xong phần thống kê danh thu (backend)
 - Chưa xong payment cho phòng (backend)
 
