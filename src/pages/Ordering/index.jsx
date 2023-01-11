@@ -23,9 +23,10 @@ export default function Ordering() {
 
     setTimeout(
       fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/order", requestOptions)
-        .then(async (res) => {
-          setData(await res.json());
-        })
+        .then((res) => 
+          res.json()
+        )
+        .then(res => setData(res.data))
         .catch((err) => console.log(err)),
       1000
     );
@@ -43,19 +44,25 @@ export default function Ordering() {
   };
 
   const updateState = (id, number) => {
+    const token = ipcRenderer.sendSync("get-token");
+    
+    
+
     setStatus(number);
     const requestOptions = {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({
-        status: number,
+        action: "done",
       }),
     };
 
     fetch(
       `https://hammerhead-app-7qhnq.ondigitalocean.app/api/order/${id}`,
       requestOptions
-    ).catch((err) => console.log(err));
+    ).then(res=> res.json())
+    .then(res => console.log(res))
+    .catch((err) => console.log(err));
   };
 
   return (
@@ -85,17 +92,11 @@ export default function Ordering() {
       </div>
 
       <div className={styles.orderList}>
-        {data
-          .filter((value) =>
-            keys.some((key) =>
-              value[key].toString().toLowerCase().includes(query)
-            )
-          )
-          .map((value, index) => (
+        {data.filter((value) => keys.some((key) => value[key].toString().toLowerCase().includes(query))).map((value, index) => (
             <div className={styles.orderItem} key={index}>
               <h5>Order #{value.id}</h5>
               <h6>{value.createin}</h6>
-              <h6>Table: {}</h6>
+              <h6>Table: {value.tables.join(", ")}</h6>
 
               <div style={{ overflowY: "scroll", height: "45%" }}>
                 {data[index].foods.map((food, index) => (

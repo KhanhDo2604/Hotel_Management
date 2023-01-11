@@ -14,22 +14,13 @@ export default function Menu() {
   const [data, setData] = useState([]);
 
   const token = ipcRenderer.sendSync("get-token");
-  
-  const [updated, setUpdated] = useState(false);
 
   const removeFood = (id) => {
     fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/food/${id}`, {
       method: "DELETE",
       headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
     })
-      .then(async (response) => {
-        setUpdated(!updated);
-        const data = await response.json();
-        if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-        }
-      })
+      .then(() => window.location.reload())
       .catch((error) => {
         console.error("There was an error!", error);
       });
@@ -42,11 +33,14 @@ export default function Menu() {
     };
 
     fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
-      .then(async (res) => {
-        setData(await res.json());
+      .then(res => res.json())
+      .then((res) => {
+        setData(res);
+        console.log(res);
+        console.log(ipcRenderer.sendSync("get-user").id);
       })
       .catch((err) => console.log(err));
-  }, [updated]);
+  }, []);
 
   const [list, setList] = useState(data);
   const [clicked,setCliked] = useState(false);

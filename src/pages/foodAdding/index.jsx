@@ -10,6 +10,7 @@ export default function FoodAdding() {
   const [newFood, setNewFood] = useState({cover: null, name: '', category: 'mainmeal', price: 0, description: ''});
 
   const addingFood = () => {
+    console.log("a");
     const token = ipcRenderer.sendSync("get-token");
 
     const formData = new FormData();
@@ -23,7 +24,7 @@ export default function FoodAdding() {
       headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
       body: formData
     };
-    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions)
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/food", requestOptions).then(() => window.location.replace("/menu"));
   };
 
   const filterCategory = (value) => {
@@ -39,7 +40,7 @@ export default function FoodAdding() {
     <div style={{ height: "98%", position: "relative" }}>
       <h3>Form Adding Food</h3>
 
-      <form className={styles.formContainer}>
+      <div className={styles.formContainer}>
         <div action="" className={styles.formUpdate}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <label>Food Image:</label>
@@ -79,21 +80,22 @@ export default function FoodAdding() {
             marginTop: "1rem",
           }}
         >
-          <Link
-            to="/menu"
+          <button
+            // to="/menu"
             style={{ marginRight: "0.4rem", background: "#F9D410" }}
             onClick={addingFood}
           >
             Confirm
-          </Link>
-          <Link
-            to="/menu"
+          </button>
+          <button
+            // to="/menu"
             style={{ marginLeft: "0.4rem", background: "#bfbfbf" }}
+            onClick={() => window.location.replace("/menu")}
           >
             Cancle
-          </Link>
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

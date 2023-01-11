@@ -14,6 +14,7 @@ const { ipcRenderer } = require("electron");
 
 export default function MenuChoosing() {
   const location = useLocation();
+  const table = location.state.table.sort((a, b) => a.number - b.number).map((key) => key.number);
 
   const [data, setData] = useState([]);
 
@@ -78,24 +79,35 @@ export default function MenuChoosing() {
   }, [currentChoice, data]);
 
   const makeAnOrder = () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        agentid: "20521331",
-        total: total,
-        foods: Object.values(order).map((value) => ({
+    const agent = ipcRenderer.sendSync("get-user");
+
+    const token = ipcRenderer.sendSync("get-token");
+
+    const form = {
+      agentid: agent.id,
+        foods: [...Object.values(order).map((value) => ({
           foodid: value.id,
           price: value.price,
           quantity: value.quantity
-        }))
-      }),
+        }))],
+        table: table
+    }
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify(
+        form
+      ),
     };
 
     fetch(
       "https://hammerhead-app-7qhnq.ondigitalocean.app/api/order",
       requestOptions
-    ).then(() => console.log("200 OK"))
+    ).then(res => res.json())
+    .then(res => console.log(res))
+    .then(() => console.log("200 OK"))
+    console.log(form);
   };
 
   //Search
@@ -200,7 +212,7 @@ export default function MenuChoosing() {
         {/* Chỗ hiển thị món đã chọn */}
         <div className={styles.orders}>
           <div>
-            <h3>Table: {location.state.table.join(", ")}</h3>
+            <h3>Table: {location.state.table.sort((a, b) => a.number - b.number).map((value) => value.number).join(", ")}</h3>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h4>My Order</h4>
               <img

@@ -1,11 +1,42 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Table.module.scss";
 
+const { ipcRenderer } = require("electron");
+
 export default function Table() {
   const [tableStatus, setTableStatus] = useState(Array(20).fill(0));
-  var temp = [];
 
+  const [tableList, setTableList] = useState([])
+  const [selectedTable, setSelectedTable] = useState([])
+
+  useEffect(() => {
+    const token = ipcRenderer.sendSync("get-token");
+    const requestOptions = {
+      method: "GET",
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+    };
+
+    fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/table", requestOptions)
+      .then(async (res) => {
+        setTableList(await res.json());
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const changeHandler = (table) => {
+    const isChecked= selectedTable.includes(table)
+    if (isChecked) {
+      //uncheck
+      const check = selectedTable.filter(value => value.number !== table.number);
+      setSelectedTable(check)
+    }
+    else {
+      setSelectedTable([...selectedTable, table])
+    }
+  }
+  
   return (
     <div className="w3-container">
       <div className={styles.gridContainer}>
@@ -26,15 +57,9 @@ export default function Table() {
           <Link
             to='/foodChoosing'
             state={{
-              table: tableStatus.reduce((prev, cur, index) => {
-                if(cur === 1) {
-                  temp = [...prev, index + 1];
-                  return [...prev, index + 1];
-                }
-                else return prev;
-              }, [])
+              table: selectedTable,
             }}
-            className={temp.length !== 0 ? null : styles.unActive} 
+            className={selectedTable.length !== 0 ? null : styles.unActive} 
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,17 +75,15 @@ export default function Table() {
       </div>
 
       <div className={styles.tableList}>
-        {tableStatus.map((value, index) => (
-          <div key={index} className={value === 1 ? styles.active : value === 2 ? styles.disable : styles.tableItem} 
-            onClick={() => {
-            if(value !== 2) {
-              setTableStatus(previous => {
-                previous[index] = value === 1 ? 0 : 1;
-                return [...previous];
-              })
-            }
-          }}> 
-            <h4>Table {index + 1}</h4>
+        {tableList.map((value, index) => (
+          <div key={index} className={styles.tableItem}>
+            <input type="checkbox" name={value.number} id={value.number} 
+              checked={selectedTable.includes(value)} className={styles.checkBox} 
+              onChange={(e) => changeHandler(value)} disabled={!value.status}/>
+            <label htmlFor={value.number} key={index}
+              className={styles.active}>
+                <h4>Table {value.number}</h4>
+            </label>
           </div>
         ))}
       </div>

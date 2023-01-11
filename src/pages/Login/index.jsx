@@ -3,6 +3,8 @@ import background from '../../assets/scenery.png';
 import hotel from '../../assets/hotel.png';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const { ipcRenderer } = require("electron");
 
 export default function Login() {
@@ -28,6 +30,9 @@ export default function Login() {
             if(res.user) {
                 ipcRenderer.send("save-token", res.token, res.user)
                 typeof(res) === "object" ? navigateFilter(res.user.role) : res;
+            }
+            else {
+                toast("Login failed!");
             }
         })
         .catch((err) => console.log(err));
@@ -72,6 +77,7 @@ export default function Login() {
                 </div>
                 <div>
                     <button className={styles.btn} onClick={authenication}>LOGIN</button>
+                    <ToastContainer hideProgressBar={true}/>
                 </div>
             </div>
         </div>
