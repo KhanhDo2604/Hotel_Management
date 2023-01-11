@@ -70,20 +70,28 @@
     gap: 6rem;
     
     .tableItem {
-        @extend %table;
-        background-color: white;
+        .active {
+           @extend %table; 
+        }
+
+        input[type="checkbox"] {
+            display: none;
+            
+            & + label {
+                background-color: white;
+            }
+    
+            &:checked + label {
+                background-color: #f7e68d;
+            }
+    
+            &:disabled + label {
+                background-color: red;
+                cursor: default;
+            }
+        }
     }
 
-    .active {
-        background-color: #f7e68d;
-        @extend %table;
-
-    }
-
-    .disable {
-        background-color: #E4644B;
-        @extend %table;
-    }
 }
 
 
