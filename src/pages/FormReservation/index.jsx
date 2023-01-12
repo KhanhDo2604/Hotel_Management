@@ -6,39 +6,46 @@ const { RangePicker } = DatePicker;
 import moment from "moment/moment";
 import { useNavigate } from "react-router-dom";
 const { ipcRenderer } = require("electron");
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function FormReservation() {
-    const [stateGender, setStateGender] = useState("")
     const location = useLocation()
     const table = location.state.table
     const navigate = useNavigate();
-
+    
     const [guestid, setguestId] = useState("")
     const [count, setCount] = useState("")
     const [date, setDate] = useState({
         start: moment(),
         end: moment().add(1, "d")
     });
+    const [check,setCheck] = useState(false)
 
     const sendData = () => {
-        const token = ipcRenderer.sendSync("get-token");
-        const userId = ipcRenderer.sendSync("get-user").id;
-        
-        const requestOptions = {
-            method: "POST",
-            headers: { "Accept": "application/json", 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-            body: JSON.stringify({
-                guestid: guestid,
-                agentid: userId,
-                in: date.start,
-                out: date.end,
-                count: count,
-                rooms: table.map((value) => value.roomnumber)
-            })
-        };
-        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation", requestOptions
-        )
-        .then((res) => navigate("/bookinglist"))
+        if(guestid === "" || check===false || count === ""){
+            toast.warn("Please fill all information")
+        }
+        else {
+            const token = ipcRenderer.sendSync("get-token");
+            const userId = ipcRenderer.sendSync("get-user").id;
+    
+            const requestOptions = {
+                method: "POST",
+                headers: { "Accept": "application/json", 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                body: JSON.stringify({
+                    guestid: guestid,
+                    agentid: userId,
+                    in: date.start,
+                    out: date.end,
+                    count: count,
+                    rooms: table.map((value) => value.roomnumber)
+                })
+            };
+            fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation", requestOptions
+            )
+                .then((res) => navigate("/bookinglist"))
+        }
     }
 
     const navigatePage = () => {
@@ -47,16 +54,11 @@ export default function FormReservation() {
 
 
     return (
-        <div style={{ padding: "1rem", position: 'relative' }}>
+        <div style={{ padding: "1rem", position: 'relative', height: "98%" }}>
+             <ToastContainer />
             <h3 style={{ fontWeight: "bold" }}>Form Reservation</h3>
             <div className={styles.flexItem}>
                 <form action="" className={styles.gridItem}>
-                    <div>
-                        <label>Customer Name:</label>
-                    </div>
-                    <div >
-                        <input type="text" name="name" />
-                    </div>
                     <div>
                         <label>Identification:</label>
                     </div>
@@ -64,37 +66,9 @@ export default function FormReservation() {
                         <input type="text" name="name" onChange={(e) => setguestId(e.target.value)} value={guestid} />
                     </div>
                     <div>
-                        <label>Email:</label>
-                    </div>
-                    <div>
-                        <input type="email" name="name" />
-                    </div>
-                    <div>
-                        <label>Gender:</label>
-                    </div>
-                    <div style={{ borderRadius: '8px' }}>
-                        <select
-                            style={{ padding: "0.8rem", fontWeight: "bold", borderRadius: '0.6rem' }}
-                            value={stateGender}
-                            onChange={(e) => {
-                                const selectedGender = e.target.value
-                                console.log(selectedGender)
-                                setStateGender(selectedGender)
-                            }}>
-                            <option value="male">Male</option>
-                            <option value="female">FeMale</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Phone Number:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="name" />
-                    </div>
-                    <div>
                         <label>Type Of Room:</label>
                     </div>
-                    <div style={{ display: 'flex' }}>
+                    <div>
                         <div>
                             <div>
                                 <input defaultValue={table.filter(value => value.roomtype === "std").length} style={{ width: "8%", marginRight: "1.5rem" }} type="text" name="name" readOnly />
@@ -123,12 +97,13 @@ export default function FormReservation() {
                         <RangePicker
                             className={styles.rangPicker}
                             format={"YYYY-MM-DD"}
-                            style={{ height: '32.4px', border: '0.2rem solid #999' }}
+                            style={{ height: '32.4px', border: '0.2rem solid #999',width:"100%" }}
                             onChange={(e) => {
                                 setDate({
                                     start: e[0].format("YYYY-MM-DD"),
                                     end: e[1].format("YYYY-MM-DD")
                                 })
+                                setCheck(true)
                             }}
                         />
                     </div>
@@ -142,8 +117,10 @@ export default function FormReservation() {
                 <div className={styles.format}>
                     <button className={styles.btnConfirm} onClick={sendData}>Confirm</button>
                     <button className={styles.btnCancel} onClick={navigatePage}>Cancel</button>
+                    
                 </div>
             </div>
+
 
         </div>
     );

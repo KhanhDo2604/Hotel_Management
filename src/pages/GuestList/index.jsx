@@ -9,7 +9,7 @@ const { ipcRenderer } = require("electron");
 const mapGender = ["Female", "Male"]
 export default function GuestList() {
     const [list, setList] = useState([])
-  
+
     //Get
     useEffect(() => {
         const token = ipcRenderer.sendSync("get-token");
@@ -24,8 +24,8 @@ export default function GuestList() {
             .catch((err) => console.log(err));
     }, []);
 
-     //Delete
-     const handleDelete = (id) => {
+    //Delete
+    const handleDelete = (id) => {
         const token = ipcRenderer.sendSync("get-token");
         const requestOptions = {
             method: "DELETE",
@@ -54,16 +54,24 @@ export default function GuestList() {
 
     return (
         <div style={{ marginTop: '2rem' }} className="w3-container">
-            <div className={styles.searchBar}>
-                <input type="text" id={styles.mySearch} placeholder="Search name, email or etc." onChange={(e) => setQuery(e.target.value)} />
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                    style={{ marginRight: "1.6rem", fill: "#F9D410" }}
-                >
-                    <path d="m19.6 21-6.3-6.3q-.75.6-1.725.95Q10.6 16 9.5 16q-2.725 0-4.612-1.887Q3 12.225 3 9.5q0-2.725 1.888-4.613Q6.775 3 9.5 3t4.613 1.887Q16 6.775 16 9.5q0 1.1-.35 2.075-.35.975-.95 1.725l6.3 6.3ZM9.5 14q1.875 0 3.188-1.312Q14 11.375 14 9.5q0-1.875-1.312-3.188Q11.375 5 9.5 5 7.625 5 6.312 6.312 5 7.625 5 9.5q0 1.875 1.312 3.188Q7.625 14 9.5 14Z" />
-                </svg>
+            <div className={styles.containerGrid}>
+                <div className={styles.searchBar}>
+                    <input type="text" id={styles.mySearch} placeholder="Search name, email or etc." onChange={(e) => setQuery(e.target.value)} />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        style={{ marginRight: "1.6rem", fill: "#F9D410" }}
+                    >
+                        <path d="m19.6 21-6.3-6.3q-.75.6-1.725.95Q10.6 16 9.5 16q-2.725 0-4.612-1.887Q3 12.225 3 9.5q0-2.725 1.888-4.613Q6.775 3 9.5 3t4.613 1.887Q16 6.775 16 9.5q0 1.1-.35 2.075-.35.975-.95 1.725l6.3 6.3ZM9.5 14q1.875 0 3.188-1.312Q14 11.375 14 9.5q0-1.875-1.312-3.188Q11.375 5 9.5 5 7.625 5 6.312 6.312 5 7.625 5 9.5q0 1.875 1.312 3.188Q7.625 14 9.5 14Z" />
+                    </svg>
+                </div>
+                <div style={{ display: "flex", justifyContent:"end" }}>
+                    <Link className={styles.buttonAction} to="/addGuest" style={{ fontWeight: "bold" }}>
+                        <img src="/src/assets/more.png" className={styles.icon} />
+                        New Guest
+                    </Link>
+                </div>
             </div>
             <div className={styles.gridGeneral}>
                 <div className={styles.gridContainer}>

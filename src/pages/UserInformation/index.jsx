@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const { ipcRenderer } = require("electron");
 
-
 export default function UserInformation() {
     const location = useLocation();
     const [fullname, setFullName] = useState(location.state.userInfo.fullname)
@@ -16,6 +15,7 @@ export default function UserInformation() {
 
     //PUT
     const handleUpdate = () => {
+
         const token = ipcRenderer.sendSync("get-token");
         const requestOptions = {
             method: "PUT",
@@ -39,12 +39,13 @@ export default function UserInformation() {
                     return Promise.reject(error);
                 }
             })
-            .then(()=>{
+            .then(() => {
                 window.location.replace("/guests")
             })
             .catch((error) => {
                 console.error("There was an error!", error);
             });
+
     }
 
     return (
@@ -82,9 +83,7 @@ export default function UserInformation() {
                 </form>
                 <div className={styles.format}>
                     <button className={styles.btnConfirm} onClick={handleUpdate}>Confirm</button>
-                    <button className={styles.btnCancel} onClick={() => {
-                        navigate("/guests")
-                    }}>Cancel</button>
+                    <button className={styles.btnCancel} onClick={()=> navigate("/guests")}>Cancel</button>
                 </div>
             </div>
         </div>

@@ -145,7 +145,7 @@ export default function BookingList() {
                         <p ref={guestRef} style={{ fontWeight: "bold" }}>{guest} Guests</p>
                     </div>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <button>Filter</button>
                     <button className={styles.btnLeft} onClick={converPage}>Book</button>
                 </div>
