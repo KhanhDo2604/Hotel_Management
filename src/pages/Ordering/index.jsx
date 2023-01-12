@@ -45,13 +45,11 @@ export default function Ordering() {
 
   const updateState = (id, number) => {
     const token = ipcRenderer.sendSync("get-token");
-    
-    
-
+  
     setStatus(number);
     const requestOptions = {
       method: "PUT",
-      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+      headers: { "Accept": "application/json", "Content-Type": "application/json", 'Authorization': 'Bearer ' + token },
       body: JSON.stringify({
         action: "done",
       }),
@@ -61,7 +59,6 @@ export default function Ordering() {
       `https://hammerhead-app-7qhnq.ondigitalocean.app/api/order/${id}`,
       requestOptions
     ).then(res=> res.json())
-    .then(res => console.log(res))
     .catch((err) => console.log(err));
   };
 
@@ -87,7 +84,7 @@ export default function Ordering() {
 
 
         <div>
-          <button className={styles.dropdownBtn} onClick={() => Navigate("/ordering")}>Reload Page</button>
+          <button className={styles.dropdownBtn} onClick={() => window.location.reload()}>Reload Page</button>
         </div>
       </div>
 
