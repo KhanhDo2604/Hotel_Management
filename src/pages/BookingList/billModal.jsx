@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./BookingList.module.scss";
+const { ipcRenderer } = require("electron");
 
 const mapType = {
   std: "Standard Room (STD)",
@@ -10,7 +11,20 @@ const mapType = {
 
 export default function BillModal({ open, onClose, guestInfo }) {
   if (!open) return null;
-  console.log(guestInfo);
+  const sendData = () => {
+    const token = ipcRenderer.sendSync("get-token");
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Accept": "application/json", 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({
+        action: "checkout"
+      })
+    };
+    fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation/${guestInfo.id}`, requestOptions
+    )
+      .then((res) => res.json())
+      .then((res) => window.location.reload())
+  }
   return (
     <div className={style.overlay}>
       <h3>Bill Details</h3>
@@ -40,13 +54,12 @@ export default function BillModal({ open, onClose, guestInfo }) {
               {mapType[value.type]} (Room {value.number})
             </p>
           ))}
-
-          <p>1200000 vnd</p>
+          <p>{guestInfo.total}</p>
         </div>
       </div>
 
       <div style={{ justifyContent: "center", display: "flex" }}>
-        <button className={style.confirmBtn} onClick={onClose}>Confirm</button>
+        <button className={style.confirmBtn} onClick={sendData}>Confirm</button>
 
         <button className={style.cancleBtn} onClick={onClose}>Cancel</button>
       </div>

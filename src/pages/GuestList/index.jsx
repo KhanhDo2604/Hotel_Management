@@ -1,44 +1,50 @@
 import styles from "./GuestList.module.scss";
 import update from "../../assets/pencil.png";
 import bin from "../../assets/bin.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
+const { ipcRenderer } = require("electron");
 
-const guestList = [
-    {
-        id: 1,
-        name: "Võ Đình Vân",
-        gender: "Male",
-        createIn: "08/01/2023",
-        contact: {
-            email: "van2k@yahoo.com",
-            phoneNumber: "0342578371"
-        }
-    },
-    {
-        id: 3,
-        name: "Đỗ Phạm Huy Khánh",
-        gender: "Male",
-        createIn: "08/01/2023",
-        contact: {
-            email: "khanhdo@hotgmail.com",
-            phoneNumber: "03429454382"
-        }
-    },
-]
-
+const mapGender = ["Female", "Male"]
 export default function GuestList() {
-    const [list, setList] = useState(guestList)
+    const [list, setList] = useState([])
+
+    //Get
+    useEffect(() => {
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "GET",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest", requestOptions)
+            .then((res) => res.json())
+            .then((res) => setList(res))
+            .catch((err) => console.log(err));
+    }, []);
+
+    //Delete
+    const handleDelete = (id) => {
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+        fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest/${id}`, requestOptions)
+            .then(res => res.json())
+            .then(window.location.replace("/guests"))
+            .catch((err) => console.log(err));
+    }
+
     //Search
     const [query, setQuery] = useState("")
-    const keys = ["name"]
 
     //Pagination
     const [itemOffset, setItemOffset] = useState(0);
     const itemsPerPage = 6;
     const endOffset = itemOffset + itemsPerPage;
-    const filtered = list.filter((values) => keys.some((key) => values[key].toLowerCase().includes(query)))
+    const filtered = list.filter((values) => values.fullname.toLowerCase().includes(query))
     const currentItems = filtered.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(filtered.length / itemsPerPage);
     const handlePageClick = (event) => {
@@ -46,23 +52,26 @@ export default function GuestList() {
         setItemOffset(newOffset);
     };
 
-    //delete an item
-    const handleDelete = (id) => {
-        const newIds = list.filter((item) => item.id !== id)
-        setList(newIds)
-    }
     return (
-        <div style={{marginTop: '2rem'}} className="w3-container">
-            <div className={styles.searchBar}>
-                <input type="text" id={styles.mySearch} placeholder="Search name, email or etc." onChange={(e) => setQuery(e.target.value)} />
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                    style={{ marginRight: "1.6rem", fill: "#F9D410" }}
-                >
-                    <path d="m19.6 21-6.3-6.3q-.75.6-1.725.95Q10.6 16 9.5 16q-2.725 0-4.612-1.887Q3 12.225 3 9.5q0-2.725 1.888-4.613Q6.775 3 9.5 3t4.613 1.887Q16 6.775 16 9.5q0 1.1-.35 2.075-.35.975-.95 1.725l6.3 6.3ZM9.5 14q1.875 0 3.188-1.312Q14 11.375 14 9.5q0-1.875-1.312-3.188Q11.375 5 9.5 5 7.625 5 6.312 6.312 5 7.625 5 9.5q0 1.875 1.312 3.188Q7.625 14 9.5 14Z" />
-                </svg>
+        <div style={{ marginTop: '2rem' }} className="w3-container">
+            <div className={styles.containerGrid}>
+                <div className={styles.searchBar}>
+                    <input type="text" id={styles.mySearch} placeholder="Search name, email or etc." onChange={(e) => setQuery(e.target.value)} />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        style={{ marginRight: "1.6rem", fill: "#F9D410" }}
+                    >
+                        <path d="m19.6 21-6.3-6.3q-.75.6-1.725.95Q10.6 16 9.5 16q-2.725 0-4.612-1.887Q3 12.225 3 9.5q0-2.725 1.888-4.613Q6.775 3 9.5 3t4.613 1.887Q16 6.775 16 9.5q0 1.1-.35 2.075-.35.975-.95 1.725l6.3 6.3ZM9.5 14q1.875 0 3.188-1.312Q14 11.375 14 9.5q0-1.875-1.312-3.188Q11.375 5 9.5 5 7.625 5 6.312 6.312 5 7.625 5 9.5q0 1.875 1.312 3.188Q7.625 14 9.5 14Z" />
+                    </svg>
+                </div>
+                <div style={{ display: "flex", justifyContent:"end" }}>
+                    <Link className={styles.buttonAction} to="/addGuest" style={{ fontWeight: "bold" }}>
+                        <img src="/src/assets/more.png" className={styles.icon} />
+                        New Guest
+                    </Link>
+                </div>
             </div>
             <div className={styles.gridGeneral}>
                 <div className={styles.gridContainer}>
@@ -85,19 +94,19 @@ export default function GuestList() {
                     currentItems && currentItems.map((value, index) => (
                         <div key={index}>
                             <div className={styles.gridItem}>
-                                <p style={{ display: "flex", alignItems: "center" }}>{value.name}</p>
-                                <p style={{ display: "flex", alignItems: "center" }}>{value.gender}</p>
-                                <p style={{ display: "flex", alignItems: "center" }}>{value.createIn}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{value.fullname}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{mapGender[value.gender]}</p>
+                                <p style={{ display: "flex", alignItems: "center" }}>{value.createin.slice(0, 10)}</p>
                                 <div>
-                                    <p>{value.contact.email}</p>
-                                    <p>{value.contact.phoneNumber}</p>
+                                    <p>{value.email}</p>
+                                    <p>{value.phone}</p>
                                 </div>
                                 <div className={styles.flexItem}>
                                     <button className={styles.actionBtn}>
                                         <Link
                                             to="/userInformation"
                                             state={{
-                                                userInfo :value
+                                                userInfo: value
                                             }}
                                         >
                                             <img src={update} alt="" style={{ width: "2.4rem" }} />

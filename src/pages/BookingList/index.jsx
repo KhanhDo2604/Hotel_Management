@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import CheckOutBtn from "../../comps/checkOutButton";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 const { RangePicker } = DatePicker;
 const { ipcRenderer } = require("electron");
 
@@ -21,7 +22,6 @@ const mapState = ["OC", "EA", "SO"]
 export default function BookingList() {
     //Fetch api
     const [data, setData] = useState([])
-
     useEffect(() => {
         const token = ipcRenderer.sendSync("get-token");
         const requestOptions = {
@@ -36,6 +36,20 @@ export default function BookingList() {
             .catch((err) => console.log(err));
     }, []);
 
+    //Delete 
+    const handleDelete = (id) => {
+        const token = ipcRenderer.sendSync("get-token");
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+
+        fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation${id}`, requestOptions)
+            .then(async (res) => {
+                setData(await res.json());
+            })
+            .catch((err) => console.log(err));
+    }
 
     //Search
     const [query, setQuery] = useState("");
@@ -131,7 +145,7 @@ export default function BookingList() {
                         <p ref={guestRef} style={{ fontWeight: "bold" }}>{guest} Guests</p>
                     </div>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <button>Filter</button>
                     <button className={styles.btnLeft} onClick={converPage}>Book</button>
                 </div>
@@ -154,7 +168,7 @@ export default function BookingList() {
             </div>
             {
                 data && data.filter((value) => keys.some((key) => value[key].toLowerCase().includes(query))).map((values, index) => (
-                    <div className={styles.contentGrid} key={values.id}>
+                    <div className={styles.contentGrid} key={index}>
                         <div className={styles.alignItems}>
                             {
                                 values.rooms.map((valueRoom) => (
@@ -202,6 +216,14 @@ export default function BookingList() {
                                 )
                             }
                             <CheckOutBtn guestInfo={values} />
+                            {
+                                values.status === 0 && (
+                                    <button className={styles.close} onClick={() => handleDelete(values.id)}>
+                                        <FontAwesomeIcon style={{ color: "red", height: "2.8rem" }} icon={faClose} />
+                                    </button>
+                                )
+                            }
+
                         </div>
                     </div>
                 ))
