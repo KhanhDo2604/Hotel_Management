@@ -85,17 +85,17 @@ export default function MenuChoosing() {
 
     const form = {
       agentid: agent.id,
-        foods: [...Object.values(order).map((value) => ({
+        foods: Object.values(order).map((value) => ({
           foodid: value.id,
           price: value.price,
           quantity: value.quantity
-        }))],
+        })),
         table: table
     }
 
     const requestOptions = {
       method: "POST",
-      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+      headers: { "Accept": "application/json", "Content-Type": "application/json", 'Authorization': 'Bearer ' + token },
       body: JSON.stringify(
         form
       ),

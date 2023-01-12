@@ -13,14 +13,14 @@
     .gridContainer {
         display: grid;
         grid-template-columns: 1fr 1.1fr 0.8fr;
-        margin-top: 2rem;
+        margin-top: 0.8rem;
         padding: 0rem 1.8rem 0rem 1.6rem;
     }
     .gridItem{
         box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.2);
         display: grid;
         grid-template-columns: 1fr 1.1fr 0.8fr;
-        padding: 0.8rem 1.8rem 1.6rem;
+        padding: 1.6rem;
         p{
             font-weight: 600;
         }

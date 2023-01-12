@@ -2,8 +2,16 @@ import styles from "./RestaurantReport.module.scss";
 import BarChart from "../../comps/BarChart";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
+const { ipcRenderer } = require("electron");
 
 export default function RestaurantReport() {
+    const user = ipcRenderer.sendSync("get-user");
+
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
     const array = [
         {
             id: 1,
@@ -78,11 +86,15 @@ export default function RestaurantReport() {
             in: 100,
         }
     ]
+
+    const [sale, setSale] = useState([]);
+
     const [data, setData] = useState({
         labels: array.map((data) => data.name),
         datasets: [{
             label: "Profitability Revenue",
             data: array.map((data) => data.in),
+            // data: sale.bill.map((data) => data.price),
             backgroundColor: [
                 "#FFFF66",
                 "#FFFF33",
@@ -100,12 +112,33 @@ export default function RestaurantReport() {
         }]
     })
 
+    
+
+    useEffect(() => {
+        const token = ipcRenderer.sendSync("get-token");
+    
+        const requestOptions = {
+          method: "GET",
+          headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+    
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/report/restaurant/2023", requestOptions)
+          .then((res) => 
+            res.json()
+          )
+          .then(res => setSale(res.data))
+          .catch((err) => console.log(err))
+
+      }, []);
+
+    // console.log(sale);
+
     return (
         <>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h2 style={{ fontWeight: "normal" }}>RESTAURANT SALES REPORT</h2>
                 <Link
-                    to="/"
+                    to="/dashboard"
                 >
                     <button className={styles.btnConvert}>Hotel</button>
                 </Link>
@@ -117,9 +150,9 @@ export default function RestaurantReport() {
                     <h5>DATE OF LAST UPDATE</h5>
                 </div>
                 <div className={styles.gridItem}>
-                    <p>Restaurant Anton</p>
-                    <p>Nara W.Glenn</p>
-                    <p>27/03/2023</p>
+                    <p>Restaurant OOAD</p>
+                    <p>{user.fullname}</p>
+                    <p>{date}</p>
                 </div>
             </div>
             <h4 style={{ paddingLeft: "10.5rem", marginTop: "3rem" }}>SALES REPORT</h4>
@@ -136,18 +169,26 @@ export default function RestaurantReport() {
                             ))
                         }
                     </tr>
+
                     <tr>
                         {
                             array.map((value, index) => (
-                                <td key={index}>${value.nor}</td>
+                                <td key={index}>{value.price}</td>
                             ))
+                            // sale.bill.map((value, index) => (
+                            //     <td key={index}>{value.price}</td>
+                            // ))
                         }
                     </tr>
+
                     <tr>
                         {
                             array.map((value, index) => (
-                                <td key={index}>${value.in}</td>
+                                <td key={index}>{parseInt(value.price) - 100000}</td>
                             ))
+                            // sale.bill.map((value, index) => (
+                            //  <td key={index}>{parseInt(value.price) - 100000}</td>
+                            // ))
                         }
                     </tr>
 
@@ -161,6 +202,7 @@ export default function RestaurantReport() {
                         <p className={styles.elementp}>
                             {
                                 "$" + array.reduce((prev, cur) => (prev + cur.in), 0)
+                                // sale.bill.reduce((prev, cur) => (parseInt(prev) + (parseInt(cur.price) - 100000)), 0)
                             }
                         </p>
                     </div>

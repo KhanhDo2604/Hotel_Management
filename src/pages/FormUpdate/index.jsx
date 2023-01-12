@@ -18,30 +18,29 @@ export default function FormUpdate() {
   const update = () => {
     const token = ipcRenderer.sendSync("get-token");
 
+    const formData = new FormData();
+
+    formData.append("cover", image);
+    formData.append("name", name);
+    formData.append("category", cate);
+    formData.append("price", price);
+    formData.append("status", trangthai);
+
+    // console.log(typeof(trangthai));
+    // console.log(cate);
+
     const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", "Accept": "application/json", 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify({
-        cover: image,
-        name: name,
-        category: cate,
-        price: price,
-        status: trangthai,
-      }),
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data", "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+      body: formData
     };
 
     fetch(
-      `https://hammerhead-app-7qhnq.ondigitalocean.app/api/food/${location.state.foodInfo.id}`,
+      `https://hammerhead-app-7qhnq.ondigitalocean.app/api/food/edit/${location.state.foodInfo.id}`,
       requestOptions
     )
-      .then(async (response) => {
-        const data = await response.json();
-
-        if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-        }
-      })
+    .then(res => res.json())
+      .then(res => console.log(res))
       .catch((error) => {
         console.error("There was an error!", error);
       });
@@ -67,7 +66,6 @@ export default function FormUpdate() {
             <label>Food Name: </label>
             <label>Category: </label>
             <label>Price: </label>
-            {/* <label>Quantity: </label> */}
             <label>Status: </label>
           </div>
 
@@ -76,38 +74,31 @@ export default function FormUpdate() {
               onChange={(e) => {
                 setImage(e.target.value);
               }}/>
-            {/* <input type="text" defaultValue={location.state.foodInfo.cover} /> */}
             <input
               type="text"
-              defaultValue={location.state.foodInfo.name}
+              value={name}
               onChange={(e) => {
                 setName(e.target.value);
               }}
             />
             <select
-              onClick={(e) => setCate(e.target.value)}
+              onChange={(e) => setCate(e.target.value)}
               style={{ textTransform: "capitalize" }}
+              value={cate}
             >
-              <option value={location.state.foodInfo.category}>
-                {filterCategory(location.state.foodInfo.category)}
-              </option>
-              {group.map((value, index) => {
-                if (value !== location.state.foodInfo.category)
-                  return (
-                    <option key={index} value={value}>
-                      {filterCategory(value)}
-                    </option>
-                  );
-              })}
+              {group.map((value, index) => (
+                  <option key={index} value={value}>
+                    {filterCategory(value)}
+                  </option>
+              ))}
             </select>
             <input
               type="text"
-              defaultValue={location.state.foodInfo.price}
+              value={price}
               onChange={(e) => {
                 setPrice(e.target.value);
               }}
             />
-            {/* <input type="text" defaultValue={location.state.foodInfo.quantity}/> */}
             <select
               name="status"
               id="status"
