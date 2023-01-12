@@ -26,12 +26,9 @@ export default function FormUpdate() {
     formData.append("price", price);
     formData.append("status", trangthai);
 
-    // console.log(typeof(trangthai));
-    // console.log(cate);
-
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "multipart/form-data", "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+      headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
       body: formData
     };
 
@@ -72,7 +69,7 @@ export default function FormUpdate() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <input type="file" className="input-file" id="choose" 
               onChange={(e) => {
-                setImage(e.target.value);
+                setImage(e.target.files[0]);
               }}/>
             <input
               type="text"
