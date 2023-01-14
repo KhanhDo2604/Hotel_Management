@@ -44,10 +44,11 @@ export default function BookingList() {
             headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
         };
 
-        fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation${id}`, requestOptions)
-            .then(async (res) => {
-                setData(await res.json());
+        fetch(`https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation/${id}`, requestOptions)
+            .then((res) => {
+                res.json()
             })
+            .then(() => window.location.reload())
             .catch((err) => console.log(err));
     }
 
@@ -171,8 +172,8 @@ export default function BookingList() {
                     <div className={styles.contentGrid} key={index}>
                         <div className={styles.alignItems}>
                             {
-                                values.rooms.map((valueRoom) => (
-                                    <span style={{ display: "flex" }}>Room:
+                                values.rooms.map((valueRoom, index) => (
+                                    <span key={index} style={{ display: "flex" }}>Room:
                                         <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
                                             {valueRoom.number}
                                         </p>
@@ -183,8 +184,8 @@ export default function BookingList() {
                         </div>
                         <div className={styles.alignItems}>
                             {
-                                values.rooms.map((valueRoom) => (
-                                    <span style={{ display: "flex" }}>Type:
+                                values.rooms.map((valueRoom, index) => (
+                                    <span key={index} style={{ display: "flex" }}>Type:
                                         <p key={value.id} style={{ fontWeight: "bold" }}>
                                             {
                                                 mapType[valueRoom.type]
