@@ -14,87 +14,82 @@ export default function RestaurantReport() {
 
     const array = [
         {
-            id: 1,
             name: "JAN",
-            nor: 100,
             in: 100,
         },
         {
-            id: 2,
             name: "FEB",
-            nor: 100,
             in: 100,
         },
         {
-            id: 3,
             name: "MAR",
-            nor: 100,
             in: 100,
         },
         {
-            id: 4,
             name: "APR",
-            nor: 100,
             in: 100,
         },
         {
-            id: 5,
             name: "MAY",
-            nor: 100,
             in: 100,
         },
         {
-            id: 6,
             name: "JUN",
-            nor: 100,
             in: 100,
         },
         {
-            id: 7,
             name: "JUL",
-            nor: 100,
             in: 100,
         },
         {
-            id: 8,
             name: "AUG",
-            nor: 100,
             in: 100,
         },
         {
-            id: 9,
             name: "SEP",
-            nor: 100,
             in: 70,
         },
         {
-            id: 10,
             name: "OCT",
-            nor: 100,
             in: 80,
         },
         {
-            id: 11,
             name: "NOV",
-            nor: 100,
             in: 90,
         },
         {
-            id: 12,
             name: "DEC",
-            nor: 100,
             in: 100,
         }
     ]
 
     const [sale, setSale] = useState([]);
 
+    useEffect(() => {
+        const token = ipcRenderer.sendSync("get-token");
+    
+        const requestOptions = {
+          method: "GET",
+          headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+    
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/report/restaurant/2023", requestOptions)
+          .then((res) => 
+            res.json()
+          )
+          .then(res => setSale(res.data.bill))
+        //   .then(res => console.log(res))
+          .catch((err) => console.log(err))
+
+      }, []);
+
+    const remain = 12 - sale.length;
     const [data, setData] = useState({
         labels: array.map((data) => data.name),
         datasets: [{
             label: "Profitability Revenue",
-            data: array.map((data) => data.in),
-            // data: sale.bill.map((data) => data.price),
+            // data: array.map((data) => data.in),
+            data: sale.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)),
             backgroundColor: [
                 "#FFFF66",
                 "#FFFF33",
@@ -112,26 +107,8 @@ export default function RestaurantReport() {
         }]
     })
 
-    
-
-    useEffect(() => {
-        const token = ipcRenderer.sendSync("get-token");
-    
-        const requestOptions = {
-          method: "GET",
-          headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
-        };
-    
-        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/report/restaurant/2023", requestOptions)
-          .then((res) => 
-            res.json()
-          )
-          .then(res => setSale(res.data))
-          .catch((err) => console.log(err))
-
-      }, []);
-
-    // console.log(sale);
+    console.log(array.map((data) => data.in))
+    console.log(sale.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)))
 
     return (
         <>
@@ -172,23 +149,27 @@ export default function RestaurantReport() {
 
                     <tr>
                         {
-                            array.map((value, index) => (
+                            sale.map((value, index) => (
                                 <td key={index}>{value.price}</td>
                             ))
-                            // sale.bill.map((value, index) => (
-                            //     <td key={index}>{value.price}</td>
-                            // ))
+                        }
+                        {
+                            Array(remain).fill(0).map((index) => (
+                                <td key={index + 1}>0</td>
+                            ))
                         }
                     </tr>
 
                     <tr>
                         {
-                            array.map((value, index) => (
-                                <td key={index}>{parseInt(value.price) - 100000}</td>
+                            sale.map((value, index) => (
+                             <td key={index}>{parseInt(value.price) - 100000}</td>
                             ))
-                            // sale.bill.map((value, index) => (
-                            //  <td key={index}>{parseInt(value.price) - 100000}</td>
-                            // ))
+                        }
+                        {
+                            Array(remain).fill(0).map((index) => (
+                                <td key={index + 1}>0</td>
+                            ))
                         }
                     </tr>
 
@@ -201,8 +182,7 @@ export default function RestaurantReport() {
                         <h4 style={{ marginTop: "3rem" }}>TOTAL PROFITABILITY</h4>
                         <p className={styles.elementp}>
                             {
-                                "$" + array.reduce((prev, cur) => (prev + cur.in), 0)
-                                // sale.bill.reduce((prev, cur) => (parseInt(prev) + (parseInt(cur.price) - 100000)), 0)
+                                sale.reduce((prev, cur) => (parseInt(prev) + (parseInt(cur.price) - 100000)), 0)
                             }
                         </p>
                     </div>
