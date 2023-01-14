@@ -10,86 +10,109 @@ export default function RestaurantReport() {
     const user = ipcRenderer.sendSync("get-user");
 
     const current = new Date();
-    const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
 
     const array = [
         {
+            id: 1,
             name: "JAN",
+            nor: 100,
             in: 100,
         },
         {
+            id: 2,
             name: "FEB",
+            nor: 100,
             in: 100,
         },
         {
+            id: 3,
             name: "MAR",
+            nor: 100,
             in: 100,
         },
         {
+            id: 4,
             name: "APR",
+            nor: 100,
             in: 100,
         },
         {
+            id: 5,
             name: "MAY",
+            nor: 100,
             in: 100,
         },
         {
+            id: 6,
             name: "JUN",
+            nor: 100,
             in: 100,
         },
         {
+            id: 7,
             name: "JUL",
+            nor: 100,
             in: 100,
         },
         {
+            id: 8,
             name: "AUG",
+            nor: 100,
             in: 100,
         },
         {
+            id: 9,
             name: "SEP",
+            nor: 100,
             in: 70,
         },
         {
+            id: 10,
             name: "OCT",
+            nor: 100,
             in: 80,
         },
         {
+            id: 11,
             name: "NOV",
+            nor: 100,
             in: 90,
         },
         {
+            id: 12,
             name: "DEC",
+            nor: 100,
             in: 100,
         }
     ]
 
     const [sale, setSale] = useState([]);
+    const remain = 12 - sale.length;
 
     useEffect(() => {
         const token = ipcRenderer.sendSync("get-token");
-    
+
         const requestOptions = {
-          method: "GET",
-          headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+            method: "GET",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
         };
-    
+
         fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/report/restaurant/2023", requestOptions)
-          .then((res) => 
-            res.json()
-          )
-          .then(res => setSale(res.data.bill))
-        //   .then(res => console.log(res))
-          .catch((err) => console.log(err))
+            .then((res) =>
+                res.json()
+            )
+            .then(res => setSale(res.data.bill))
+            // .then(res => console.log(res))
+            .catch((err) => console.log(err))
 
-      }, []);
+    }, []);
 
-    const remain = 12 - sale.length;
+
     const [data, setData] = useState({
-        labels: array.map((data) => data.name),
+        labels: array.map((value) => value.name),
         datasets: [{
             label: "Profitability Revenue",
-            // data: array.map((data) => data.in),
-            data: sale.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)),
             backgroundColor: [
                 "#FFFF66",
                 "#FFFF33",
@@ -107,8 +130,11 @@ export default function RestaurantReport() {
         }]
     })
 
-    console.log(array.map((data) => data.in))
-    console.log(sale.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)))
+    useEffect(() => {
+        if (sale.length > 0) {
+            setData(pre => ({ ...pre, datasets: [{ ...pre.datasets[0], data: sale.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)) }] }))
+        }
+    }, [sale])
 
     return (
         <>
@@ -163,7 +189,7 @@ export default function RestaurantReport() {
                     <tr>
                         {
                             sale.map((value, index) => (
-                             <td key={index}>{parseInt(value.price) - 100000}</td>
+                                <td key={index}>{parseInt(value.price) - 100000}</td>
                             ))
                         }
                         {
