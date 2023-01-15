@@ -1,7 +1,9 @@
 import styles from "./DashBoard.module.scss";
 import BarChart from "../../comps/BarChart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+const { ipcRenderer } = require("electron");
+
 export default function DashBoard() {
     const array = [
         {
@@ -89,11 +91,40 @@ export default function DashBoard() {
             tr: 50
         }
     ]
+
+    const user = ipcRenderer.sendSync("get-user");
+
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+
+    const [rooms, setRooms] = useState([]);
+    const [bill, setBill] = useState([])
+    const remain = 12 - rooms.length;
+    useEffect(() => {
+        const token = ipcRenderer.sendSync("get-token");
+
+        const requestOptions = {
+            method: "GET",
+            headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
+        };
+
+        fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/report/hotel/2023", requestOptions)
+            .then((res) =>
+                res.json()
+            )
+            .then(res => {
+                setRooms(res.data.rooms)
+                setBill(res.data.bill)
+            })
+            // .then(res => console.log(res))
+            .catch((err) => console.log(err))
+
+    }, []);
+
     const [data, setData] = useState({
         labels: array.map((data) => data.name),
         datasets: [{
             label: "Monthly Revenue",
-            data: array.map((data) => data.tr),
             backgroundColor: [
                 "#FFFF66",
                 "#FFFF33",
@@ -110,6 +141,12 @@ export default function DashBoard() {
             ]
         }]
     })
+
+    useEffect(() => {
+        if (bill.length > 0) {
+            setData(pre => ({ ...pre, datasets: [{ ...pre.datasets[0], data: bill.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)) }] }))
+        }
+    }, [bill])
     return (
         <>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -127,12 +164,12 @@ export default function DashBoard() {
                     <h5>DATE OF LAST UPDATE</h5>
                 </div>
                 <div className={styles.gridItem}>
-                    <p>Hotel Anton</p>
-                    <p>Nara W.Glenn</p>
-                    <p>27/03/2023</p>
+                    <p>Hotel OOAD</p>
+                    <p>{user.fullname}</p>
+                    <p>{date}</p>
                 </div>
             </div>
-            
+
             <h4 style={{ paddingLeft: "10.5rem", marginTop: "2rem" }}>SALES REPORT</h4>
             <div className={styles.format}>
                 <div>
@@ -150,23 +187,38 @@ export default function DashBoard() {
                     </tr>
                     <tr>
                         {
-                            array.map((value, index) => (
-                                <td key={index}>{value.nor}</td>
+                            rooms.map((value, index) => (
+                                <td key={index}>{value.count}</td>
+                            ))
+                        }
+                        {
+                            Array(remain).fill(0).map((index) => (
+                                <td key={index + 1}>0</td>
                             ))
                         }
                     </tr>
                     <tr>
                         {
-                            array.map((value, index) => (
-                                <td key={index}>{value.in}</td>
+                            bill.map((value, index) => (
+                                <td key={index}>{value.price}</td>
+                            ))
+                        }
+                        {
+                            Array(remain).fill(0).map((index) => (
+                                <td key={index + 1}>0</td>
                             ))
                         }
 
                     </tr>
                     <tr>
                         {
-                            array.map((value, index) => (
-                                <td key={index}>${value.tr}</td>
+                            bill.map((value, index) => (
+                                <td key={index}>{parseInt(value.price) - 100000}</td>
+                            ))
+                        }
+                        {
+                            Array(remain).fill(0).map((index) => (
+                                <td key={index + 1}>0</td>
                             ))
                         }
 
@@ -180,7 +232,7 @@ export default function DashBoard() {
                         <h4 style={{ marginTop: "3rem" }}>TOTAL REVENUE</h4>
                         <p className={styles.elementp}>
                             {
-                                "$" + array.reduce((prev, cur) => (prev + cur.tr), 0)
+                                bill.reduce((prev, cur) => (parseInt(prev) + (parseInt(cur.price) - 100000)), 0)
                             }
                         </p>
                     </div>
