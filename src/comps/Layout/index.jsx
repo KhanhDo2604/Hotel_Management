@@ -1,17 +1,28 @@
 import "./Layout.scss";
 import logo from "../../assets/hotelLogo.png";
 import icon from "../../assets/sort.svg";
-import noti from "../../assets/bell2.png";
 import avatar from "../../assets/main_logo.png";
 import logout from "../../assets/logout.png";
 
 import { useState, useRef } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { routes } from "../../routes.js";
+import NoticeModal from "../NoticeModal";
 
 const { ipcRenderer } = require("electron");
 
 export default function Layout({ children }) {
+    const [modalState, setModalState] = useState(false);
+
+    const openModal = () => {
+        setModalState(!modalState);
+    }
+
+    const logOut = () => {
+        console.log("hello world");
+        // navigate("/");
+    }
+
     const [sidebar, setSidebar] = useState(true);
     const navRef = useRef(null);
     const navigate = useNavigate();
@@ -54,10 +65,7 @@ export default function Layout({ children }) {
                     </button>
 
                     <div className="user-selection">
-                        {/* <button className="header-btn">
-                            <img src={noti} alt="bell" />
-                        </button> */}
-                        <button className="header-btn" onClick={_=>navigate("/")}>
+                        <button className="header-btn" onClick={openModal}>
                             <img src={logout} alt="logout" />
                         </button>
                         <button className="header-btn avatar" style={{backgroundImage: `url(${avatar})`}}></button>
@@ -66,6 +74,7 @@ export default function Layout({ children }) {
                 <div className="content">
                     {children}
                 </div>
+                <NoticeModal toggle={modalState} hide={openModal} action={logOut} title={"Log Out"} content={"Do you want to log out ?"}/>
             </div>
         </div>
     );

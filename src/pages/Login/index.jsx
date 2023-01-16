@@ -36,7 +36,7 @@ export default function Login() {
                     typeof (res) === "object" ? navigateFilter(res.user.role) : res;
                 }
                 else {
-                    toast("Login failed!");
+                    toast.error("Login failed!");
                 }
             })
             .catch((err) => console.log(err));
@@ -100,7 +100,7 @@ export default function Login() {
                 </div>
                 <div>
                     <button className={styles.btn} onClick={authenication}>LOGIN</button>
-                    <ToastContainer hideProgressBar={true} />
+                    <ToastContainer />
                 </div>
             </div>
         </div>

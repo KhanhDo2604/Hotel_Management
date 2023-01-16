@@ -6,9 +6,11 @@ import drink from "../../assets/drink.png";
 import meal from "../../assets/meal.png";
 import pasta from "../../assets/spaghetti.png";
 import { useState, useReducer } from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { actions, reducer } from "./reducer";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { ipcRenderer } = require("electron");
 
@@ -79,35 +81,38 @@ export default function MenuChoosing() {
   }, [currentChoice, data]);
 
   const makeAnOrder = () => {
-    const agent = ipcRenderer.sendSync("get-user");
-
-    const token = ipcRenderer.sendSync("get-token");
-
-    const form = {
-      agentid: agent.id,
-        foods: Object.values(order).map((value) => ({
-          foodid: value.id,
-          price: value.price,
-          quantity: value.quantity
-        })),
-        table: table
+    if(Object.values(order).length !== 0){
+      const agent = ipcRenderer.sendSync("get-user");
+  
+      const token = ipcRenderer.sendSync("get-token");
+  
+      const form = {
+        agentid: agent.id,
+          foods: Object.values(order).map((value) => ({
+            foodid: value.id,
+            price: value.price,
+            quantity: value.quantity
+          })),
+          table: table
+      }
+  
+      const requestOptions = {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json", 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify(
+          form
+        ),
+      };
+  
+      fetch(
+        "https://hammerhead-app-7qhnq.ondigitalocean.app/api/order",
+        requestOptions
+      ).then(res => res.json()).then(_ => window.location.replace("/tables"))
+   
     }
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Accept": "application/json", "Content-Type": "application/json", 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify(
-        form
-      ),
-    };
-
-    fetch(
-      "https://hammerhead-app-7qhnq.ondigitalocean.app/api/order",
-      requestOptions
-    ).then(res => res.json())
-    .then(res => console.log(res))
-    .then(() => console.log("200 OK"))
-    console.log(form);
+    else {
+      toast.warn("List of order is empty!");
+    }
   };
 
   //Search
@@ -293,6 +298,8 @@ export default function MenuChoosing() {
               <h3>{total}đ</h3>
             </div>
             <button className={styles.checkOutBtn} onClick={makeAnOrder}>Make Order</button>
+            <ToastContainer />
+
           </div>
         </div>
       </div>

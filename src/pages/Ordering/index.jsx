@@ -59,6 +59,7 @@ export default function Ordering() {
       `https://hammerhead-app-7qhnq.ondigitalocean.app/api/order/${id}`,
       requestOptions
     ).then(res=> res.json())
+    .then(() => window.location.reload())
     .catch((err) => console.log(err));
   };
 
@@ -190,65 +191,6 @@ export default function Ordering() {
                         <img src={tick} alt="" className={styles.iconBtn} />
                       </button>
                     </div>
-                    {/* {value.status === 0 ? (
-                      <div style={{ display: "flex" }}>
-                        <button
-                          className={styles.rejectBtn}
-                          style={{
-                            marginRight: "1.6rem",
-                            borderColor: "#E13428",
-                          }}
-                          onClick={() => updateState(value.id, 2)}
-                        >
-                          <img src={close} alt="" className={styles.iconBtn} />
-                        </button>
-                        <button
-                          className={styles.completeBtn}
-                          style={{ borderColor: "#2BC48A" }}
-                          onClick={() => updateState(value.id, 1)}
-                        >
-                          <img src={tick} alt="" className={styles.iconBtn} />
-                        </button>
-                      </div>
-                    ) : value.status === 1 ? (
-                      <div>
-                        <button
-                          style={{ borderColor: "#2BC48A", cursor: "default" }}
-                          disabled
-                        >
-                          <img src={tick} alt="" className={styles.iconBtn} />
-                          <h6
-                            style={{
-                              opacity: "1",
-                              color: "#2BC48A",
-                              textTransform: "uppercase",
-                              fontWeight: "600",
-                            }}
-                          >
-                            completed
-                          </h6>
-                        </button>
-                      </div>
-                    ) : (
-                      <div>
-                        <button
-                          style={{ borderColor: "#E13428", cursor: "default" }}
-                          disabled
-                        >
-                          <img src={close} alt="" className={styles.iconBtn} />
-                          <h6
-                            style={{
-                              opacity: "1",
-                              color: "#E13428",
-                              textTransform: "uppercase",
-                              fontWeight: "600",
-                            }}
-                          >
-                            rejected
-                          </h6>
-                        </button>
-                      </div>
-                    )} */}
                   </div>
                 </div>
               </div>

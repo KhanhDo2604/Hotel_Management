@@ -7,6 +7,7 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import NoticeModal from "../../comps/NoticeModal";
 
 const { ipcRenderer } = require("electron");
 
@@ -20,6 +21,8 @@ export default function Menu() {
       method: "DELETE",
       headers: { "Accept": "application/json", 'Authorization': 'Bearer ' + token },
     })
+    // .then(res => res.json())
+    // .then(res => console.log(res))
       .then(() => window.location.reload())
       .catch((error) => {
         console.error("There was an error!", error);
@@ -85,6 +88,14 @@ export default function Menu() {
     const newOffset = (event.selected * itemsPerPage) % filtered.length;
     setItemOffset(newOffset);
   };
+
+  const [modalState, setModalState] = useState(false);
+  const [getId, setId] = useState();
+
+  const openModal = (id) => {
+      setModalState(!modalState);
+      setId(id);
+  }
 
   return (
     <div className="w3-container">
@@ -191,7 +202,6 @@ export default function Menu() {
                         : value.category}
                     </h6>
                     <h6 className={styles.foodInfo}>{value.price}đ</h6>
-                    {/* <h6 className={styles.foodInfo}>{value.quantity}</h6> */}
 
                     <div
                       style={{
@@ -220,11 +230,13 @@ export default function Menu() {
                       </Link>
                       <button
                         className={styles.actionBtn}
-                        onClick={() => removeFood(value.id)}
+                        onClick={() => openModal(value.id)}
                       >
                         <img src={bin} alt="" style={{ width: "2.4rem" }} />
                       </button>
+        
                     </div>
+
                   </div>
                   <hr
                     style={{
@@ -235,6 +247,7 @@ export default function Menu() {
                       marginBottom: "1.6rem",
                     }}
                   />
+
                 </div>
               ))}
           </div>
@@ -260,6 +273,8 @@ export default function Menu() {
           activeClassName={styles.active}
           renderOnZeroPageCount={null}
         />
+        
+        <NoticeModal toggle={modalState} hide={() => openModal(getId)} action={() => removeFood(getId)} title={"Delete Food"} content={"Do you want to delete this food ?"}/>
       </div>
     </div>
   );

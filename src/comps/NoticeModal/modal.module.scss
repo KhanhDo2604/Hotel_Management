@@ -1,0 +1,65 @@
+.container{
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0px;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+
+    &.active{
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .modal {
+        width: 30%;
+        height: 30%;
+        border-radius: 0.8rem;
+        box-shadow: -1px 1px 8px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
+        background-color: white;
+        padding: 0 1.2rem;
+        z-index: 2;
+        
+        .content, .buttonLayer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .buttonLayer {
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            left: 50%;
+            margin-bottom: 1.2rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background-image: url("/src/assets/close.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 2.4rem;
+            height: 2.4rem;
+            cursor: pointer;
+        }
+
+        button {
+            text-decoration: none;
+            padding: 0.8rem 1.6rem;
+            border-radius: 0.8rem;
+            border: none;
+            font-weight: 500;
+        }
+    }
+}

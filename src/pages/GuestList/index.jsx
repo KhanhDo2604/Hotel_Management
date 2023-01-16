@@ -4,11 +4,14 @@ import bin from "../../assets/bin.png";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
+import NoticeModal from "../../comps/NoticeModal";
 const { ipcRenderer } = require("electron");
 
 const mapGender = ["Female", "Male"]
 export default function GuestList() {
     const [list, setList] = useState([])
+    const [getId, setId] = useState();
+    const [modalState, setModalState] = useState(false);
 
     //Get
     useEffect(() => {
@@ -51,6 +54,11 @@ export default function GuestList() {
         const newOffset = (event.selected * itemsPerPage) % filtered.length;
         setItemOffset(newOffset);
     };
+
+    const openModal = (id) => {
+        setModalState(!modalState);
+        setId(id);
+    }
 
     return (
         <div style={{ marginTop: '2rem' }} className="w3-container">
@@ -112,7 +120,7 @@ export default function GuestList() {
                                             <img src={update} alt="" style={{ width: "2.4rem" }} />
                                         </Link>
                                     </button>
-                                    <button className={styles.actionBtn} onClick={() => handleDelete(value.id)}>
+                                    <button className={styles.actionBtn} onClick={() => openModal(value.id)}>
                                         <img src={bin} alt="" style={{ width: "2.4rem" }} />
                                     </button>
                                 </div>
@@ -153,6 +161,8 @@ export default function GuestList() {
                     renderOnZeroPageCount={null}
                 />
             </div>
+
+            <NoticeModal toggle={modalState} hide={() => openModal(getId)} action={() => handleDelete(getId)} title={"Delete guest"} content={"Do you want to delete this guest ?"}/>
         </div>
     );
 }
