@@ -1,5 +1,5 @@
+import styles from "./bookInAdvanced.module.scss";
 import { useState } from "react";
-import styles from "./FormReservation.module.scss";
 import { DatePicker } from "antd";
 import { useLocation } from "react-router-dom";
 const { RangePicker } = DatePicker;
@@ -9,9 +9,7 @@ const { ipcRenderer } = require("electron");
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function FormReservation() {
-  const location = useLocation();
-  const table = location.state.table;
+export default function BookInAdvanced() {
   const navigate = useNavigate();
 
   const [guestid, setguestId] = useState("");
@@ -21,50 +19,25 @@ export default function FormReservation() {
     end: moment().add(1, "d"),
   });
   const [check, setCheck] = useState(false);
-
-  const sendData = () => {
-    if (guestid === "" || check === false || count === "") {
-      toast.warn("Please fill all information");
-    } else {
-      const token = ipcRenderer.sendSync("get-token");
-      const userId = ipcRenderer.sendSync("get-user").id;
-
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          guestid: guestid,
-          agentid: userId,
-          in: date.start,
-          out: date.end,
-          //num of children and adults here
-        //   count: count,
-          rooms: table.map((value) => value.roomnumber),
-        }),
-      };
-      fetch(
-        "https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation",
-        requestOptions
-      ).then((res) => navigate("/bookinglist"));
-    }
-  };
-
-  const navigatePage = () => {
-    navigate("/bookinglist");
-  };
-
   return (
-    <div style={{ padding: "1rem", position: "relative", height: "98%" }}>
-      <ToastContainer />
-      <h3 style={{ fontWeight: "bold" }}>Form Reservation</h3>
+    <div style={{ height: "98%", position: "relative" }}>
+      {/* <ToastContainer /> */}
+      <h3 style={{ fontWeight: "bold" }}>Book In Advanced</h3>
       <div className={styles.flexItem}>
         <form action="" className={styles.gridItem}>
           <div>
             <label>Identification:</label>
+          </div>
+          <div>
+            <input
+              type="text"
+              name="name"
+              onChange={(e) => setguestId(e.target.value)}
+              value={guestid}
+            />
+          </div>
+          <div>
+            <label>Guest Name:</label>
           </div>
           <div>
             <input
@@ -81,9 +54,6 @@ export default function FormReservation() {
             <div>
               <div>
                 <input
-                  defaultValue={
-                    table.filter((value) => value.roomtype === "std").length
-                  }
                   style={{ width: "8%", marginRight: "1.5rem" }}
                   type="text"
                   name="name"
@@ -93,9 +63,6 @@ export default function FormReservation() {
               </div>
               <div style={{ marginTop: "1rem" }}>
                 <input
-                  defaultValue={
-                    table.filter((value) => value.roomtype === "sup").length
-                  }
                   style={{ width: "8%", marginRight: "1.5rem" }}
                   type="text"
                   name="name"
@@ -107,9 +74,6 @@ export default function FormReservation() {
             <div>
               <div style={{ marginTop: "1rem" }}>
                 <input
-                  defaultValue={
-                    table.filter((value) => value.roomtype === "dlx").length
-                  }
                   style={{ width: "8%", marginRight: "1.5rem" }}
                   type="text"
                   name="name"
@@ -119,9 +83,6 @@ export default function FormReservation() {
               </div>
               <div style={{ marginTop: "1rem" }}>
                 <input
-                  defaultValue={
-                    table.filter((value) => value.roomtype === "sui").length
-                  }
                   style={{ width: "8%", marginRight: "1.5rem" }}
                   type="text"
                   name="name"
@@ -152,13 +113,7 @@ export default function FormReservation() {
               }}
             />
           </div>
-          {/* <div>
-                        <label>Number Of Guest:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="name" onChange={(e) => setCount(e.target.value)} value={count} />
-                    </div> */}
-
+          
           <div>
             <label>Number Of Adults:</label>
           </div>
@@ -182,14 +137,24 @@ export default function FormReservation() {
               value={count}
             />
           </div>
+
+          <div>
+            <label>Car park requirement:</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              name="name"
+              onChange={(e) => setCount(e.target.value)}
+              value={count}
+                style={{width: '2.8rem', height: '2.8rem', borderRadius: '0.5rem', border: '0.2rem solid #999'}}
+            />
+          </div>
         </form>
+
         <div className={styles.format}>
-          <button className={styles.btnConfirm} onClick={sendData}>
-            Confirm
-          </button>
-          <button className={styles.btnCancel} onClick={navigatePage}>
-            Cancel
-          </button>
+          <button className={styles.btnConfirm}>Confirm</button>
+          <button className={styles.btnCancel} onClick={() => navigate('/bookingList')}>Cancel</button>
         </div>
       </div>
     </div>

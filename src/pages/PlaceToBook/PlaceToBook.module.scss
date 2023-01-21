@@ -19,6 +19,10 @@
         text-decoration: none;
     }
 
+    a:hover {
+        background-color: #ED7D3E;
+    }
+
     .unActive {
         opacity: 0.5;
         pointer-events: none;

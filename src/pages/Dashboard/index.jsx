@@ -170,12 +170,16 @@ export default function DashBoard() {
                 </div>
             </div>
 
-            <h4 style={{ paddingLeft: "10.5rem", marginTop: "2rem" }}>SALES REPORT</h4>
+            <div style={{display: 'flex'}}>
+                <h4 style={{ paddingLeft: "10.5rem", marginTop: "2rem" }}>SALES REPORT </h4>
+                <p style={{fontStyle: 'italic', marginTop: "2.4rem", paddingLeft: "0.8rem", color: '#f72323'}}>(* Unit: VND)</p>
+            </div>
+
             <div className={styles.format}>
                 <div>
                     <p style={{ marginTop: "6.2rem" }}>Number of Room</p>
-                    <p style={{ marginTop: "2rem" }}>Invoice Number</p>
-                    <p style={{ marginTop: "2.4rem" }}>Total Revenue</p>
+                    <p style={{ marginTop: "2rem" }}>Invoice Number *</p>
+                    <p style={{ marginTop: "2.4rem" }}>Total Revenue*</p>
                 </div>
                 <table>
                     <tr>
@@ -229,7 +233,7 @@ export default function DashBoard() {
             <div style={{ display: "flex", width: "100%", paddingLeft: "10.5rem", alignItems: "center" }}>
                 <div style={{ display: "flex", flexDirection: "column", width: "300px" }}>
                     <div>
-                        <h4 style={{ marginTop: "3rem" }}>TOTAL REVENUE</h4>
+                        <h4 style={{ marginTop: "3rem" }}>TOTAL REVENUE *</h4>
                         <p className={styles.elementp}>
                             {
                                 bill.reduce((prev, cur) => (parseInt(prev) + (parseInt(cur.price) - 100000)), 0)

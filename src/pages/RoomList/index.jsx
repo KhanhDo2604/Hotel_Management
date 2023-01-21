@@ -161,6 +161,7 @@ export default function RoomList() {
 
     return (
         <>
+            <p style={{fontStyle: 'italic'}}>* Unit: VND/night</p>
             {
                 roomList.map((value, index) => (
                     <div className={styles.roomList} key={index} style={{ margin: '1.2rem 0' }}>

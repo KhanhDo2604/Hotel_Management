@@ -15,7 +15,8 @@ import {
   FoodAdding,
   RestaurantReport,
   PlaceToBook,
-  AddGuest
+  AddGuest,
+  BookInAdvanced
 
 } from "./pages";
 import bell from "./assets/bell.png";
@@ -119,6 +120,10 @@ const hiddenRoutes = [
   {
     path:'/addGuest',
     page:AddGuest
+  },
+  {
+    path: '/bookInAdvanced',
+    page: BookInAdvanced
   }
 ];
 

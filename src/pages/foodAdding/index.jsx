@@ -88,7 +88,8 @@ export default function FoodAdding() {
         >
           <button
             // to="/menu"
-            style={{ marginRight: "0.4rem", background: "#F9D410" }}
+            className={styles.confirmBtn}
+            style={{ marginRight: "0.4rem" }}
             onClick={addingFood}
           >
             Confirm

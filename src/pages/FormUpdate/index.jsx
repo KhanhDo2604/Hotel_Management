@@ -117,8 +117,9 @@ export default function FormUpdate() {
         >
           <Link
             to="/menu"
-            style={{ marginRight: "0.4rem", background: "#F9D410" }}
+            style={{ marginRight: "0.4rem" }}
             onClick={update}
+            className={styles.confirmBtn}
           >
             Update
           </Link>

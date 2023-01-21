@@ -3,16 +3,13 @@
     grid-template-columns: 2.5fr 0.8fr 1.2fr;
     gap: 3.8rem;
 
-    .rangPicker{
-        padding: 0.8rem;
-    }
-
     .middles {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-evenly;
         border: 0.2rem solid #A9A9A9;
         border-radius: 0.8rem;
+        
     }
 
     button {
@@ -20,7 +17,6 @@
         border-radius: 0.8rem;
         border: none;
         background-color: #F9D410;
-        margin-top: 0.8rem;
         font-weight: bold;
     }
 }
@@ -31,7 +27,7 @@
     background-color: #e4e4e4;
     border-radius: 0.8rem;
     border: none;
-    width: 100%;
+    width: 72%;
     font-size: 1.6rem;
     position: relative;
     display: flex;
@@ -157,8 +153,12 @@
     background-color: #F9D410;
     padding: 0.8rem 2.6rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 0.8rem;
     font-weight: bold;
+}
+
+.btnLeft:hover {
+    background-color: #ED7D3E;
 }
 
 .overlay {
