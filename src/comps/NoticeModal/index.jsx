@@ -11,7 +11,7 @@ export default function NoticeModal(props) {
         <div className={styles.modal}>
             <h4 style={{fontWeight:'500'}}>{props.title}</h4>
             <div className={styles.close} onClick={hide}></div>
-            <div className={styles.content}>
+            <div className={styles.content} style={{height:"11rem"}}>
                 <p>{props.content}</p>
             </div>
 
