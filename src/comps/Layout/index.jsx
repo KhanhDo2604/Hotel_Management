@@ -19,8 +19,8 @@ export default function Layout({ children }) {
     }
 
     const logOut = () => {
-        console.log("hello world");
-        // navigate("/");
+        ipcRenderer.send("save-token", null, null);
+        navigate("/");
     }
 
     const [sidebar, setSidebar] = useState(true);

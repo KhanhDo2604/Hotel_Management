@@ -9,7 +9,7 @@ export default function AddGuest() {
     const navigate = useNavigate()
     const [name, setName] = useState("")
     const [identification, setIdentification] = useState("")
-    const [gender, setGender] = useState("")
+    const [gender, setGender] = useState("Male")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
 
@@ -35,7 +35,10 @@ export default function AddGuest() {
             fetch("https://hammerhead-app-7qhnq.ondigitalocean.app/api/guest", requestOptions
             )
                 .then(res => res.json())
-                .then(navigate("/guests"))
+                // .then(navigate("/guests"))
+                .then(() => {
+                    window.location.replace("/guests")
+                })
                 .catch(err => console.log(err))
         }
     }

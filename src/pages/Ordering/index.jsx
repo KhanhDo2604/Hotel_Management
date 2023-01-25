@@ -84,9 +84,9 @@ export default function Ordering() {
         </div>
 
 
-        <div>
+        {/* <div>
           <button className={styles.dropdownBtn} onClick={() => window.location.reload()}>Reload Page</button>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.orderList}>

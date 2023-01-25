@@ -12,16 +12,67 @@ import "react-toastify/dist/ReactToastify.css";
 export default function BookInAdvanced() {
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const table = location.state.table;
+
   const [guestid, setguestId] = useState("");
-  const [count, setCount] = useState("");
+  const [guestName, setGuestName] = useState("");
+
+  const [countAdult, setCountAdult] = useState("");
+  const [countChildren, setCountChildren] = useState("");
+
+  const [parking, setParking] = useState(0);
+
   const [date, setDate] = useState({
     start: moment(),
     end: moment().add(1, "d"),
   });
   const [check, setCheck] = useState(false);
+
+  const handleBooking = () => {
+    if (
+      guestid === "" ||
+      check === false ||
+      countAdult === "" ||
+      countChildren === "" ||
+      guestName === ""
+    ) {
+      toast.warn("Please fill all information");
+    } else {
+      const token = ipcRenderer.sendSync("get-token");
+      const userId = ipcRenderer.sendSync("get-user").id;
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          guestid: guestid,
+          agentid: userId,
+          in: date.start,
+          out: date.end,
+          adults: countAdult,
+          children: countChildren,
+          parking: parking,
+          rooms: table.map((value) => value.roomnumber),
+        }),
+      };
+      fetch(
+        "https://hammerhead-app-7qhnq.ondigitalocean.app/api/reservation",
+        requestOptions
+      )
+        .then((res) => res.json())
+        .then((res) => console.log(res))
+        .then((res) => navigate("/bookinglist"));
+    }
+  };
+
   return (
     <div style={{ height: "98%", position: "relative" }}>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <h3 style={{ fontWeight: "bold" }}>Book In Advanced</h3>
       <div className={styles.flexItem}>
         <form action="" className={styles.gridItem}>
@@ -43,8 +94,8 @@ export default function BookInAdvanced() {
             <input
               type="text"
               name="name"
-              onChange={(e) => setguestId(e.target.value)}
-              value={guestid}
+              onChange={(e) => setGuestName(e.target.value)}
+              value={guestName}
             />
           </div>
           <div>
@@ -54,7 +105,10 @@ export default function BookInAdvanced() {
             <div>
               <div>
                 <input
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  defaultValue={
+                    table.filter((value) => value.roomtype === "std").length
+                  }
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -63,7 +117,10 @@ export default function BookInAdvanced() {
               </div>
               <div style={{ marginTop: "1rem" }}>
                 <input
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  defaultValue={
+                    table.filter((value) => value.roomtype === "sup").length
+                  }
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -74,7 +131,10 @@ export default function BookInAdvanced() {
             <div>
               <div style={{ marginTop: "1rem" }}>
                 <input
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  defaultValue={
+                    table.filter((value) => value.roomtype === "dlx").length
+                  }
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -83,7 +143,10 @@ export default function BookInAdvanced() {
               </div>
               <div style={{ marginTop: "1rem" }}>
                 <input
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  defaultValue={
+                    table.filter((value) => value.roomtype === "sui").length
+                  }
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -113,7 +176,7 @@ export default function BookInAdvanced() {
               }}
             />
           </div>
-          
+
           <div>
             <label>Number Of Adults:</label>
           </div>
@@ -121,8 +184,8 @@ export default function BookInAdvanced() {
             <input
               type="text"
               name="name"
-              onChange={(e) => setCount(e.target.value)}
-              value={count}
+              onChange={(e) => setCountAdult(e.target.value)}
+              value={countAdult}
             />
           </div>
 
@@ -133,8 +196,8 @@ export default function BookInAdvanced() {
             <input
               type="text"
               name="name"
-              onChange={(e) => setCount(e.target.value)}
-              value={count}
+              onChange={(e) => setCountChildren(e.target.value)}
+              value={countChildren}
             />
           </div>
 
@@ -145,16 +208,27 @@ export default function BookInAdvanced() {
             <input
               type="checkbox"
               name="name"
-              onChange={(e) => setCount(e.target.value)}
-              value={count}
-                style={{width: '2.8rem', height: '2.8rem', borderRadius: '0.5rem', border: '0.2rem solid #999'}}
+              onChange={(e) => setParking(e.target.checked ? 1 : 0)}
+              style={{
+                width: "2.8rem",
+                height: "2.8rem",
+                borderRadius: "0.5rem",
+                border: "0.2rem solid #999",
+              }}
             />
           </div>
         </form>
 
         <div className={styles.format}>
-          <button className={styles.btnConfirm}>Confirm</button>
-          <button className={styles.btnCancel} onClick={() => navigate('/bookingList')}>Cancel</button>
+          <button className={styles.btnConfirm} onClick={handleBooking}>
+            Confirm
+          </button>
+          <button
+            className={styles.btnCancel}
+            onClick={() => navigate("/bookingList")}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>

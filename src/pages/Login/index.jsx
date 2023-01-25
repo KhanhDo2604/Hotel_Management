@@ -95,9 +95,9 @@ export default function Login() {
                             )
                     }
                 </button>
-                <div>
+                {/* <div>
                     <a className={styles.forgotPassword} href="/forgotPassword">FORGOT PASSWORD?</a>
-                </div>
+                </div> */}
                 <div>
                     <button className={styles.btn} onClick={authenication}>LOGIN</button>
                     <ToastContainer />

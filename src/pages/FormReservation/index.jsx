@@ -84,7 +84,7 @@ export default function FormReservation() {
                   defaultValue={
                     table.filter((value) => value.roomtype === "std").length
                   }
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -96,7 +96,7 @@ export default function FormReservation() {
                   defaultValue={
                     table.filter((value) => value.roomtype === "sup").length
                   }
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -110,7 +110,7 @@ export default function FormReservation() {
                   defaultValue={
                     table.filter((value) => value.roomtype === "dlx").length
                   }
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -122,7 +122,7 @@ export default function FormReservation() {
                   defaultValue={
                     table.filter((value) => value.roomtype === "sui").length
                   }
-                  style={{ width: "8%", marginRight: "1.5rem" }}
+                  style={{ width: "8%", marginRight: "1.5rem", textAlign: 'center' }}
                   type="text"
                   name="name"
                   readOnly
@@ -152,12 +152,6 @@ export default function FormReservation() {
               }}
             />
           </div>
-          {/* <div>
-                        <label>Number Of Guest:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="name" onChange={(e) => setCount(e.target.value)} value={count} />
-                    </div> */}
 
           <div>
             <label>Number Of Adults:</label>

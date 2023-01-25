@@ -15,9 +15,13 @@
 .btnLeft{
     background-color: #F9D410;
     padding: 0.8rem 2.6rem;
-    border: 0.2rem solid #999;
+    border: none;
     border-radius: 0.4rem;
     font-weight: bold;
+}
+
+.btnLeft:hover {
+    background-color: #ED7D3E;
 }
 
 

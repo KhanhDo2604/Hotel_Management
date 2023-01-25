@@ -55,7 +55,7 @@ export default function PlaceToBook() {
         </div>
         <div>
           <Link
-            to="/formReservation"
+            to="/bookInAdvanced"
             state={{
               table: selectedRoom
             }}
@@ -75,7 +75,7 @@ export default function PlaceToBook() {
       </div>
       <div>
         <Tabs>
-          <TabList>
+          <TabList style={{marginBottom: '1.6rem'}}>
             <Tab>
               <h6 style={{ fontWeight: '700' }}>Standard Room (STD)</h6>
             </Tab>

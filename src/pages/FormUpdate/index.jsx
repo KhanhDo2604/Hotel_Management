@@ -11,6 +11,7 @@ export default function FormUpdate() {
   const [name, setName] = useState(location.state.foodInfo.name);
   const [cate, setCate] = useState(location.state.foodInfo.category);
   const [price, setPrice] = useState(location.state.foodInfo.price);
+  const [description, setDescription] = useState(location.state.foodInfo.description);
   const [trangthai, setStatus] = useState(location.state.foodInfo.status);
 
   const group = ["mainmeal", "pizza", "dessert", "drink", "pasta"];
@@ -25,6 +26,7 @@ export default function FormUpdate() {
     formData.append("category", cate);
     formData.append("price", price);
     formData.append("status", trangthai);
+    formData.append("description", description);
 
     const requestOptions = {
       method: "POST",
@@ -63,6 +65,7 @@ export default function FormUpdate() {
             <label>Food Name: </label>
             <label>Category: </label>
             <label>Price: </label>
+            <label>Description: </label>
             <label>Status: </label>
           </div>
 
@@ -94,6 +97,13 @@ export default function FormUpdate() {
               value={price}
               onChange={(e) => {
                 setPrice(e.target.value);
+              }}
+            />
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
               }}
             />
             <select
