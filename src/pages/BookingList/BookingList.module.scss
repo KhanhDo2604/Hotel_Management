@@ -48,7 +48,7 @@
 
 .contentGrid {
     display: grid;
-    grid-template-columns: 0.6fr 1fr 0.6fr 0.8fr;
+    grid-template-columns: 0.6fr 1fr 0.8fr 0.7fr;
     gap: 3.2rem;
     margin-top: 2rem;
     padding: 2rem;
@@ -60,7 +60,6 @@
     }
     .end{
         display: flex;
-        justify-content: space-evenly;
         align-items: center;
     }
     .oc {

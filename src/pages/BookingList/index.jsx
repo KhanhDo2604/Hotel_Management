@@ -18,7 +18,7 @@ const mapType = {
   sui: "Suite Room (SUT)",
 };
 
-const mapState = ["EA", "OC", "SO"];
+const mapState = ["NA", "OC", "SO"];
 
 export default function BookingList() {
   //Fetch api
@@ -45,12 +45,10 @@ export default function BookingList() {
   const openModal = (id) => {
     setModalState(!modalState);
     setId(id);
-    console.log(id);
   };
 
   //Delete
   const handleDelete = (id) => {
-    console.log(id);
     const token = ipcRenderer.sendSync("get-token");
     const requestOptions = {
       method: "DELETE",
@@ -199,9 +197,13 @@ export default function BookingList() {
         </div>
       </div>
 
-      <div style={{ fontWeight: "bold", marginTop: "2.2rem" }}>
+      <div style={{ fontWeight: "bold", marginTop: "2.2rem", display: 'flex', justifyContent: 'space-between' }}>
         <p>
           List: <span>{data.length}</span> results
+        </p>
+
+        <p style={{color: '#f72323', fontStyle: 'italic'}}>
+          *Red tag: guest maybe cancel their reservation before check in
         </p>
       </div>
       {data &&
@@ -210,7 +212,13 @@ export default function BookingList() {
             keys.some((key) => value[key].toLowerCase().includes(query))
           )
           .map((values, index) => (
-            <div className={styles.contentGrid} key={index} style={{backgroundColor: values.cancellable ? "#f7bbb7" : "#fff"}}>
+            <div
+              className={styles.contentGrid}
+              key={index}
+              style={{
+                backgroundColor: values.cancellable ? "#f7bbb7" : "#fff",
+              }}
+            >
               <div className={styles.alignItems}>
                 {values.rooms.map((valueRoom, index) => (
                   <span key={index} style={{ display: "flex" }}>
@@ -231,7 +239,7 @@ export default function BookingList() {
                 {values.rooms.map((valueRoom, index) => (
                   <span key={index} style={{ display: "flex" }}>
                     Type:
-                    <p key={value.id} style={{ fontWeight: "bold" }}>
+                    <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
                       {mapType[valueRoom.type]}
                     </p>
                   </span>
@@ -298,7 +306,9 @@ export default function BookingList() {
                 {values.status === 0 && (
                   <button
                     className={styles.close}
-                    onClick={() => {openModal(values.id)}}
+                    onClick={() => {
+                      openModal(values.id);
+                    }}
                   >
                     <FontAwesomeIcon
                       style={{ color: "red", height: "2.8rem" }}
