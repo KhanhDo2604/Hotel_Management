@@ -73,7 +73,7 @@ export default function BookInAdvanced() {
   return (
     <div style={{ height: "98%", position: "relative" }}>
       <ToastContainer />
-      <h3 style={{ fontWeight: "bold" }}>Book In Advanced</h3>
+      <h3 style={{ fontWeight: "bold" }}>Book In Advance</h3>
       <div className={styles.flexItem}>
         <form action="" className={styles.gridItem}>
           <div>

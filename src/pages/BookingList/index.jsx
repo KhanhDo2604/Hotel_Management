@@ -146,7 +146,7 @@ export default function BookingList() {
   const dateFormat = "DD/MM/YYYY";
 
   return (
-    <>
+    <div style={{}}>
       <div style={{ marginTop: "2.2rem" }} className={styles.containerGrid}>
         <RangePicker
           format={dateFormat}
@@ -197,128 +197,145 @@ export default function BookingList() {
         </div>
       </div>
 
-      <div style={{ fontWeight: "bold", marginTop: "2.2rem", display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          fontWeight: "bold",
+          marginTop: "2.2rem",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <p>
           List: <span>{data.length}</span> results
         </p>
 
-        <p style={{color: '#f72323', fontStyle: 'italic'}}>
+        <p style={{ color: "#f72323", fontStyle: "italic" }}>
           *Red tag: guest maybe cancel their reservation before check in
         </p>
       </div>
-      {data &&
-        data
-          .filter((value) =>
-            keys.some((key) => value[key].toLowerCase().includes(query))
-          )
-          .map((values, index) => (
-            <div
-              className={styles.contentGrid}
-              key={index}
-              style={{
-                backgroundColor: values.cancellable ? "#f7bbb7" : "#fff",
-              }}
-            >
-              <div className={styles.alignItems}>
-                {values.rooms.map((valueRoom, index) => (
-                  <span key={index} style={{ display: "flex" }}>
-                    Room:
-                    <p
-                      key={value.id}
-                      style={{ fontWeight: "bold", marginLeft: "0.4rem" }}
-                    >
-                      {valueRoom.number}
-                    </p>
-                  </span>
-                ))}
-                <p>
-                  In: <span style={{ fontWeight: "bold" }}>{values.in}</span>
-                </p>
-              </div>
-              <div className={styles.alignItems}>
-                {values.rooms.map((valueRoom, index) => (
-                  <span key={index} style={{ display: "flex" }}>
-                    Type:
-                    <p key={value.id} style={{ fontWeight: "bold", marginLeft: '0.4rem' }}>
-                      {mapType[valueRoom.type]}
-                    </p>
-                  </span>
-                ))}
-                <p>
-                  Out: <span style={{ fontWeight: "bold" }}>{values.out}</span>
-                </p>
-              </div>
-              <div className={styles.alignItems}>
-                <p>{values.fullname}</p>
+      <div style={{height: '50rem', overflowY: 'auto'}}>
+        {data &&
+          data
+            .filter((value) =>
+              keys.some((key) => value[key].toLowerCase().includes(query))
+            )
+            .map((values, index) => (
+              <div
+                className={styles.contentGrid}
+                key={index}
+                style={{
+                  backgroundColor: values.cancellable ? "#f7bbb7" : "#fff",
+                  marginLeft: '0.1rem',
 
-                <p style={{ fontWeight: "bold" }}>{values.adults} Adult(s)</p>
-                <p style={{ fontWeight: "bold" }}>{values.children} Children</p>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <p style={{ marginRight: "0.8rem" }}>Car park:</p>
-
-                  <input
-                    type="checkbox"
-                    name="name"
-                    checked={values.parking ? true : false}
-                    readOnly
-                    style={{
-                      width: "1.8rem",
-                      height: "1.8rem",
-                      borderRadius: "0.5rem",
-                      border: "0.2rem solid #999",
-                    }}
-                  />
+                }}
+              >
+                <div className={styles.alignItems}>
+                  {values.rooms.map((valueRoom, index) => (
+                    <span key={index} style={{ display: "flex" }}>
+                      Room:
+                      <p
+                        key={value.id}
+                        style={{ fontWeight: "bold", marginLeft: "0.4rem" }}
+                      >
+                        {valueRoom.number}
+                      </p>
+                    </span>
+                  ))}
+                  <p>
+                    In: <span style={{ fontWeight: "bold" }}>{values.in}</span>
+                  </p>
                 </div>
-              </div>
-              <div className={styles.end}>
-                {values.status === 1 ? (
-                  <>
-                    <p
-                      className={styles.oc}
-                      style={{ backgroundColor: "#5BF551", color: "#2C7527" }}
-                    >
-                      {mapState[values.status]}
-                    </p>
-                  </>
-                ) : values.status === 0 ? (
-                  <>
-                    <p
-                      className={styles.oc}
-                      style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}
-                    >
-                      {mapState[values.status]}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p
-                      className={styles.oc}
+                <div className={styles.alignItems}>
+                  {values.rooms.map((valueRoom, index) => (
+                    <span key={index} style={{ display: "flex" }}>
+                      Type:
+                      <p
+                        key={value.id}
+                        style={{ fontWeight: "bold", marginLeft: "0.4rem" }}
+                      >
+                        {mapType[valueRoom.type]}
+                      </p>
+                    </span>
+                  ))}
+                  <p>
+                    Out:{" "}
+                    <span style={{ fontWeight: "bold" }}>{values.out}</span>
+                  </p>
+                </div>
+                <div className={styles.alignItems}>
+                  <p>{values.fullname}</p>
+
+                  <p style={{ fontWeight: "bold" }}>{values.adults} Adult(s)</p>
+                  <p style={{ fontWeight: "bold" }}>
+                    {values.children} Children
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <p style={{ marginRight: "0.8rem" }}>Car park:</p>
+
+                    <input
+                      type="checkbox"
+                      name="name"
+                      checked={values.parking ? true : false}
+                      readOnly
                       style={{
-                        backgroundColor: "var(--nav-item-hover-color)",
-                        color: "#FF0000",
+                        width: "1.8rem",
+                        height: "1.8rem",
+                        borderRadius: "0.5rem",
+                        border: "0.2rem solid #999",
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.end}>
+                  {values.status === 1 ? (
+                    <>
+                      <p
+                        className={styles.oc}
+                        style={{ backgroundColor: "#5BF551", color: "#2C7527" }}
+                      >
+                        {mapState[values.status]}
+                      </p>
+                    </>
+                  ) : values.status === 0 ? (
+                    <>
+                      <p
+                        className={styles.oc}
+                        style={{ backgroundColor: "#B5DCFF", color: "#0000FF" }}
+                      >
+                        {mapState[values.status]}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p
+                        className={styles.oc}
+                        style={{
+                          backgroundColor: "var(--nav-item-hover-color)",
+                          color: "#FF0000",
+                        }}
+                      >
+                        {mapState[values.status]}
+                      </p>
+                    </>
+                  )}
+                  <CheckOutBtn guestInfo={values} />
+                  {values.status === 0 && (
+                    <button
+                      className={styles.close}
+                      onClick={() => {
+                        openModal(values.id);
                       }}
                     >
-                      {mapState[values.status]}
-                    </p>
-                  </>
-                )}
-                <CheckOutBtn guestInfo={values} />
-                {values.status === 0 && (
-                  <button
-                    className={styles.close}
-                    onClick={() => {
-                      openModal(values.id);
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      style={{ color: "red", height: "2.8rem" }}
-                      icon={faClose}
-                    />
-                  </button>
-                )}
+                      <FontAwesomeIcon
+                        style={{ color: "red", height: "2.8rem" }}
+                        icon={faClose}
+                      />
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+      </div>
 
       {modal && (
         <div className={styles.modal}>
@@ -405,6 +422,6 @@ export default function BookingList() {
         title={"Delete reservation?"}
         content={"Do you want to delete this reservation ?"}
       />
-    </>
+    </div>
   );
 }
