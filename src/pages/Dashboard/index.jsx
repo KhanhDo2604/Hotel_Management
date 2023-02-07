@@ -149,6 +149,7 @@ export default function DashBoard() {
     }, [bill])
     return (
         <>
+            {console.log(bill)}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h2 style={{ fontWeight: "normal" }}>HOTEL SALES REPORT</h2>
                 <Link
@@ -191,7 +192,7 @@ export default function DashBoard() {
                     </tr>
                     <tr>
                         {
-                            rooms.map((value, index) => (
+                            bill.map((value, index) => (
                                 <td key={index}>{value.count}</td>
                             ))
                         }

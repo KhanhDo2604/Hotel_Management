@@ -36,7 +36,8 @@ export default function BillModal({ open, onClose, guestInfo }) {
           <label>Date In:</label>
           <label>Date Out:</label>
           <label>Stayover:</label>
-          <label>Number of guest:</label>
+          <label>Number of adults:</label>
+          <label>Number of children:</label>
           <label>Details:</label>
           <label className={style.special}>Total Money:</label>
         </div>
@@ -47,14 +48,15 @@ export default function BillModal({ open, onClose, guestInfo }) {
           <p>{guestInfo.in}</p>
           <p>{guestInfo.out}</p>
           <p>{guestInfo.status !== "so" ? "No" : "Yes"}</p>
-          <p>{guestInfo.guestcount}</p>
+          <p>{guestInfo.adults}</p>
+          <p>{guestInfo.children}</p>
 
           {guestInfo.rooms.map((value) => (
             <p>
               {mapType[value.type]} (Room {value.number})
             </p>
           ))}
-          <p>{guestInfo.total}</p>
+          <p>{guestInfo.total}đ</p>
         </div>
       </div>
 

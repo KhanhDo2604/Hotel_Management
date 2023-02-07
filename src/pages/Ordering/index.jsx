@@ -3,7 +3,6 @@ import close from "../../assets/close.png";
 import tick from "../../assets/tick.png";
 
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 
 const { ipcRenderer } = require("electron");
 
@@ -83,10 +82,6 @@ export default function Ordering() {
           </svg>
         </div>
 
-
-        {/* <div>
-          <button className={styles.dropdownBtn} onClick={() => window.location.reload()}>Reload Page</button>
-        </div> */}
       </div>
 
       <div className={styles.orderList}>

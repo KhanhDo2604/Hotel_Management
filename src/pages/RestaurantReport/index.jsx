@@ -87,6 +87,7 @@ export default function RestaurantReport() {
         }
     ]
 
+    const temp = Array(12).fill(0);
     const [sale, setSale] = useState([]);
     const remain = 12 - sale.length;
 
@@ -102,8 +103,12 @@ export default function RestaurantReport() {
             .then((res) =>
                 res.json()
             )
-            .then(res => setSale(res.data.bill))
-            // .then(res => console.log(res))
+            .then(res => {
+                res.data.bill.forEach(e => {
+                    temp[e.month-1] = e.price;
+                })
+                setSale(temp);
+            })
             .catch((err) => console.log(err))
 
     }, []);
@@ -132,7 +137,7 @@ export default function RestaurantReport() {
 
     useEffect(() => {
         if (sale.length > 0) {
-            setData(pre => ({ ...pre, datasets: [{ ...pre.datasets[0], data: sale.sort((a, b) => a.month - b.month).map((value) => parseInt(value.price) - 100000).concat(Array(remain).fill(0)) }] }))
+            setData(pre => ({ ...pre, datasets: [{ ...pre.datasets[0], data: sale }] }))
         }
     }, [sale])
 
@@ -179,9 +184,9 @@ export default function RestaurantReport() {
                     </tr>
 
                     <tr>
-                        {
+                        {   
                             sale.map((value, index) => (
-                                <td key={index}>{value.price}</td>
+                                <td key={index}>{value}</td>
                             ))
                         }
                         {
@@ -194,7 +199,7 @@ export default function RestaurantReport() {
                     <tr>
                         {
                             sale.map((value, index) => (
-                                <td key={index}>{parseInt(value.price) - 100000}</td>
+                                <td key={index}>{index <= current.getMonth() ? parseInt(value) - 100000 : 0}</td>
                             ))
                         }
                         {
@@ -213,7 +218,7 @@ export default function RestaurantReport() {
                         <h4 style={{ marginTop: "3rem" }}>TOTAL PROFITABILITY *</h4>
                         <p className={styles.elementp}>
                             {
-                                sale.reduce((prev, cur) => (parseInt(prev) + (parseInt(cur.price) - 100000)), 0)
+                                sale.reduce((prev, cur, index) => parseInt(prev) + (index <= current.getMonth() ?  (parseInt(cur) - 100000): 0), 0)
                             }
                         </p>
                     </div>
